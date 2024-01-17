@@ -18,12 +18,12 @@ const Uploader: React.FC<Props> = ({
     onUpload,
     component,
     style,
-    claaName=''
+    claaName = ''
 }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [url, setUrl] = useState<string | ArrayBuffer | null>();
 
-    const handleChange = (e:any,file: any) => {
+    const handleChange = (e: any, file: any) => {
         e.preventDefault();
         if (file) {
             let reader = new FileReader();
@@ -38,15 +38,15 @@ const Uploader: React.FC<Props> = ({
         <StyleUploadForm
             className={`width-100 height-100 flex column both-center relative bg-gray radius-12 gap-8 pointer ${claaName}`}
             style={style}
-            onDragOver={(e:any) => e.preventDefault()}
-            onDrop={(e:any) => handleChange(e,e.dataTransfer.files[0])}
+            onDragOver={(e: any) => e.preventDefault()}
+            onDrop={(e: any) => handleChange(e, e.dataTransfer.files[0])}
         >
             <StyleFileInput
                 ref={fileInputRef}
                 type="file"
                 accept={fileType}
                 onChange={(e: any) => {
-                    handleChange(e,e.target.files[0]);
+                    handleChange(e, e.target.files[0]);
                 }}
                 className='StyleFileInput absolute'
             />
@@ -62,7 +62,7 @@ const Uploader: React.FC<Props> = ({
 }
 
 const StyleUploadForm = styled.label`
-    padding:32px;
+    padding:16px;
 `
 const StyleFileInput = styled.input`
     width: 0;
