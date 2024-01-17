@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Uploader from '../../components/Uploader'
 import ImgColorPicker from '../../components/ImgColorPicker'
 import PopOver from '../../components/PopOver'
-import Button from '../../components/Button'
 import Toast from '../../components/Toast'
 
 type Props = {
@@ -16,8 +15,6 @@ const ToolColorPicker: React.FC<Props> = ({
     const [colors, setColors] = useState<any>([]);
     const convertRgbToHex = (rgb: string) => {
         let arr: string[] = rgb.slice(0, rgb.length).split(",");
-        console.log(rgb, arr);
-
         let hexColor: string = '#';
         for (let i = 0; i < arr.length; i++) {
             let t = Number(arr[i]).toString(16);
@@ -30,22 +27,31 @@ const ToolColorPicker: React.FC<Props> = ({
     }
     const [colorArr, setColorArr] = useState<any>([]);
     useEffect(() => {
-        let arr: { id: number, value: string }[] = []
-        colors?.map((item: any, index: number) => {
-            arr.push({
-                id: index + 1,
-                value: convertRgbToHex(item[0]),
+        if(colorArr.length === 0){
+            let arr: { id: number, value: string }[] = []
+            colors?.map((item: any, index: number) => {
+                arr.push({
+                    id: index + 1,
+                    value: convertRgbToHex(item[0]),
+                })
             })
-        })
         setColorArr(arr);
-        console.log(colorArr);
-
+        }
     }, [colors])
     const handleChangeColor = (e: any, id: number) => {
         colorArr.splice(id - 1, 1, { id: id, value: e.target.value });
         setColorArr(colorArr);
     }
-
+    const handleAddColor = (e:any) => {
+        if(colorArr.length > 0){
+            colorArr.length < 12 ? setColorArr([...colorArr, { id: colorArr.length + 1, value: e.target.value }]) : handleShowToast(true,'已达上限～长按删除后重试')
+        }else{
+            handleShowToast(true,'请先上传图片并提取颜色～')
+        }
+    }
+    const handleDeleteCOlor = (id:number) => {
+        colorArr.splice(id-1,1)
+    }
     //提示信息
     const [toast, setToast] = useState<boolean>(false);
     const [toastText, setToastText] = useState<string>('');
@@ -66,8 +72,8 @@ const ToolColorPicker: React.FC<Props> = ({
                     onUpload={(url) => setImgUrl(url)}
                 />
             </StyleUploadBtn>
-            <img src={imgUrl} className='radius-12 mt-32 border' width='100%' alt="" />
-            {colorArr && <div className='flex justify-around items-center mt-16 px-24 py-12 bg-gray radius-12 width-100' >
+            <img src={imgUrl} className='radius-12 mt-32 border width-100' width='100%' style={{minHeight:120}} alt="" />
+            <StyleColorList className={`StyleColorList grid gap-12 px-24 py-12 mt-16 bg-gray radius-12 width-100 transition ${colors.length ? 'show' : 'hide'}`} >
                 {
                     colorArr?.map((item: any) =>
                         <div className='flex column both-center gap-4'>
@@ -75,28 +81,34 @@ const ToolColorPicker: React.FC<Props> = ({
                                 key={item.id}
                                 className='StyleColorItem relative width-100 pointer'
                             >
-                                <input type="color" value={item.value} onChange={(e) => handleChangeColor(e, item.id)} />
+                                <input 
+                                    type="color" 
+                                    value={item.value} 
+                                    onChange={(e) => handleChangeColor(e, item.id)} 
+
+                                />
+                                <PopOver>长按删除</PopOver>
                             </StyleColorItem>
                             <div className='fs-12 color-gray-2' onClick={(e: any) => navigator.clipboard.writeText(e.target?.innerText)}>{item.value}</div>
                         </div>
                     )
                 }
                 {
-                    colorArr && <StyleAddColorBtn
+                    colors.length ? <StyleAddColorBtn
                         className='StyleAddColorBtn flex both-center relative border radius-50 pointer'
                     >
                         <div className='absolute'>+</div>
-                        <input type="color" className='opacity-0 pointer' onChange={(e) => setColorArr([...colorArr, { id: colorArr.length + 1, value: e.target.value }])} />
-                    </StyleAddColorBtn>
+                        <input type="color" className='opacity-0 pointer' onChange={(e) => handleAddColor(e)} />
+                    </StyleAddColorBtn>:null
                 }
-            </div>}
+            </StyleColorList>
 
-            <ImgColorPicker
-                className='mt-16'
+            {colorArr && <ImgColorPicker
+                className='ImgColorPicker mt-16'
                 url={imgUrl}
-                colorLength={6}
+                colorLength={8}
                 onChange={(colors) => imgUrl ? setColors(colors) : handleShowToast(true, '请先上传图片～')}
-            />
+            />}
             <Toast text={toastText} show={toast} />
         </StyleColorPickerWrap>
     )
@@ -112,9 +124,27 @@ const StyleColorPickerWrap = styled.div`
 const StyleUploadBtn = styled.div`
     width: 160px;
 `
+
+const StyleColorList = styled.div`
+    grid-template-columns: repeat(auto-fill,minmax(48px,1fr));
+    &.show{
+        opacity: 1;
+        pointer-events: all;
+        &+.ImgColorPicker{
+            transform: translateY(0px);
+        }
+    }
+    &.hide{
+        opacity: 0;
+        pointer-events: none;
+        &+.ImgColorPicker{
+            transform: translateY(-24px);
+        }
+    }
+`
 const StyleColorItem = styled.div`
-    width: 48px;
-    height: 48px;
+    width: 100%;
+    aspect-ratio: 1;
     border-radius: 8px;
     &.color{
         border-radius: 24px;

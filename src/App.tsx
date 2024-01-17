@@ -11,7 +11,7 @@ import ColorFill from './pages/Tool/ColorFill'
 function App() {
   return (
     <>
-      {/* <Navbar/> */}
+      <Navbar/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />

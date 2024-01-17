@@ -18,14 +18,22 @@ const ImgColorPicker: React.FC<Props> = ({
   const analyzeImageData = (imageData: any) => {
     let data: any = imageData;
     let rgbCounts: any = {};
-    for (let i = 0; i < data.length; i += 8) { // 每4个元素代表一个像素（R, G, B, A）
+    var r0,g0,b0 = 0;
+    for (let i = 0; i < data.length; i += 12) { 
       let r = data[i];
       let g = data[i + 1];
-      let b = data[i + 2];
+      let b = data[i + 2];            
       // 将RGB组合成一个键，并计数
-      let rgbKey = `${r},${g},${b}`;
-      rgbCounts[rgbKey] = (rgbCounts[rgbKey] || 0) + 1;
+      if(Math.abs(r-r0)>=10 || Math.abs(g-g0)>=10 || Math.abs(b-b0)>=10){
+        let rgbKey = `${r},${g},${b}`;
+        rgbCounts[rgbKey] = (rgbCounts[rgbKey] || 0) +1;
+      }
+      r0=data[i];
+      g0 = data[i + 1];
+      b0 = data[i + 2]; 
     }
+    
+    
     // 排序并获取出现次数最多的RGB值
     let sortedRgbCounts = Object.entries(rgbCounts).sort((a: any, b: any) => b[1] - a[1]);
     let topRgbValues = sortedRgbCounts.slice(0, colorLength);
