@@ -59,7 +59,7 @@ const StyleNavWrap = styled.div`
     }
     @media screen and (max-width:800px){
         top: unset;
-        bottom: 24px;
+        bottom: -80px;
         height: 80px;
         &.hide{
         transform: translate(-50%,0);
