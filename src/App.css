@@ -1,6 +1,7 @@
-@import url('./style/atomic.scss');
-@import url('./style/reset.scss');
-
 #root{
   width: 100vw;
+  height: 100vh;
+}
+*{
+  box-sizing: border-box;
 }

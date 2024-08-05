@@ -1,6 +1,7 @@
+//@ts-nocheck
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Select from '../../components/Select'
+// import Select from '../../components/Select'
 
 type Props = {
 }

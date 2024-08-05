@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+//@ts-nocheck
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import TabBar from '../../components/TabBar'
+// import TabBar from '../../components/TabBar'
 
 type Props = {
 }
@@ -10,12 +11,12 @@ const ColorFill: React.FC<Props> = ({
     const [activeTab, setActiveTab] = useState<number>(1);
     return (
         <StyleContentWrap className='StyleContentWrap flex column items-center'>
-            <TabBar data={[{ value: 1, label: '1' }, { value: 2, label: '2' }]} active={activeTab} onClick={(val) => setActiveTab(val)} className='mt-24' />
+            {/* <TabBar data={[{ value: 1, label: '1' }, { value: 2, label: '2' }]} active={activeTab} onClick={(val) => setActiveTab(val)} className='mt-24' />
             <StyleSvgContainer className='StyleSvgContainer flex both-center relative width-100 border radius-12 mt-16'>
                 {currentSvg}
                 <StyleControl className='absolute'>0</StyleControl>
             </StyleSvgContainer>
-            <TabBar type='text' data={[{ value: 1, label: '1' }, { value: 2, label: '2' }]} active={activeTab} onClick={(val) => setActiveTab(val)} className='mt-24' />
+            <TabBar type='text' data={[{ value: 1, label: '1' }, { value: 2, label: '2' }]} active={activeTab} onClick={(val) => setActiveTab(val)} className='mt-24' /> */}
             <StyleColorPanel className='StyleColorPanel width-100 border flex-1 overflow-auto'>
                 {
                     activeTab === 1 && <StyleSelectList className='StyleSelectList flex'>
