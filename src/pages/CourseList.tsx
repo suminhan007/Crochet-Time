@@ -1,13 +1,11 @@
-//@ts-nocheck
 import { Icon, LandContent, LandFlex, LandMenu, LandTitle } from '@suminhan/land-design'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Crochet_Course_Data } from '../mock'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 type Props = {
   data?:any[];
 }
-const Course:React.FC<Props> = ({
+const CourseList:React.FC<Props> = ({
   data=[]
 }) => {
   const [open, setOpen] = useState<boolean>(true);
@@ -30,13 +28,13 @@ const Course:React.FC<Props> = ({
   },[]);
 
   const curItm = useMemo(() => {
-    return data?.filter(itm => itm.cap_id === activeCap)[0].contentMenuList.filter(dropItm => dropItm.id === activeItm)[0];
+    return data?.filter(itm => itm.cap_id === activeCap)[0].contentMenuList.filter((dropItm:any) => dropItm.id === activeItm)[0];
   }, [activeItm,activeCap,data]);
   return (
       <LandContent className="flex-1 flex width-100">
       <StyledCourseMenu className={`relative ${open ? 'open':''}`}>
       <LandMenu
-      data={data?.map(itm => ({key: itm.cap_id,title:itm.cap,dropData:itm.contentMenuList.map(dropItm => ({key:dropItm.id,title:dropItm.title})),open:true}))}
+      data={data?.map(itm => ({key: itm.cap_id,title:itm.cap,dropData:itm.contentMenuList.map((dropItm:any) => ({key:dropItm.id,title:dropItm.title})),open:true}))}
       direction='column'
       active={activeCap}
       onChange={item => {
@@ -59,19 +57,24 @@ const Course:React.FC<Props> = ({
       />
       {mobile&&<div className='toggle-arrow absolute flex items-center jusity-center border' onClick={() => setOpen(!open)}><Icon name='arrow' className={`${open ? 'rotate-90':'-rotate-90'}`}/></div>}
       </StyledCourseMenu>
-      <LandFlex column gap={16} className='p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0'>
-        <LandTitle title={curItm.title} type='h2'/>
-        <div className='flex column gap-12'>
-        {curItm.des && <LandTitle title={curItm.des} type='p'/>}
-        {curItm.imgList?.map(imgItm => <LandFlex column gap={8}>
-          <LandTitle title={imgItm.img_des} type='p'/>
-          <img src={imgItm.img_src} width='100%'/>
-        </LandFlex>)}
-        </div>
-      </LandFlex>
+
+      <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
+        <LandFlex column gap={16} w="fit-content" style={{ margin: "0 auto" }}>
+          <LandTitle title={curItm.title} type="h2" />
+          <div className="flex column gap-12">
+            {curItm.des && <LandTitle title={curItm.des} type="p" />}
+            {curItm.imgList?.map((imgItm:any) => (
+              <LandFlex column gap={8}>
+                <LandTitle title={imgItm.img_des} type="p" />
+                <img src={imgItm.img_src}  width='100%'/>
+              </LandFlex>
+            ))}
+          </div>
+        </LandFlex>
+      </div>
     </LandContent>
-  )
-}
+  );
+};
 
 export const StyledCourseMenu = styled.div`
   transform: translateX(-100%);
@@ -96,4 +99,5 @@ export const StyledCourseMenu = styled.div`
     z-index: 1;
   }
 `
-export default Course
+export default CourseList;
+

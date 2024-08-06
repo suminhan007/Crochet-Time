@@ -4,12 +4,12 @@ import './style/atomic.scss';
 import './style/reset.scss';
 import './style/variable.scss';
 import {  LandFlex, LandHeader, LandTitle } from '@suminhan/land-design';
-import Course from './pages/Course';
 import Tool from './pages/Tool';
 import styled from 'styled-components';
 import { Crochet_Course_Data, QC_List_Data, TJ_List_Data, XC_List_Data } from './pages/mock';
 import { IconCTLogo } from './components/Icon';
 import CardList from './pages/CardList';
+import CourseList from './pages/CourseList';
 
 function App() {
   const [curType, setCurType] = useState<number|string>(11);
@@ -42,8 +42,8 @@ function App() {
         align='end'
         />
         
-          {curPage === 1 && <Course data={Crochet_Course_Data}/>}
-          {curPage === 2 && <Course data={Crochet_Course_Data}/>}
+          {curPage === 1 && <CourseList data={Crochet_Course_Data}/>}
+          {curPage === 2 && <CourseList data={Crochet_Course_Data}/>}
           {curPage === 11 && <CardList data={XC_List_Data}/>}
           {curPage === 12 && <CardList data={QC_List_Data}/>}
           {curPage === 21 && <Tool/>}

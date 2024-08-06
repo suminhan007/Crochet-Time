@@ -1,6 +1,6 @@
 import { Icon, LandContent, LandFlex, LandTitle } from '@suminhan/land-design';
 import React, { useEffect, useMemo, useState } from 'react'
-import { StyledCourseMenu } from './Course';
+import { StyledCourseMenu } from './CourseList';
 
 type Props = {
 data?:any[];
@@ -45,21 +45,22 @@ data=[],
       {mobile&&<div className='toggle-arrow absolute flex items-center jusity-center border' onClick={() => setOpen(!open)}><Icon name='arrow' className={`${open ? 'rotate-90':'-rotate-90'}`}/></div>}
       </StyledCourseMenu>
      
-      <LandFlex column gap={16} className='p-24 flex-1  height-100 color-gray-2 overflow-auto scrollbar-none shrink-0'>
-      <LandTitle title={curItm.title} type='h2'/>
-     <LandFlex gap={12} className='p-12 bg-gray radius-8' w='100%'>
-     {curItm.img && <img src={curItm.img} width='50%' className='radius-8'/>}
-     {curItm.desc && <div className='fs-12 color-gray-3'>{curItm.desc}</div>}
-     </LandFlex>
-      {curItm.detail && <img src={curItm.detail} width='100%'/>}
-      {curItm.detailList?.length>0 && <div className='flex column gap-12'>
-      {curItm.detailList?.map((imgItm:any) => <LandFlex column gap={8}>
-        <LandTitle title={imgItm.desc} type='p'/>
-        <img src={imgItm.img} width='100%' className='radius-8'/>
-      </LandFlex>)}
-      </div>}
-
+      <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
+        <LandFlex column gap={16} w="fit-content" style={{ margin: "0 auto" }}>
+        <LandTitle title={curItm.title} type='h2'/>
+        <LandFlex gap={12} className='p-12 bg-gray radius-8' w='100%'>
+        {curItm.img && <img src={curItm.img} width='50%' className='radius-8'/>}
+        {curItm.desc && <div className='fs-12 color-gray-3'>{curItm.desc}</div>}
+        </LandFlex>
+        {curItm.detail && <img src={curItm.detail} width='100%'/>}
+        {curItm.detailList?.length>0 && <div className='flex column gap-12'>
+        {curItm.detailList?.map((imgItm:any) => <LandFlex column gap={8}>
+          <LandTitle title={imgItm.desc} type='p'/>
+          <img src={imgItm.img} width='100%' className='radius-8'/>
+        </LandFlex>)}
+        </div>}
       </LandFlex>
+      </div>
     </LandContent>
   )
 }
