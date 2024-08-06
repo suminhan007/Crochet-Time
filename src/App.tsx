@@ -9,7 +9,7 @@ import Tool from './pages/Tool';
 import styled from 'styled-components';
 
 function App() {
-  const [curPage, setCurPage] = useState<number|string>('crochet');
+  const [curPage, setCurPage] = useState<number | string>(3);
   return (
       <StyledLayout column className='height-100'>
         <LandHeader
