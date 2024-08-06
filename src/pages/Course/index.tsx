@@ -1,32 +1,42 @@
 //@ts-nocheck
 import { Icon, LandContent, LandFlex, LandMenu, LandTitle } from '@suminhan/land-design'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Crochet_Course_Data } from '../mock'
 import styled from 'styled-components'
 
 type Props = {
-
+  data?:any[];
 }
 const Course:React.FC<Props> = ({
-
+  data=[]
 }) => {
   const [open, setOpen] = useState<boolean>(true);
   const [activeCap, setActiveCap] = useState<number|string>('0');
   const [activeItm, setActiveItm] = useState<number|string>('1');
+
+  const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => {
-    setTimeout(() => {
-      setOpen(false);
-    }, 1000);
+    const observer = new ResizeObserver((entries) => {
+      for(let entry of entries){
+        if(entry.contentRect.width <= 800){
+          setMobile(true);
+        }else{setMobile(false)}
+      }
+    })
+    observer.observe(document.body);
+    return () => {
+      observer.disconnect();
+    }
   },[]);
 
   const curItm = useMemo(() => {
-    return Crochet_Course_Data.filter(itm => itm.cap_id === activeCap)[0].contentMenuList.filter(dropItm => dropItm.id === activeItm)[0];
-  }, [activeItm,activeCap]);
+    return data?.filter(itm => itm.cap_id === activeCap)[0].contentMenuList.filter(dropItm => dropItm.id === activeItm)[0];
+  }, [activeItm,activeCap,data]);
   return (
-    <LandContent className="flex-1 flex width-100">
+      <LandContent className="flex-1 flex width-100">
       <StyledCourseMenu className={`relative ${open ? 'open':''}`}>
       <LandMenu
-      data={Crochet_Course_Data.map(itm => ({key: itm.cap_id,title:itm.cap,dropData:itm.contentMenuList.map(dropItm => ({key:dropItm.id,title:dropItm.title})),open:true}))}
+      data={data?.map(itm => ({key: itm.cap_id,title:itm.cap,dropData:itm.contentMenuList.map(dropItm => ({key:dropItm.id,title:dropItm.title})),open:true}))}
       direction='column'
       active={activeCap}
       onChange={item => {
@@ -47,7 +57,7 @@ const Course:React.FC<Props> = ({
       }}
       className='pt-24 height-100 border-right overflow-auto scrollbar-none'
       />
-      <div className='toggle-arrow absolute flex items-center jusity-center border' onClick={() => setOpen(!open)}><Icon name='arrow' className={`${open ? 'rotate-90':'-rotate-90'}`}/></div>
+      {mobile&&<div className='toggle-arrow absolute flex items-center jusity-center border' onClick={() => setOpen(!open)}><Icon name='arrow' className={`${open ? 'rotate-90':'-rotate-90'}`}/></div>}
       </StyledCourseMenu>
       <LandFlex column gap={16} className='p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0'>
         <LandTitle title={curItm.title} type='h2'/>
@@ -63,7 +73,7 @@ const Course:React.FC<Props> = ({
   )
 }
 
-const StyledCourseMenu = styled.div`
+export const StyledCourseMenu = styled.div`
   transform: translateX(-100%);
   width: 0;
   transition: all var(--transition-15) linear;

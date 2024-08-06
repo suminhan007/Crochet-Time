@@ -7,24 +7,32 @@ import {  LandFlex, LandHeader, LandTitle } from '@suminhan/land-design';
 import Course from './pages/Course';
 import Tool from './pages/Tool';
 import styled from 'styled-components';
+import { Crochet_Course_Data, QC_List_Data, TJ_List_Data, XC_List_Data } from './pages/mock';
+import { IconCTLogo } from './components/Icon';
+import CardList from './pages/CardList';
 
 function App() {
-  const [curPage, setCurPage] = useState<number|string>('crochet');
+  const [curType, setCurType] = useState<number|string>(11);
+  const [curPage, setCurPage] = useState<number|string>(11);
   return (
       <StyledLayout column className='height-100'>
         <LandHeader
         name={<LandTitle title='Crochet Time'/>}
-        logo={<img src='./LOGO.png' alt='织作时光' width={48}/>}
+        logo={<IconCTLogo/>}
         menuProps={{
           data: [
-            {key:'crochet', title:'图解教程',open:true,dropData: [{key: 'crochet',title:'钩针'},{key: 'knit',title:'棒针'}]},
-            {key:2, title:'线材器材'},
-            {key:3, title:'配色器'}
+            {key:11, title:'基础知识',open:true,dropData: [{key: 11,title:'线材'},{key: 12,title:'器材'}]},
+            {key: 1, title:'插图教程',open:true,dropData: [{key: 1,title:'钩针'},{key: 2,title:'棒针'}]},
+            
+            {key:21, title:'配色器'},
+            {key:31, title:'图解'}
           ],
-          active: curPage,
-          onChange: item => setCurPage(item.key),
+          active: curType,
+          onChange: item => {setCurPage(item.key);setCurType(item.key)},
+          onDropChange: (dropItem,item) => {setCurPage(dropItem.key);setCurType(item.key)},
           dropProps:{
-            direction:'column'
+            direction:'column',
+            active:curPage
           },
           theme: {
             lineColor: 'inherit',
@@ -34,8 +42,12 @@ function App() {
         align='end'
         />
         
-          {curPage === 'crochet' && <Course/>}
-          {curPage === 3 && <Tool/>}
+          {curPage === 1 && <Course data={Crochet_Course_Data}/>}
+          {curPage === 2 && <Course data={Crochet_Course_Data}/>}
+          {curPage === 11 && <CardList data={XC_List_Data}/>}
+          {curPage === 12 && <CardList data={QC_List_Data}/>}
+          {curPage === 21 && <Tool/>}
+          {curPage === 31 && <CardList data={TJ_List_Data}/>}
       </StyledLayout>
   )
 }
