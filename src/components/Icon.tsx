@@ -8,8 +8,8 @@ type Props = {
 };
 export const IconCTLogo: React.FC<Props> = ({ style, className = "" }) => (
   <svg
-    width="172"
-    height="32.5"
+    width="40%"
+    // height="32.5"
     viewBox="0 0 2594 490"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

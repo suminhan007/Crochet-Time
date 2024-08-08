@@ -1,44 +1,139 @@
-import { LandContent, LandFlex } from "@suminhan/land-design";
+// @ts-nocheck
+import {
+  Icon,
+  LandAffixContainer,
+  LandContent,
+  LandFlex,
+  LandGrid,
+  LandTitle,
+} from "@suminhan/land-design";
 import React, { useMemo, useState } from "react";
-import { ColorFill_Path_List_Data } from "../mock";
+import { ColorFill_Color_List_Data } from "../mock";
+import styled from "styled-components";
+import { downloadHtmlAsImg } from "../../utils";
 
-type Props = {};
-const ColorFill: React.FC<Props> = ({}) => {
+type Props = {
+  pathData?: { id: number; img: string; path: string[]; numPath: string[] }[];
+};
+const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
+  /** 当前选中的样式 */
   const [currentSvgId, setCurrentSvgId] = useState<number>(1);
   const currentSvg = useMemo(
-    () => ColorFill_Path_List_Data.filter((itm) => itm.id === currentSvgId)[0],
+    () => pathData.filter((itm) => itm.id === currentSvgId)[0],
     [currentSvgId]
   );
+  /** 当前选中的path */
+  const [currentPathId, setCurrentPathId] = useState<number>(1);
+  const [colorList, setColorList] = useState<string[]>(
+    Array.from({ length: currentSvg.path?.length }).map(
+      () => "var(--color-bg-3)"
+    )
+  );
+  /** 选择颜色 */
+  const handleColorClick = (color: string) => {
+    const resColorList = colorList?.map((itm, idx) =>
+      idx + 1 === currentPathId ? color : itm
+    );
+    setColorList(resColorList);
+  };
 
   return (
-    <LandContent className="flex-1 flex column items-start gap-32 px-24 pt-32 pb-24 width-100 overflow-auto">
-      <LandFlex bothCenter>
+    <StyledLandContent className="flex-1 flex column items-start gap-32 p-24 width-100 overflow-auto">
+      <LandAffixContainer
+        className="flex both-center width-100 ratio-1"
+        content={
+          <Icon
+            name="download"
+            size={32}
+            stroke="var(--color-text-4)"
+            onClick={() => {
+              const node = document.querySelector(".colorFill-svg");
+              downloadHtmlAsImg(node, `crochet-time-color-fill-res`);
+            }}
+          />
+        }
+        placement="rb"
+        gap={12}
+      >
         <svg
-          width="220"
-          height="220"
+          width="100%"
           viewBox="0 0 220 220"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="radius-8"
+          className="colorFill-svg radius-8"
+          onClick={() => setCurrentPathId(0)}
         >
           <rect width="220" height="220" fill="var(--color-bg-1)" />
           {currentSvg.path?.map((item, index) => (
-            <path key={index} d={item} fill="gray" stroke="white" />
+            <path
+              key={index}
+              d={item}
+              fill={colorList[index] || "var(--color-bg-3)"}
+              stroke={
+                index + 1 === currentPathId ? "var(--color-primary-6)" : "white"
+              }
+              className="transition-15"
+              onClick={(e: React.UIEvent) => {
+                e.stopPropagation();
+                setCurrentPathId(index + 1);
+              }}
+            />
           ))}
           {currentSvg.numPath?.map((item2, index2) => (
-            <path key={index2} d={item2} fill="white" />
+            <>
+              {colorList[index2] === "var(--color-bg-3)" && (
+                <path key={index2} d={item2} fill="white" />
+              )}
+            </>
           ))}
         </svg>
-      </LandFlex>
+      </LandAffixContainer>
+      {/* 样式 */}
       <LandFlex>
-        {ColorFill_Path_List_Data.map((item3, index3) => (
-          <div key={index3} onClick={() => setCurrentSvgId(item3.id)}>
+        {pathData.map((item3, index3) => (
+          <div
+            key={index3}
+            onClick={() => {
+              setCurrentSvgId(item3.id);
+              /** 是否清空colorList */
+            }}
+          >
             <img src={item3.img} width={100} />
           </div>
         ))}
       </LandFlex>
-    </LandContent>
+      {/* 颜色 */}
+      <LandFlex className="flex-1 overflow-auto">
+        {ColorFill_Color_List_Data.map((item) => (
+          <LandFlex key={item.id} column gap={12}>
+            <LandTitle title={item.title} type="h3" />
+            <LandGrid type="column-repeat" repeatNum={5}>
+              {item.colors?.map((c) => (
+                <StyledColorItem
+                  key={c.id}
+                  className="flex items-center justify-center fs-8 color-white border radius-50 border"
+                  style={{ backgroundColor: c.value }}
+                  onClick={() => handleColorClick?.(c.value)}
+                >
+                  {c.name}
+                </StyledColorItem>
+              ))}
+            </LandGrid>
+          </LandFlex>
+        ))}
+      </LandFlex>
+    </StyledLandContent>
   );
 };
 
+const StyledLandContent = styled(LandContent)`
+  @media screen and (max-width: 800px) {
+    gap: 16px;
+  }
+`;
+
+const StyledColorItem = styled.div`
+  width: 48px;
+  height: 48px;
+`;
 export default ColorFill;

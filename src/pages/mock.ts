@@ -1213,3 +1213,32 @@ export const ColorFill_Path_List_Data = [
     }
 ]
 
+export const ColorFill_Color_List_Data = [
+    {
+        id: 1,
+        title: '基础颜色',
+        colors: [
+            {
+                id: 1,
+                name: '#01',
+                value: '#fff'
+            },
+            {
+                id: 2,
+                name: '#02',
+                value: '#000'
+            },
+            {
+                id: 3,
+                name: '#03',
+                value: 'pink'
+            },
+            {
+                id: 4,
+                name: '#04',
+                value: '#0000ff'
+            }
+        ]
+    }
+]
+

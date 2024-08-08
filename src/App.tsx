@@ -6,6 +6,7 @@ import './style/variable.scss';
 import { LandFlex, LandHeader, LandTitle } from "@suminhan/land-design";
 import styled from "styled-components";
 import {
+  ColorFill_Path_List_Data,
   Crochet_Course_Data,
   QC_List_Data,
   TJ_List_Data,
@@ -84,7 +85,7 @@ function App() {
       {curPage === 12 && <CardList data={QC_List_Data} />}
 
       {curPage === 21 && <ImgColorPicker />}
-      {curPage === 22 && <ColorFill />}
+      {curPage === 22 && <ColorFill pathData={ColorFill_Path_List_Data} />}
 
       {curPage === 31 && <CardList data={TJ_List_Data} />}
     </StyledLayout>
@@ -92,19 +93,22 @@ function App() {
 }
 
 const StyledLayout = styled(LandFlex)`
-  @media screen and (max-width:800px) {
+  .land-menu {
+    z-index: 1000;
+  }
+  @media screen and (max-width: 800px) {
     .land-header .land-header-logo .land-title,
-    .land-header .land-header-logo .land-divider{
+    .land-header .land-header-logo .land-divider {
       display: none;
     }
     .land-menu-drop-wrap.open .land-menu-drop {
-    padding: 0;
-    .land-menu{
-      position: static;
-      border: none;
       padding: 0;
+      .land-menu {
+        position: static;
+        border: none;
+        padding: 0;
+      }
     }
   }
-  }
-`
+`;
 export default App
