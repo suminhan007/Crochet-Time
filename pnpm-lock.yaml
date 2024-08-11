@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@suminhan/land-design':
-    specifier: ^0.0.39
-    version: 0.0.39(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.40
+    version: 0.0.40(react-dom@18.2.0)(react@18.2.0)
   html2canvas:
     specifier: ^1.4.1
     version: 1.4.1
@@ -728,8 +728,8 @@ packages:
     dev: true
     optional: true
 
-  /@suminhan/land-design@0.0.39(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-7aD0j/Xlof5m1835QP3lQCJYvUKhBZpxAHnVOwOyzo1C8MoDMRajQ4eGCNaA7J349R5thXA+9fHRRhUra1M/5g==}
+  /@suminhan/land-design@0.0.40(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-k0KXxs819/+y+HOJ1wLWHtWkxncyvg1OLSK4s85X5rLZuDFJu4fySck2qRTomAMeFjC/fI6lqUVa7O1Lk4BX3g==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
