@@ -118,10 +118,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
         ))}
       </LandFlex>
       {/* 颜色 */}
-      <LandFlex
-        className="flex-1 flex flex-column"
-        style={{ overflow: "auto" }}
-      >
+      <LandFlex className="flex-1 flex column" style={{ overflow: "auto" }}>
         {ColorFill_Color_List_Data.map((item) => (
           <LandFlex key={item.id} column gap={12}>
             <LandTitle
@@ -129,10 +126,11 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
               type="h3"
               style={{ margin: "0 auto" }}
             />
-            <LandGrid
-              type={gridType.ColumnFit}
-              autoSize={48}
-              className="width-100"
+            <div
+              className="grid width-100"
+              style={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(48px,1fr))",
+              }}
             >
               {item.colors?.map((c) => (
                 <div
@@ -146,7 +144,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                   {c.name}
                 </div>
               ))}
-            </LandGrid>
+            </div>
           </LandFlex>
         ))}
       </LandFlex>

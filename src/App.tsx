@@ -4,7 +4,6 @@ import './style/atomic.scss';
 import './style/reset.scss';
 import './style/variable.scss';
 import { LandFlex, LandHeader, LandTitle } from "@suminhan/land-design";
-import styled from "styled-components";
 import {
   ColorFill_Path_List_Data,
   Crochet_Course_Data,
@@ -22,7 +21,7 @@ function App() {
   const [curType, setCurType] = useState<number | string>(22);
   const [curPage, setCurPage] = useState<number | string>(22);
   return (
-    <StyledLayout column className="height-100">
+    <LandFlex column className="height-100">
       <LandHeader
         name={<LandTitle title="Crochet Time" />}
         logo={<IconCTLogo />}
@@ -88,31 +87,8 @@ function App() {
       {curPage === 22 && <ColorFill pathData={ColorFill_Path_List_Data} />}
 
       {curPage === 31 && <CardList data={TJ_List_Data} />}
-    </StyledLayout>
+    </LandFlex>
   );
 }
 
-const StyledLayout = styled(LandFlex)`
-  .land-menu {
-    z-index: 1000;
-  }
-  @media screen and (max-width: 800px) {
-    .land-header .land-header-logo .land-title,
-    .land-header .land-header-logo .land-divider {
-      display: none;
-    }
-    .land-menu-drop-wrap.open .land-menu-drop {
-      padding: 0;
-      .land-menu {
-        position: static;
-        border: none;
-        padding: 0;
-        pointer-events: none;
-      }
-    }
-    .land-header-nav.jMaKte .land-menu {
-      pointer-events: all;
-    }
-  }
-`;
 export default App

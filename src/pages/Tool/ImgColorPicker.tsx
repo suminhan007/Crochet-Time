@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 import {
   Icon,
   LandAutoMedia,
@@ -9,6 +9,7 @@ import {
   LandFlex,
   LandInput,
   LandMessage,
+  LandNumberInput,
   LandPop,
   LandSelect,
   LandTitle,
@@ -178,12 +179,15 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
     const img = new Image();
     img.src = url;
     img.onload = () => {
-      const mainColors = getTopColors(img)?.map((itm) => {
-        return {
-          id: itm[0] + itm[1] + itm[2],
-          value: `#${tinycolor(`rgb(${itm[0]},${itm[1]},${itm[2]})`).toHex()}`,
-        };
-      });
+      const mainColors =
+        getTopColors(img)?.map((itm) => {
+          return {
+            id: itm[0] + itm[1] + itm[2],
+            value: `#${tinycolor(
+              `rgb(${itm[0]},${itm[1]},${itm[2]})`
+            ).toHex()}`,
+          };
+        }) ?? [];
       setColorArr(mainColors);
     };
   };
@@ -241,12 +245,11 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                   }}
                   pop="勾选后将自动过滤饱和度或纯度低于 10 的颜色<br/>支持输入自定义过滤范围（≤35）"
                 />
-                <LandInput
-                  type="number"
+                <LandNumberInput
                   max={35}
                   min={0}
                   step={5}
-                  value={String(filter)}
+                  value={filter}
                   onChange={(val) => setFilter(Number(val))}
                 />
               </div>
@@ -254,13 +257,13 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                 title="数量"
                 width={124}
                 data={[
-                  { id: "1", value: "4" },
-                  { id: "2", value: "6" },
-                  { id: "3", value: "8" },
+                  { value: "1", label: "4" },
+                  { value: "2", label: "6" },
+                  { value: "3", label: "8" },
                 ]}
                 selected="2"
                 onChange={(item) => {
-                  setColorNum(Number(item.value));
+                  setColorNum(Number(item.label));
                 }}
               />
             </div>
@@ -289,7 +292,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                   key={index0}
                   className="flex column relative justify-center gap-4 disabled"
                 >
-                  <LandColorPicker value={item0.value} showDrop={false} />
+                  <LandColorPicker value={item0.value} showList={false} />
                 </StyleColorItem>
               ))
             : colorArr?.map((item: any, index: number) => (
@@ -300,7 +303,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                   >
                     <LandColorPicker
                       value={item.value}
-                      showDrop={false}
+                      showList={false}
                       onChange={(color) => {
                         const newColorArr = colorArr.map((itm) => {
                           return {
@@ -327,11 +330,17 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
             </StyleAddColorBtn>
           )}
         </div>
-      </div>
-      {/* <Message text={toastText} show={toast} /> */}
-      {/* </Flex> */}
+      </div>;
+      {
+        /* <Message text={toastText} show={toast} /> */
+      }
+      {
+        /* </Flex> */
+      }
 
-      {/* 色卡 */}
+      {
+        /* 色卡 */
+      }
       <LandFlex column gap={8}>
         <LandTitle title="Step 03: 下载 & 保存色卡" type="h3" />
         <LandTitle
@@ -339,124 +348,125 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
           type="p"
           className="color-gray-4"
         />
-      </LandFlex>
-      {colorArr?.length === 0 ? (
-        <StyleColorCardWrap
-          className="grid mx-32 gap-24 mb-24 disabled"
-          length={6}
-        >
-          {Array.from({ length: 6 }).map((_itm, index) => (
-            <div className="flex column items-center gap-12">
-              <StyleColorCardBox
-                className={`relative p-24 flex gap-4 width-100 border color-card card-${index} column`}
-                width={1000}
-                height={667}
-                ratio={1.5}
-              >
-                <div className="color-img">
-                  <img src={unitImg} />
-                </div>
-                <div className="color-list grid gap-4">
-                  {colorArr?.length === 0
-                    ? unitColorArr.map((itm0: any) => (
-                        <div className="color-item flex column items-center gap-4">
-                          <div
-                            key={itm0.id}
-                            style={{
-                              background: itm0.value,
-                            }}
-                            className="width-100 flex-1"
-                          ></div>
-                          <p>{itm0.value}</p>
-                        </div>
-                      ))
-                    : colorArr.map((itm: any) => (
-                        <div className="color-item flex column items-center gap-4">
-                          <div
-                            key={itm.id}
-                            style={{
-                              background: itm.value,
-                            }}
-                            className="width-100 flex-1"
-                          ></div>
-                          <p>{itm.value}</p>
-                        </div>
-                      ))}
-                </div>
-              </StyleColorCardBox>
-              <LandButton
-                type="background"
-                className="width-100"
-                text="下载色卡"
-                icon={<Icon name="download" />}
-              />
-            </div>
-          ))}
-        </StyleColorCardWrap>
-      ) : (
-        <StyleColorCardWrap
-          className="grid mx-32 gap-24"
-          length={colorArr.length}
-        >
-          {Array.from({ length: 6 }).map((_itm, index) => (
-            <div className="flex column items-center gap-12">
-              <StyleColorCardBox
-                className={`relative p-24 flex gap-4 width-100 border color-card card-${index} ${
-                  size.ratio < 1 ? "" : "column"
-                }`}
-                width={size.w}
-                height={size.h}
-                ratio={size.ratio}
-              >
-                <div className="color-img">
-                  <img src={imgUrl} />
-                </div>
-                <div className="color-list grid gap-4">
-                  {colorArr.map((itm: any) => (
-                    <div className="color-item flex column items-center gap-4">
-                      <div
-                        key={itm.id}
-                        style={{
-                          background: itm.value,
-                        }}
-                        className="width-100 flex-1"
-                      ></div>
-                      <p>{itm.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </StyleColorCardBox>
-              <div className="width-100 flex gap-12">
-                <LandInput
-                  placeholder="自定义色卡名称"
-                  value={cardName[index]}
-                  onChange={(val) => {
-                    const newArr = cardName.map((n, i) => {
-                      if (i === index) {
-                        return val;
-                      } else {
-                        return n;
-                      }
-                    });
-                    setCardName(newArr);
-                  }}
-                  className="flex-1"
-                />
+      </LandFlex>;
+      {
+        colorArr?.length === 0 ? (
+          <StyleColorCardWrap
+            className="grid mx-32 gap-24 mb-24 disabled"
+            length={6}
+          >
+            {Array.from({ length: 6 }).map((_itm, index) => (
+              <div className="flex column items-center gap-12">
+                <StyleColorCardBox
+                  className={`relative p-24 flex gap-4 width-100 border color-card card-${index} column`}
+                  width={1000}
+                  height={667}
+                  ratio={1.5}
+                >
+                  <div className="color-img">
+                    <img src={unitImg} />
+                  </div>
+                  <div className="color-list grid gap-4">
+                    {colorArr?.length === 0
+                      ? unitColorArr.map((itm0: any) => (
+                          <div className="color-item flex column items-center gap-4">
+                            <div
+                              key={itm0.id}
+                              style={{
+                                background: itm0.value,
+                              }}
+                              className="width-100 flex-1"
+                            ></div>
+                            <p>{itm0.value}</p>
+                          </div>
+                        ))
+                      : colorArr.map((itm: any) => (
+                          <div className="color-item flex column items-center gap-4">
+                            <div
+                              key={itm.id}
+                              style={{
+                                background: itm.value,
+                              }}
+                              className="width-100 flex-1"
+                            ></div>
+                            <p>{itm.value}</p>
+                          </div>
+                        ))}
+                  </div>
+                </StyleColorCardBox>
                 <LandButton
                   type="background"
-                  className="flex-1"
+                  className="width-100"
                   text="下载色卡"
                   icon={<Icon name="download" />}
-                  onClick={() => {
-                    const card = document.querySelectorAll(".color-card");
-                    downloadHtmlAsImg(card[index], cardName[index], 4);
-                  }}
                 />
               </div>
-            </div>
-          ))}
-        </StyleColorCardWrap>
-      )}
+            ))}
+          </StyleColorCardWrap>
+        ) : (
+          <StyleColorCardWrap
+            className="grid mx-32 gap-24"
+            length={colorArr.length}
+          >
+            {Array.from({ length: 6 }).map((_itm, index) => (
+              <div className="flex column items-center gap-12">
+                <StyleColorCardBox
+                  className={`relative p-24 flex gap-4 width-100 border color-card card-${index} ${
+                    size.ratio < 1 ? "" : "column"
+                  }`}
+                  width={size.w}
+                  height={size.h}
+                  ratio={size.ratio}
+                >
+                  <div className="color-img">
+                    <img src={imgUrl} />
+                  </div>
+                  <div className="color-list grid gap-4">
+                    {colorArr.map((itm: any) => (
+                      <div className="color-item flex column items-center gap-4">
+                        <div
+                          key={itm.id}
+                          style={{
+                            background: itm.value,
+                          }}
+                          className="width-100 flex-1"
+                        ></div>
+                        <p>{itm.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </StyleColorCardBox>
+                <div className="width-100 flex gap-12">
+                  <LandInput
+                    placeholder="自定义色卡名称"
+                    value={cardName[index]}
+                    onChange={(val) => {
+                      const newArr = cardName.map((n, i) => {
+                        if (i === index) {
+                          return String(val);
+                        } else {
+                          return n;
+                        }
+                      });
+                      setCardName(newArr);
+                    }}
+                    className="flex-1"
+                  />
+                  <LandButton
+                    type="background"
+                    className="flex-1"
+                    text="下载色卡"
+                    icon={<Icon name="download" />}
+                    onClick={() => {
+                      const card = document.querySelectorAll(".color-card");
+                      downloadHtmlAsImg(card[index], cardName[index], 4);
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </StyleColorCardWrap> );
+      }
       <LandMessage show={toast} text={toastText} />
     </LandContent>
   );
