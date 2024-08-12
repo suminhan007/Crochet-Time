@@ -3,7 +3,7 @@ import {
   Icon,
   LandContent,
   LandFlex,
-  LandImg,
+  LandImage,
   LandMenu,
   LandTitle,
 } from "@suminhan/land-design";
@@ -80,7 +80,7 @@ const CourseList: React.FC<Props> = ({ data }) => {
             {curItm.imgList?.map((imgItm) => (
               <LandFlex column gap={8}>
                 <LandTitle title={imgItm.img_des} type="p" />
-                <LandImg src={imgItm.img_src} ratio={1} />
+                <LandImage src={imgItm.img_src} ratio={1} />
               </LandFlex>
             ))}
           </div>

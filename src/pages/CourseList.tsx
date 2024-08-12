@@ -80,17 +80,17 @@ export const StyledCourseMenu = styled.div`
   transform: translateX(-100%);
   width: 0;
   transition: all var(--transition-15) linear;
-  &.open{
+  &.open {
     width: 160px;
-    transform:translateX(0);
-    .toggle-arrow{
+    transform: translateX(0);
+    .toggle-arrow {
       right: 0;
     }
   }
-  .toggle-arrow{
+  .toggle-arrow {
     top: 50%;
-    right: -8px;
-    transform: translate(50%,-50%);
+    right: -12px;
+    transform: translate(50%, -50%);
     width: 24px;
     height: 48px;
     background-color: var(--color-bg-white);
@@ -98,6 +98,11 @@ export const StyledCourseMenu = styled.div`
     border: 1px solid var(--color-border-3);
     z-index: 1;
   }
-`
+  @media screen and (max-width: 800px) {
+    .land-menu-link {
+      font-size: 12px;
+    }
+  }
+`;
 export default CourseList;
 

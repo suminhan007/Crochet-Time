@@ -2,8 +2,8 @@ import {
   Icon,
   LandContent,
   LandFlex,
-  LandImg,
   LandTitle,
+  LandImage,
 } from "@suminhan/land-design";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyledCourseMenu } from "./CourseList";
@@ -36,20 +36,16 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
   return (
     <LandContent className="flex-1 flex width-100">
       <StyledCourseMenu className={`relative ${open ? "open" : ""}`}>
-        <div className="height-100 width-100 overflow-auto">
+        <div className="height-100 width-100 overflow-auto pb-24">
           <div className="flex column gap-12 px-12 py-24 height-100 width-100">
             {data?.map((item, index) => (
               <div
                 key={item.id ?? index}
-                className="flex column items-center justify-center gap-8 bg-gray radius-12 cursor-pointer"
+                className="flex column items-center justify-center gap-8 py-12 w-fit-content bg-gray radius-12 cursor-pointer"
                 style={{ aspectRatio: 1, flexShrink: 0 }}
                 onClick={() => setActiveItm(item.id)}
               >
-                <LandImg
-                  url={item.img}
-                  style={{ width: "64px" }}
-                  className="radius-8"
-                />
+                <LandImage url={item.img} width={64} className="radius-8" />
                 <div className="fs-14">{item.title}</div>
               </div>
             ))}
@@ -73,10 +69,10 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
           <LandTitle title={curItm.title} type="h2" />
           <LandFlex gap={12} className="p-12 bg-gray radius-8" w="100%">
             {curItm.img && (
-              <LandImg
+              <LandImage
                 url={curItm.img}
-                style={{ width: "50%" }}
-                className="radius-8"
+                width="50%"
+                className="radius-8 shrink-0"
               />
             )}
             {curItm.desc && (
@@ -89,7 +85,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
               {curItm.detailList?.map((imgItm: any) => (
                 <LandFlex column gap={8}>
                   <LandTitle title={imgItm.desc} type="p" />
-                  <LandImg url={imgItm.img} className="width-100 radius-8" />
+                  <LandImage url={imgItm.img} className="width-100 radius-8" />
                 </LandFlex>
               ))}
             </div>

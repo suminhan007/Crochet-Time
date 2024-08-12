@@ -6,6 +6,7 @@ import {
   LandFlex,
   LandGrid,
   LandTitle,
+  gridType,
 } from "@suminhan/land-design";
 import React, { useMemo, useState } from "react";
 import { ColorFill_Color_List_Data } from "../mock";
@@ -37,8 +38,22 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
     setColorList(resColorList);
   };
 
+  const isWhite = (value: string) => {
+    if (
+      value === "white" ||
+      value === "#fff" ||
+      value === "#FFF" ||
+      value === "#ffffff" ||
+      value === "#FFFFFF"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
-    <StyledLandContent className="flex-1 flex column items-start gap-32 p-24 width-100 overflow-auto">
+    <StyledLandContent className="flex-1 flex column items-start gap-32 p-24 width-100">
       <LandAffixContainer
         className="flex both-center width-100 ratio-1"
         content={
@@ -103,20 +118,33 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
         ))}
       </LandFlex>
       {/* 颜色 */}
-      <LandFlex className="flex-1 overflow-auto">
+      <LandFlex
+        className="flex-1 flex flex-column"
+        style={{ overflow: "auto" }}
+      >
         {ColorFill_Color_List_Data.map((item) => (
           <LandFlex key={item.id} column gap={12}>
-            <LandTitle title={item.title} type="h3" />
-            <LandGrid type="column-repeat" repeatNum={5}>
+            <LandTitle
+              title={item.title}
+              type="h3"
+              style={{ margin: "0 auto" }}
+            />
+            <LandGrid
+              type={gridType.ColumnFit}
+              autoSize={48}
+              className="width-100"
+            >
               {item.colors?.map((c) => (
-                <StyledColorItem
+                <div
                   key={c.id}
-                  className="flex items-center justify-center fs-8 color-white border radius-50 border"
+                  className={`flex items-center justify-center fs-8 color-white border radius-50 ratio-1 ${
+                    isWhite(c.value) ? "border" : ""
+                  }`}
                   style={{ backgroundColor: c.value }}
                   onClick={() => handleColorClick?.(c.value)}
                 >
                   {c.name}
-                </StyledColorItem>
+                </div>
               ))}
             </LandGrid>
           </LandFlex>
@@ -127,13 +155,10 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
 };
 
 const StyledLandContent = styled(LandContent)`
+  overflow: auto;
   @media screen and (max-width: 800px) {
     gap: 16px;
   }
 `;
 
-const StyledColorItem = styled.div`
-  width: 48px;
-  height: 48px;
-`;
 export default ColorFill;

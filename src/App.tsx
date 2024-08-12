@@ -107,7 +107,11 @@ const StyledLayout = styled(LandFlex)`
         position: static;
         border: none;
         padding: 0;
+        pointer-events: none;
       }
+    }
+    .land-header-nav.jMaKte .land-menu {
+      pointer-events: all;
     }
   }
 `;

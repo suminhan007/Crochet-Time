@@ -190,7 +190,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
   //  自定义色卡名称
   const [cardName, setCardName] = useState<string[]>(["", "", "", "", "", ""]);
   return (
-    <LandContent className="flex-1 flex column items-start gap-32 px-24 pt-32 pb-24 width-100 overflow-auto">
+    <LandContent className="flex-1 flex column items-start gap-32 px-24 pt-32 pb-24 width-100">
       {/* 上传框 */}
       <LandFlex column gap={24}>
         <PageTitle
