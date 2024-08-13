@@ -3,7 +3,7 @@ import './App.css';
 import './style/atomic.scss';
 import './style/reset.scss';
 import './style/variable.scss';
-import { LandFlex, LandHeader, LandTitle } from "@suminhan/land-design";
+import { LandFlex, LandHeader } from "@suminhan/land-design";
 import {
   ColorFill_Path_List_Data,
   Crochet_Course_Data,
@@ -23,7 +23,6 @@ function App() {
   return (
     <LandFlex column className="height-100">
       <LandHeader
-        name={<LandTitle title="Crochet Time" />}
         logo={<IconCTLogo />}
         menuProps={{
           data: [
@@ -75,6 +74,7 @@ function App() {
           },
         }}
         align="end"
+        className="relative"
       />
 
       {curPage === 1 && <CourseList data={Crochet_Course_Data} />}

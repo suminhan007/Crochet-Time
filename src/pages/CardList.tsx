@@ -1,12 +1,7 @@
-import {
-  Icon,
-  LandContent,
-  LandFlex,
-  LandTitle,
-  LandImage,
-} from "@suminhan/land-design";
+import { Icon, LandContent, LandFlex, LandTitle } from "@suminhan/land-design";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyledCourseMenu } from "./CourseList";
+import Image from "../components/Image";
 
 type Props = {
   data?: any[];
@@ -45,7 +40,11 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
                 style={{ aspectRatio: 1, flexShrink: 0 }}
                 onClick={() => setActiveItm(item.id)}
               >
-                <LandImage url={item.img} width={64} className="radius-8" />
+                <Image
+                  url={item.img}
+                  className="radius-8 overflow-hidden"
+                  imgStyle={{ width: "64px" }}
+                />
                 <div className="fs-14">{item.title}</div>
               </div>
             ))}
@@ -69,10 +68,10 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
           <LandTitle title={curItm.title} type="h2" />
           <LandFlex gap={12} className="p-12 bg-gray radius-8" w="100%">
             {curItm.img && (
-              <LandImage
+              <Image
                 url={curItm.img}
-                width="50%"
-                className="radius-8 shrink-0"
+                imgStyle={{ width: "100%" }}
+                className="width-50 radius-8 shrink-0"
               />
             )}
             {curItm.desc && (
@@ -84,8 +83,14 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
             <div className="flex column gap-12">
               {curItm.detailList?.map((imgItm: any) => (
                 <LandFlex column gap={8}>
-                  <LandTitle title={imgItm.desc} type="p" />
-                  <LandImage url={imgItm.img} className="width-100 radius-8" />
+                  {imgItm.desc && <LandTitle title={imgItm.desc} type="p" />}
+                  {imgItm.img && (
+                    <Image
+                      url={imgItm.img}
+                      imgStyle={{ width: "100%" }}
+                      className="width-100 radius-8 overflow-hidden"
+                    />
+                  )}
                 </LandFlex>
               ))}
             </div>

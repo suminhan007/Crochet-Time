@@ -26,6 +26,11 @@
 .none {
     display: none;
 }
+.absolute-center{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
 
 //布局
 .flex {
@@ -389,6 +394,9 @@
 //大小
 .width-100 {
     width: 100%;
+}
+.width-50 {
+    width: 50%;
 }
 .height-100 {
     height: 100%;

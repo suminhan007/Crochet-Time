@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { downloadHtmlAsImg } from "../../utils";
 
 type Props = {
-  pathData?: { id: number; img: string; path: string[]; numPath: string[] }[];
+  pathData?: { id: number; img: string; path: string[] }[];
 };
 const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
   /** 当前选中的样式 */
@@ -94,13 +94,6 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
               }}
             />
           ))}
-          {currentSvg.numPath?.map((item2, index2) => (
-            <>
-              {colorList[index2] === "var(--color-bg-3)" && (
-                <path key={index2} d={item2} fill="white" />
-              )}
-            </>
-          ))}
         </svg>
       </LandAffixContainer>
       {/* 样式 */}
@@ -118,16 +111,19 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
         ))}
       </LandFlex>
       {/* 颜色 */}
-      <LandFlex className="flex-1 flex column" style={{ overflow: "auto" }}>
+      <div
+        className="flex-1 flex column width-100"
+        style={{ overflow: "auto" }}
+      >
         {ColorFill_Color_List_Data.map((item) => (
-          <LandFlex key={item.id} column gap={12}>
+          <LandFlex key={item.id} column>
             <LandTitle
               title={item.title}
               type="h3"
-              style={{ margin: "0 auto" }}
+              style={{ margin: "24px auto" }}
             />
             <div
-              className="grid width-100"
+              className="grid width-100 gap-8"
               style={{
                 gridTemplateColumns: "repeat(auto-fit, minmax(48px,1fr))",
               }}
@@ -147,7 +143,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
             </div>
           </LandFlex>
         ))}
-      </LandFlex>
+      </div>
     </StyledLandContent>
   );
 };

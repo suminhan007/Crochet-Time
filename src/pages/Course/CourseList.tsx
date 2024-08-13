@@ -66,10 +66,7 @@ const CourseList: React.FC<Props> = ({ data }) => {
           className="toggle-arrow absolute flex items-center justify-center border cursor-pointer"
           onClick={() => setOpen(!open)}
         >
-          <Icon
-            name="arrow"
-            className={`${open ? "rotate-90" : "-rotate-90"}`}
-          />
+          <Icon name="arrow" />
         </div>
       </StyledCourseMenu>
       <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
@@ -99,11 +96,14 @@ const StyledCourseMenu = styled.div`
     transform: translateX(0);
     .toggle-arrow {
       right: 0;
+      svg {
+        transform: rotate(90deg);
+      }
     }
   }
   .toggle-arrow {
     top: 50%;
-    right: -8px;
+    right: -6px;
     transform: translate(50%, -50%);
     width: 24px;
     height: 48px;
@@ -111,6 +111,10 @@ const StyledCourseMenu = styled.div`
     border-radius: 12px;
     border: 1px solid var(--color-border-3);
     z-index: 1;
+    transition: transform var(--transition-15) linear;
+    svg {
+      transform: rotate(-90deg) translateY(4px);
+    }
   }
 `;
 export default CourseList;
