@@ -53,9 +53,8 @@ const Image: React.FC<ImageProps> = ({
   }, []);
   return (
     <div
-      className={`relative flex items-center justify-center ${
-        imgLoading || loadDefaultImg ? "bg-gray radius-6 overflow-hidden" : ""
-      } ${className}`}
+      className={`relative flex items-center justify-center ${imgLoading || loadDefaultImg ? "bg-gray radius-6 overflow-hidden" : ""
+        } ${className}`}
       style={{
         aspectRatio: imgLoading || loadDefaultImg ? `${ratio}` : "auto",
         ...style,
@@ -73,6 +72,7 @@ const Image: React.FC<ImageProps> = ({
       ) : (
         <img
           src={url}
+          alt=""
           className={imgClassName}
           style={{ zIndex: "1", ...imgStyle }}
         />

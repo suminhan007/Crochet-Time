@@ -1,12 +1,10 @@
-// @ts-nocheck
+//@ts-nocheck
 import {
   Icon,
   LandAffixContainer,
   LandContent,
   LandFlex,
-  LandGrid,
   LandTitle,
-  gridType,
 } from "@suminhan/land-design";
 import React, { useMemo, useState } from "react";
 import { ColorFill_Color_List_Data } from "../mock";
@@ -18,7 +16,7 @@ type Props = {
 };
 const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
   /** 当前选中的样式 */
-  const [currentSvgId, setCurrentSvgId] = useState<number>(1);
+  const [currentSvgId, setCurrentSvgId] = useState<number>(0);
   const currentSvg = useMemo(
     () => pathData.filter((itm) => itm.id === currentSvgId)[0],
     [currentSvgId]
@@ -63,6 +61,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
             stroke="var(--color-text-4)"
             onClick={() => {
               const node = document.querySelector(".colorFill-svg");
+              console.log(node);
+
               downloadHtmlAsImg(node, `crochet-time-color-fill-res`);
             }}
           />
@@ -85,7 +85,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
               d={item}
               fill={colorList[index] || "var(--color-bg-3)"}
               stroke={
-                index + 1 === currentPathId ? "var(--color-primary-6)" : "white"
+                index + 1 === currentPathId ? "var(--color-text-3)" : colorList[index] ?? "white"
               }
               className="transition-15"
               onClick={(e: React.UIEvent) => {
@@ -131,9 +131,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
               {item.colors?.map((c) => (
                 <div
                   key={c.id}
-                  className={`flex items-center justify-center fs-8 color-white border radius-50 ratio-1 ${
-                    isWhite(c.value) ? "border" : ""
-                  }`}
+                  className={`flex items-center justify-center fs-8 color-white border radius-50 ratio-1 ${isWhite(c.value) ? "border" : ""
+                    }`}
                   style={{ backgroundColor: c.value }}
                   onClick={() => handleColorClick?.(c.value)}
                 >

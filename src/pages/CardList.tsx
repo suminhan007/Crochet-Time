@@ -45,7 +45,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
                   className="radius-8 overflow-hidden"
                   imgStyle={{ width: "64px" }}
                 />
-                <div className="fs-14">{item.title}</div>
+                <div className="fs-14 color-gray-3">{item.title}</div>
               </div>
             ))}
           </div>

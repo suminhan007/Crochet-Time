@@ -16,13 +16,14 @@ import CardList from "./pages/CardList";
 import CourseList from "./pages/CourseList";
 import ColorFill from "./pages/Tool/ColorFill";
 import ImgColorPicker from "./pages/Tool/ImgColorPicker";
+import styled from 'styled-components';
 
 function App() {
   const [curType, setCurType] = useState<number | string>(22);
   const [curPage, setCurPage] = useState<number | string>(22);
   return (
     <LandFlex column className="height-100">
-      <LandHeader
+      <StyledLandHeader
         logo={<IconCTLogo />}
         menuProps={{
           data: [
@@ -91,4 +92,30 @@ function App() {
   );
 }
 
-export default App
+const StyledLandHeader = styled(LandHeader)`
+  @media screen and (max-width: 800px){
+    .land-menu{
+      display: none;
+    }
+    .jdrwKk .land-menu{
+      display: flex;
+    }
+    /* .ixqGrc .land-menu-drop-wrap.open .land-menu-link{
+      padding-left: 12px;
+    }
+    .land-menu,
+    .land-menu-drop-wrap,
+    .land-menu-link {
+      pointer-events: none;
+    }
+    .jdrwKk{
+      .land-menu,
+      .land-menu-drop-wrap,
+    .land-menu-link {
+      pointer-events: all;
+    }
+    } */
+  }
+`
+export default App;
+
