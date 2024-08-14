@@ -17,18 +17,25 @@ import CardList from "./pages/CardList";
 import CourseList from "./pages/CourseList";
 import ColorFill from "./pages/Tool/ColorFill";
 import ImgColorPicker from "./pages/Tool/ImgColorPicker";
-import styled from 'styled-components';
-import PixelDrawer from './pages/Tool/PixelDrawer';
+import styled from "styled-components";
+import PixelDrawer from "./pages/Tool/PixelDrawer";
 
 function App() {
   const [curType, setCurType] = useState<number | string>(22);
   const [curPage, setCurPage] = useState<number | string>(22);
   const [navData, setNavData] = useState<any[]>(Nav_Data);
   useEffect(() => {
-    const wrap = document.querySelector('#root') || document.body;
+    const wrap = document.querySelector("#root") || document.body;
     const rect = wrap.getBoundingClientRect();
     if (rect.width > 800) {
-      setNavData(Nav_Data.map(itm => ({ key: itm.key, title: itm.title, dropData: itm.dropData, open: false })));
+      setNavData(
+        Nav_Data.map((itm) => ({
+          key: itm.key,
+          title: itm.title,
+          dropData: itm.dropData,
+          open: false,
+        }))
+      );
     } else {
       setNavData(Nav_Data);
     }
@@ -77,14 +84,17 @@ function App() {
 }
 
 const StyledLandHeader = styled(LandHeader)`
-  @media screen and (max-width: 800px){
-    .land-menu{
+  &.kjXciE {
+    z-index: 100;
+  }
+  @media screen and (max-width: 800px) {
+    .land-menu {
       display: none;
     }
-    .jdrwKk .land-menu{
+    .jdrwKk .land-menu {
       display: flex;
     }
   }
-`
+`;
 export default App;
 

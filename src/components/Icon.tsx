@@ -5,6 +5,7 @@ type Props = {
   size?: number;
   style?: CSSProperties;
   className?: string;
+  onClick?: () => void;
 };
 export const IconCTLogo: React.FC<Props> = ({ style, className = "" }) => (
   <svg
@@ -223,3 +224,26 @@ export const IconColorPicker: React.FC<Props> = ({
     </svg>
   );
 };
+
+export const IconDec: React.FC<Props> = ({
+  size = 16,
+  fill = "currentColor",
+  onClick,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    onClick={onClick}
+  >
+    <path
+      d="M10.5 24L38.5 24"
+      stroke={fill}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

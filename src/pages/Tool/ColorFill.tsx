@@ -2,11 +2,12 @@
 import {
   Icon,
   LandAffixContainer,
+  LandButton,
   LandContent,
   LandFlex,
   LandTitle,
 } from "@suminhan/land-design";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { ColorFill_Color_List_Data } from "../mock";
 import styled from "styled-components";
 import { downloadHtmlAsImg } from "../../utils";
@@ -16,17 +17,15 @@ type Props = {
 };
 const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
   /** 当前选中的样式 */
-  const [currentSvgId, setCurrentSvgId] = useState<number>(0);
+  const [currentSvgId, setCurrentSvgId] = useState<number>(1);
   const currentSvg = useMemo(
     () => pathData.filter((itm) => itm.id === currentSvgId)[0],
     [currentSvgId]
   );
   /** 当前选中的path */
-  const [currentPathId, setCurrentPathId] = useState<number>(1);
+  const [currentPathId, setCurrentPathId] = useState<number>(0);
   const [colorList, setColorList] = useState<string[]>(
-    Array.from({ length: currentSvg.path?.length }).map(
-      () => "var(--color-bg-3)"
-    )
+    Array.from({ length: currentSvg.path?.length }).map(() => "#DDDDDD")
   );
   /** 选择颜色 */
   const handleColorClick = (color: string) => {
@@ -49,90 +48,109 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
       return false;
     }
   };
-
+  const colorFillRef = useRef<HTMLOrSVGElement>(null);
   return (
-    <StyledLandContent className="flex-1 flex column items-start gap-32 p-24 width-100">
-      <LandAffixContainer
-        className="flex both-center width-100 ratio-1"
-        content={
-          <Icon
-            name="download"
-            size={32}
-            stroke="var(--color-text-4)"
-            onClick={() => {
-              const node = document.querySelector(".colorFill-svg");
-              console.log(node);
-
-              downloadHtmlAsImg(node, `crochet-time-color-fill-res`);
-            }}
-          />
-        }
-        placement="rb"
-        gap={12}
-      >
-        <svg
-          width="100%"
-          viewBox="0 0 220 220"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="colorFill-svg radius-8"
-          onClick={() => setCurrentPathId(0)}
-        >
-          <rect width="220" height="220" fill="var(--color-bg-1)" />
-          {currentSvg.path?.map((item, index) => (
-            <path
-              key={index}
-              d={item}
-              fill={colorList[index] || "var(--color-bg-3)"}
-              stroke={
-                index + 1 === currentPathId ? "var(--color-text-3)" : colorList[index] ?? "white"
-              }
-              className="transition-15"
-              onClick={(e: React.UIEvent) => {
-                e.stopPropagation();
-                setCurrentPathId(index + 1);
-              }}
-            />
-          ))}
-        </svg>
-      </LandAffixContainer>
-      {/* 样式 */}
-      <LandFlex>
-        {pathData.map((item3, index3) => (
+    <StyledLandContent className="flex-1 flex column items-start gap-32 pt-24 px-16 width-100">
+      <div className="flex column items-center gap-12 width-100">
+        <div className="relative flex gap-12">
+          {/* 样式 */}
           <div
-            key={index3}
+            className="flex column gap-8 height-100 scrollbar-none"
+            style={{ width: "72px" }}
+          >
+            {pathData.map((item3, index3) => (
+              <div
+                key={index3}
+                onClick={() => {
+                  setCurrentSvgId(item3.id);
+                  /** 是否清空colorList */
+                }}
+                className={`flex items-center justify-center radius-6 ratio-1 ${
+                  currentSvgId === item3.id ? "border-primary" : "border"
+                }`}
+                style={{ width: "72px" }}
+              >
+                <img src={item3.img} width={58} />
+              </div>
+            ))}
+          </div>
+          <div ref={colorFillRef} className="flex-1 ratio-1">
+            <svg
+              width="100%"
+              viewBox="0 0 220 220"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="radius-8 bg-gray"
+              onClick={() => setCurrentPathId(0)}
+            >
+              {currentSvg.path?.map((item, index) => (
+                <path
+                  key={index}
+                  d={item}
+                  fill={colorList[index] || "var(--color-bg-3)"}
+                  stroke={
+                    index + 1 === currentPathId
+                      ? "var(--color-text-3)"
+                      : colorList[index] !== "#DDDDDD"
+                      ? colorList[index]
+                      : "#EfEfEf"
+                  }
+                  className="transition"
+                  onClick={(e: React.UIEvent) => {
+                    e.stopPropagation();
+                    setCurrentPathId(index + 1);
+                  }}
+                />
+              ))}
+            </svg>
+          </div>
+          <div
+            className="absolute"
+            style={{ bottom: "12px", right: "12px" }}
             onClick={() => {
-              setCurrentSvgId(item3.id);
-              /** 是否清空colorList */
+              downloadHtmlAsImg(
+                colorFillRef.current,
+                `crochet-time-color-fill-res`,
+                3
+              );
             }}
           >
-            <img src={item3.img} width={100} />
+            <Icon name="download" stroke="var(--color-text-4)" size={20} />
           </div>
-        ))}
-      </LandFlex>
+        </div>
+      </div>
+
       {/* 颜色 */}
+      <StyledColorFillInput className="flex items-center justify-center fs-12 color-gray-2 width-100 border radius-8">
+        <input
+          type="color"
+          onChange={(e: any) => handleColorClick?.(e.target.value)}
+        />
+        自定义颜色
+      </StyledColorFillInput>
       <div
-        className="flex-1 flex column width-100"
+        className="flex-1 flex column width-100 pb-24"
         style={{ overflow: "auto" }}
       >
         {ColorFill_Color_List_Data.map((item) => (
           <LandFlex key={item.id} column>
             <LandTitle
-              title={item.title}
-              type="h3"
-              style={{ margin: "24px auto" }}
+              title={`【${item.title}】`}
+              type="p"
+              style={{ margin: "12px auto" }}
             />
             <div
               className="grid width-100 gap-8"
               style={{
-                gridTemplateColumns: "repeat(auto-fit, minmax(48px,1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(36px,1fr))",
               }}
             >
               {item.colors?.map((c) => (
                 <div
                   key={c.id}
-                  className={`flex items-center justify-center fs-8 color-white border radius-50 ratio-1 ${isWhite(c.value) ? "border" : ""
-                    }`}
+                  className={`flex items-center justify-center fs-12 color-white border radius-50 ratio-1 ${
+                    isWhite(c.value) ? "border" : ""
+                  }`}
                   style={{ backgroundColor: c.value }}
                   onClick={() => handleColorClick?.(c.value)}
                 >
@@ -154,4 +172,12 @@ const StyledLandContent = styled(LandContent)`
   }
 `;
 
+const StyledColorFillInput = styled.label`
+  height: 36px;
+  input {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+  }
+`;
 export default ColorFill;

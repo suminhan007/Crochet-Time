@@ -5,12 +5,10 @@ import styled from 'styled-components'
 type Props = {
   data?: any[];
 }
-const CourseList: React.FC<Props> = ({
-  data = []
-}) => {
+const CourseList: React.FC<Props> = ({ data = [] }) => {
   const [open, setOpen] = useState<boolean>(true);
-  const [activeCap, setActiveCap] = useState<number | string>('0');
-  const [activeItm, setActiveItm] = useState<number | string>('1');
+  const [activeCap, setActiveCap] = useState<number | string>("0");
+  const [activeItm, setActiveItm] = useState<number | string>("1");
 
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => {
@@ -18,44 +16,66 @@ const CourseList: React.FC<Props> = ({
       for (let entry of entries) {
         if (entry.contentRect.width <= 800) {
           setMobile(true);
-        } else { setMobile(false) }
+        } else {
+          setMobile(false);
+        }
       }
-    })
+    });
     observer.observe(document.body);
     return () => {
       observer.disconnect();
-    }
+    };
   }, []);
 
   const curItm = useMemo(() => {
-    return data?.filter(itm => itm.cap_id === activeCap)[0].contentMenuList.filter((dropItm: any) => dropItm.id === activeItm)[0];
+    return data
+      ?.filter((itm) => itm.cap_id === activeCap)[0]
+      .contentMenuList.filter((dropItm: any) => dropItm.id === activeItm)[0];
   }, [activeItm, activeCap, data]);
   return (
     <LandContent className="flex-1 flex width-100">
-      <StyledCourseMenu className={`relative ${open ? 'open' : ''}`}>
+      <StyledCourseMenu className={`relative ${open ? "open" : ""}`}>
         <LandMenu
-          data={data?.map(itm => ({ key: itm.cap_id, title: itm.cap, dropData: itm.contentMenuList.map((dropItm: any) => ({ key: dropItm.id, title: dropItm.title })), open: true }))}
-          direction='column'
+          data={data?.map((itm) => ({
+            key: itm.cap_id,
+            title: itm.cap,
+            dropData: itm.contentMenuList.map((dropItm: any) => ({
+              key: dropItm.id,
+              title: dropItm.title,
+            })),
+            open: true,
+          }))}
+          direction="column"
           active={activeCap}
-          onChange={item => {
+          onChange={(item) => {
             setActiveCap(item.key);
-            setActiveItm(`${Number(item.key) * 10 + 1}`)
+            setActiveItm(`${Number(item.key) * 10 + 1}`);
           }}
           dropProps={{
-            direction: 'column',
+            direction: "column",
             active: activeItm,
           }}
           onDropChange={(dropItem, item) => {
             setActiveCap(item.key);
-            setActiveItm(dropItem.key)
+            setActiveItm(dropItem.key);
           }}
           theme={{
-            activeBg: 'var(--color-bg-3)',
-            lineColor: 'inherit'
+            activeBg: "var(--color-bg-3)",
+            lineColor: "inherit",
           }}
-          className='pt-24 height-100 border-right overflow-auto scrollbar-none'
+          className="pt-24 height-100 border-right overflow-auto scrollbar-none"
         />
-        {mobile && <div className='toggle-arrow absolute flex items-center jusity-center border' onClick={() => setOpen(!open)}><Icon name='arrow' className={`${open ? 'rotate-90' : '-rotate-90'}`} /></div>}
+        {mobile && (
+          <div
+            className="toggle-arrow absolute flex items-center jusity-center border"
+            onClick={() => setOpen(!open)}
+          >
+            <Icon
+              name="arrow"
+              className={`${open ? "rotate-90" : "-rotate-90"}`}
+            />
+          </div>
+        )}
       </StyledCourseMenu>
 
       <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
@@ -64,9 +84,9 @@ const CourseList: React.FC<Props> = ({
           <div className="flex column gap-12">
             {curItm.des && <LandTitle title={curItm.des} type="p" />}
             {curItm.imgList?.map((imgItm: any) => (
-              <LandFlex column gap={8}>
+              <LandFlex column gap={8} style={{ maxWidth: "400px" }}>
                 <LandTitle title={imgItm.img_des} type="p" />
-                <img src={imgItm.img_src} width='100%' />
+                <img src={imgItm.img_src} width="100%" />
               </LandFlex>
             ))}
           </div>
@@ -81,7 +101,7 @@ export const StyledCourseMenu = styled.div`
   width: 0;
   transition: all var(--transition-15) linear;
   &.open {
-    width: 120px;
+    width: 148px;
     transform: translateX(0);
     .toggle-arrow {
       right: 0;
