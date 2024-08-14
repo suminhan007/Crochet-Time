@@ -1,4 +1,35 @@
 
+export const Nav_Data = [
+  {
+    key: 11,
+    title: "基础知识",
+    open: true,
+    dropData: [
+      { key: 11, title: "线材" },
+      { key: 12, title: "器材" },
+    ],
+  },
+  {
+    key: 1,
+    title: "插图教程",
+    open: true,
+    dropData: [
+      { key: 1, title: "钩针" },
+      { key: 2, title: "棒针" },
+    ],
+  },
+  {
+    key: 21,
+    title: "工具",
+    open: true,
+    dropData: [
+      { key: 21, title: "取色" },
+      { key: 22, title: "配色" },
+    ],
+  },
+  { key: 31, title: "图解" },
+]
+
 export const Crochet_Course_Data = [
   {
     "cap_id": "0",

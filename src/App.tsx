@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import './style/atomic.scss';
 import './style/reset.scss';
@@ -7,6 +7,7 @@ import { LandFlex, LandHeader } from "@suminhan/land-design";
 import {
   ColorFill_Path_List_Data,
   Crochet_Course_Data,
+  Nav_Data,
   QC_List_Data,
   TJ_List_Data,
   XC_List_Data,
@@ -21,41 +22,22 @@ import styled from 'styled-components';
 function App() {
   const [curType, setCurType] = useState<number | string>(22);
   const [curPage, setCurPage] = useState<number | string>(22);
+  const [navData, setNavData] = useState<any[]>(Nav_Data);
+  useEffect(() => {
+    const wrap = document.querySelector('#root') || document.body;
+    const rect = wrap.getBoundingClientRect();
+    if (rect.width > 800) {
+      setNavData(Nav_Data.map(itm => ({ key: itm.key, title: itm.title, dropData: itm.dropData, open: false })));
+    } else {
+      setNavData(Nav_Data);
+    }
+  }, []);
   return (
     <LandFlex column className="height-100">
       <StyledLandHeader
         logo={<IconCTLogo />}
         menuProps={{
-          data: [
-            {
-              key: 11,
-              title: "基础知识",
-              open: true,
-              dropData: [
-                { key: 11, title: "线材" },
-                { key: 12, title: "器材" },
-              ],
-            },
-            {
-              key: 1,
-              title: "插图教程",
-              open: true,
-              dropData: [
-                { key: 1, title: "钩针" },
-                { key: 2, title: "棒针" },
-              ],
-            },
-            {
-              key: 21,
-              title: "工具",
-              open: true,
-              dropData: [
-                { key: 21, title: "取色" },
-                { key: 22, title: "配色" },
-              ],
-            },
-            { key: 31, title: "图解" },
-          ],
+          data: navData,
           active: curType,
           onChange: (item) => {
             setCurPage(item.key);
