@@ -20,14 +20,15 @@ export const Nav_Data = [
   },
   {
     key: 21,
-    title: "工具",
+    title: "辅助工具",
     open: true,
     dropData: [
       { key: 21, title: "取色" },
       { key: 22, title: "配色" },
+      { key: 23, title: "像素格" },
     ],
   },
-  { key: 31, title: "图解" },
+  { key: 31, title: "图解收录" },
 ]
 
 export const Crochet_Course_Data = [

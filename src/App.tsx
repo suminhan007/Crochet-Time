@@ -18,6 +18,7 @@ import CourseList from "./pages/CourseList";
 import ColorFill from "./pages/Tool/ColorFill";
 import ImgColorPicker from "./pages/Tool/ImgColorPicker";
 import styled from 'styled-components';
+import PixelDrawer from './pages/Tool/PixelDrawer';
 
 function App() {
   const [curType, setCurType] = useState<number | string>(22);
@@ -68,6 +69,7 @@ function App() {
 
       {curPage === 21 && <ImgColorPicker />}
       {curPage === 22 && <ColorFill pathData={ColorFill_Path_List_Data} />}
+      {curPage === 23 && <PixelDrawer />}
 
       {curPage === 31 && <CardList data={TJ_List_Data} />}
     </LandFlex>
@@ -82,21 +84,6 @@ const StyledLandHeader = styled(LandHeader)`
     .jdrwKk .land-menu{
       display: flex;
     }
-    /* .ixqGrc .land-menu-drop-wrap.open .land-menu-link{
-      padding-left: 12px;
-    }
-    .land-menu,
-    .land-menu-drop-wrap,
-    .land-menu-link {
-      pointer-events: none;
-    }
-    .jdrwKk{
-      .land-menu,
-      .land-menu-drop-wrap,
-    .land-menu-link {
-      pointer-events: all;
-    }
-    } */
   }
 `
 export default App;
