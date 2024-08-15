@@ -43,22 +43,22 @@ export const Crochet_Course_Data = [
         desc: "锁针常用于起针，也可以独立应用。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/dlOyrFmHhYjTuqM.png"
+            "img_src": "./images/crochet/szhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/MGZPTfFQgJBSl1q.png",
+            "img_src": "./images/crochet/szhen2.jpg",
             "img_des": "1、打一个活结并按图示持线"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/ZwP9ISDKYzb1fiR.png",
+            "img_src": "./images/crochet/szhen3.jpg",
             "img_des": "2、钩针穿入活结线圈内、绕线按箭头方向钩出（即为1个锁针）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/s1PDdfarAKcI36Q.png",
+            "img_src": "./images/crochet/szhen4.jpg",
             "img_des": "3、同理重复前面的动作再次绕线、继续钩织锁针（如图为5个锁针、最开始与最后钩针上的线圈不计入）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/GI6mCRxTYKFvebS.png",
+            "img_src": "./images/crochet/szhen5.jpg",
             "img_des": "4、提示：锁针起针方法中挑针的对象为锁针的里山（倒 n ch表示从倒数第n个里山开始起针、与引拔作用相同）"
           }
         ]
@@ -69,22 +69,22 @@ export const Crochet_Course_Data = [
         desc: "引拔针是一种过渡针法，常见于环形结构的织物，用于环钩结尾处。也可用于织片边缘，加上一圈引拔针后更加平整。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/jx8XTHlMsdVJUQ4.png"
+            "img_src": "./images/crochet/ybzhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/cfMk71RoUs3NlQm.png",
+            "img_src": "./images/crochet/ybzhen2.jpg",
             "img_des": "1、如图所示为短针环钩的结尾处"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/9q5TeODLgzYGAof.png",
+            "img_src": "./images/crochet/ybzhen3.jpg",
             "img_des": "2、将钩针从第一个针目穿过、绕线钩出、并按箭头方向直接从钩针上的线圈中钩出"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/EN59GXqoimYHwMZ.png",
+            "img_src": "./images/crochet/ybzhen4.jpg",
             "img_des": "3、拉紧即完成连接"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/tuM9S2WiRXr3lUs.png",
+            "img_src": "./images/crochet/ybzhen5.jpg",
             "img_des": "4、接着根据针法选择引拔的锁针高度、参考下图"
           }
         ]
@@ -95,27 +95,24 @@ export const Crochet_Course_Data = [
         desc: "短针是非常基础的针法，短针钩法为钩针穿入针目、绕线钩出、再次绕线从钩针上2个线圈中钩出。引拔时高度为1个锁针。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/2shOLI61PveoYd3.png"
+            "img_src": "./images/crochet/dzhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/OsHmBNxkLQIpC1l.png",
+            "img_src": "./images/crochet/dzhen2.jpg",
             "img_des": "1、按箭头方向穿过锁针里山（或其他针目）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/MJKrzTlD2UEmPj8.png",
+            "img_src": "./images/crochet/dzhen3.jpg",
             "img_des": "2、绕线钩出、此时钩针上有2个线圈、再次绕线从两个线圈中钩出，即完成1个短针"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/o7iNOuqAgHc4Wmy.png",
+            "img_src": "./images/crochet/dzhen4.jpg",
             "img_des": "3、同理重复前面的动作、穿过下一个里山、继续钩织短针"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/D7BPxNS1wvnpZr3.png",
+            "img_src": "./images/crochet/dzhen5.jpg",
             "img_des": "4、如图为钩织3个短针、接下来按照图解继续完成钩织"
           },
-          // {
-          //     "img_src": "https://suumhan007.oss-cn-hangzhou.aliyuncs.com/gif/dz.gif"
-          // }
         ]
       },
       {
@@ -124,23 +121,21 @@ export const Crochet_Course_Data = [
         desc: "中长针在入针目前绕线1圈、每次绕线从钩针上3个线圈中一次性钩出。引拔时高度等于2个锁针。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/1FHcSlgUrZhWbwE.png"
+            "img_src": "./images/crochet/zczhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/hR9mj1DaiecFKp7.png",
+            "img_src": "./images/crochet/zczhen2.jpg",
             "img_des": "1、绕线、按箭头方向穿过锁针里山（或其他针目）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/6tQAPwGxhJVBkg3.png",
+            "img_src": "./images/crochet/zczhen3.jpg",
             "img_des": "2、绕线钩出、此时钩针上有3个线圈、再次绕线从3个线圈中一次性钩出，即完成1个中长针"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/rOL6mqF3fxiSeGT.png",
+            "img_src": "./images/crochet/zczhen4.jpg",
             "img_des": "3、同理重复前面的动作、穿过下一个里山、继续钩织中长针"
           },
-          // {
-          //     "img_src": "https://suumhan007.oss-cn-hangzhou.aliyuncs.com/gif/zcz.gif"
-          // }
+
         ]
       },
       {
@@ -149,26 +144,23 @@ export const Crochet_Course_Data = [
         desc: "长针在入针目前绕线1圈、每次绕线从前2个线圈中钩出。引拔时高度等于3个锁针。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/IY9TJOPHprkCgFc.png"
+            "img_src": "./images/crochet/czhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/OQZrax93htPWbUK.png",
+            "img_src": "./images/crochet/czhen2.jpg",
             "img_des": "1、绕线、按箭头方向穿过锁针里山（或其他针目）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/2E4Vgixfy6Q1GH9.png",
+            "img_src": "./images/crochet/czhen3.jpg",
             "img_des": "2、绕线钩出、此时钩针上有3个线圈、再次绕线从前2个线圈中钩出、此时钩针上还有2个线圈"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/UvhdzuosPqiaHXw.png"
+            "img_src": "./images/crochet/czhen4.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/oiBOIWljCzwvN6J.png",
+            "img_src": "./images/crochet/czhen5.jpg",
             "img_des": "3、绕线从这2个线圈中钩出，即完成一个长针"
           },
-          // {
-          //     "img_src": "https://suumhan007.oss-cn-hangzhou.aliyuncs.com/gif/cz.gif"
-          // }
         ]
       },
       {
@@ -177,29 +169,26 @@ export const Crochet_Course_Data = [
         desc: "长长针即在入针目前绕线2圈、每次绕线从前2个线圈中钩出。引拔时高度等于4个锁针。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/TcHaDG27dUEqs1K.png"
+            "img_src": "./images/crochet/cczhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/bNEBqwdrRiPAxcX.png",
+            "img_src": "./images/crochet/cczhen2.jpg",
             "img_des": "1、如图所示在钩针上绕线3圈后穿入针目"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/bhptxHfsvAaVLBe.png",
+            "img_src": "./images/crochet/cczhen3.jpg",
             "img_des": "2、绕线钩出、此时钩针上有5个线圈绕线每次从前2个线圈中钩出"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/6lNJcryYhCKzQg8.png"
+            "img_src": "./images/crochet/cczhen4.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/lsP3AHnpkXOfELy.png"
+            "img_src": "./images/crochet/cczhen5.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/CPwesp4UcjndfoH.png",
+            "img_src": "./images/crochet/cczhen6.jpg",
             "img_des": "3、钩针上只有一个线圈时即完成一个三卷长针"
           },
-          // {
-          //     "img_src": "https://suumhan007.oss-cn-hangzhou.aliyuncs.com/gif/ccz.gif"
-          // }
         ]
       },
       {
@@ -208,7 +197,7 @@ export const Crochet_Course_Data = [
         desc: "N卷长针即在入针目前绕线N圈（长针绕线1圈、长长针绕线2圈）、穿入针目、绕线钩出、此时钩针上有N+2个线圈、绕线每次穿过2个线圈、直到钩针上只剩1个线圈即完成一个N卷长针。（钩法参考长针、此处不再演示）。\nN卷长针引拔时高度等于N个锁针。\nN卷长针常用于植物钩织。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/hM6dayTbrexlf2K.png"
+            "img_src": "./images/crochet/jczhen.jpg"
           }
         ]
       },
@@ -218,16 +207,16 @@ export const Crochet_Course_Data = [
         desc: "加针即在同一个针目中钩多针，一般情况下加针表示一个针目中钩2针（最常用）、其他加针数量需说明。以下图示为短针加针演示，其他针法类似。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/N7a6UdMw2zyF4kc.png"
+            "img_src": "./images/crochet/jiazhen.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/xpgMCzHYlr3JKSu.png",
+            "img_src": "./images/crochet/dzjvzhen1.jpg",
             "img_des": "1、如图所示在一个针目中已经钩好1个短针、下一针依然从同一针目入针"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/msNihQ7DjXg3voz.png",
+            "img_src": "./images/crochet/dzjvzhen2.jpg",
             "img_des": "2、在同一针目中钩2个短针即为短针加针。同理短针加3针即在同一针目中钩3个短针、以此类推"
-          }
+          },
         ]
       },
       {
@@ -237,64 +226,78 @@ export const Crochet_Course_Data = [
         "imgList": [
           {
             "img_des": "短针减针：",
-            "img_src": "https://s2.loli.net/2022/01/25/DAyWndjw23bkt7v.png"
+            "img_src": "./images/crochet/dzjazhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/MZVXQxb5yU9in7t.png",
+            "img_src": "./images/crochet/dzjazhen2.jpg",
             "img_des": "1、如图所示为短针的最后一步、此时不绕线钩出、钩针穿过下一个针目（不饶线直接穿入）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/dLWS4NmAjitsx6Z.png",
+            "img_src": "./images/crochet/dzjazhen3.jpg",
             "img_des": "2、穿过针目后绕线钩出、此时钩针上有3个线圈"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/ROE9csFB2xbwnyp.png",
+            "img_src": "./images/crochet/dzjazhen4.jpg",
             "img_des": "3、绕线从3个线圈中一次性钩出，即完成一个短针减针"
           },
           {
-            "img_des": "中长针减针：",
-            "img_src": "https://s2.loli.net/2022/01/25/mhi9ayTWpRcOE36.png"
+            "img_des": "短针减三针：",
+            "img_src": "./images/crochet/dzjmzhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/BDyIOq7sKSE9pgZ.png",
+            "img_src": "./images/crochet/dzjmzhen2.jpg",
+            "img_des": "1、如图所示为短针的最后一步、此时不绕线钩出、钩针穿过下一个针目（不饶线直接穿入）"
+          },
+          {
+            "img_src": "./images/crochet/dzjmzhen3.jpg",
+            "img_des": "2、穿过针目后绕线钩出、此时钩针上有3个线圈"
+          },
+          {
+            "img_src": "./images/crochet/dzjmzhen4.jpg",
+            "img_des": "3、继续穿过下一个针目后绕线钩出、此时钩针上有4个线圈"
+          },
+          {
+            "img_src": "./images/crochet/dzjmzhen5.jpg",
+            "img_des": "4、绕线从4个线圈中一次性钩出，即完成一个短针减三针"
+          },
+          {
+            "img_des": "中长针减针：",
+            "img_src": "./images/crochet/zczjtazhen1.jpg"
+          },
+          {
+            "img_src": "./images/crochet/zczjtazhen2.jpg",
             "img_des": "1、如图所示为中长针的最后一步。接下来钩针穿过下一个针目（不饶线直接穿入）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/vQ8atefw9xV7WkI.png",
+            "img_src": "./images/crochet/zczjtazhen3.jpg",
             "img_des": "2、穿过针目后绕线钩出、此时钩针上有4个线圈、绕线从前3个线圈中钩出"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/T9ELXWaHBztrcF3.png"
+            "img_src": "./images/crochet/zczjtazhen4.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/gBSCvHJWpPnRATK.png",
+            "img_src": "./images/crochet/zczjtazhen5.jpg",
             "img_des": "3、钩出后钩针上有2个线圈、绕线从这2个线圈中钩出，即完成一个中长针减针"
           },
           {
-            "img_src": "https://suumhan007.oss-cn-hangzhou.aliyuncs.com/gif/zczjianz.gif"
-          },
-          {
             "img_des": "长针减针：",
-            "img_src": "https://s2.loli.net/2022/01/25/ItS3Torw8LcUGji.png"
+            "img_src": "./images/crochet/czjfazhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/NWYPDVLufjBxUmZ.png",
+            "img_src": "./images/crochet/czjfazhen2.jpg",
             "img_des": "1、如图所示为长针的最后一步。接下来钩针穿过下一个针目（不饶线直接穿入）"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/og3vxXNVumds5j9.png",
+            "img_src": "./images/crochet/czjfazhen3.jpg",
             "img_des": "2、穿过后绕线钩出、此时钩针上有4个线圈"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/1cKbxvI2OXkPn3S.png",
+            "img_src": "./images/crochet/czjfazhen4.jpg",
             "img_des": "3、绕线从前2个线圈中钩出、相当于完成第二个半长针、此时钩针上有3个线圈"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/jCFLiwbVcQeTpRM.png",
+            "img_src": "./images/crochet/czjfazhen5.jpg",
             "img_des": "4、绕线从这3个线圈中一次性钩出，即完成一个长针减针"
-          },
-          {
-            "img_src": "https://suumhan007.oss-cn-hangzhou.aliyuncs.com/gif/czjianz.gif"
           },
           {
             "img_des": "长针、长长针、N卷长针的减针钩法类似(步骤总结)：\n1、停留在对应针法的最后一步（即未完成的N卷长针）、绕线（绕线圈数于对应针法一致、例如三卷长针绕三圈）穿入下一个针目\n2、绕线从针目中钩出、钩织第2个未完成的N卷长针\n3、减几针就钩织几个未完成的N卷长针、此时钩针上有N+1个线圈\n4、绕线从这些个线圈中一次性钩出"
@@ -307,10 +310,10 @@ export const Crochet_Course_Data = [
         desc: "内半针指织片反面一侧的针目、即手持织片时远离自己的一侧。内半针可钩织出’边线‘效果，常用于包袋不同面之间的过渡。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/UidtWPLcOak6Glm.png"
+            "img_src": "./images/crochet/nbzhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/9VYrljNEiOyZL8t.png",
+            "img_src": "./images/crochet/nbzhen2.jpg",
             "img_des": "短针内半针："
           }
         ]
@@ -321,10 +324,10 @@ export const Crochet_Course_Data = [
         desc: "外半针指织片正面一侧的针目、即手持织片时靠近自己的一侧。在外半针上减针可使织物更平整，根据实际钩织情况选择。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/PDZhkqa1nzIvJwb.png"
+            "img_src": "./images/crochet/wbzhen1.jpg"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/jkaPw45mRst1Hd2.png",
+            "img_src": "./images/crochet/wbzhen2.jpg",
             "img_des": "短针外半针："
           }
         ]
@@ -342,19 +345,19 @@ export const Crochet_Course_Data = [
         desc: "钩织时有一定的绕线方式、拿线方式与拿针方式。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/8tGYqI5BaEJSkHF.png",
+            "img_src": "./images/crochet/sshi1.jpg",
             "img_des": "绕线方式：\n1、如图绕线"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/KU5uzmGVfFg461B.png",
+            "img_src": "./images/crochet/sshi2.jpg",
             "img_des": "2、左手拇指与中指按住线头/织物、食指与小指配合带线"
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/3uXekgrcVOxnfEG.png",
+            "img_src": "./images/crochet/sshi3.jpg",
             "img_des": "拿针方式："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/xutBU13f5n2jI4l.png"
+            "img_src": "./images/crochet/sshi4.jpg"
           }
         ]
       },
@@ -364,15 +367,15 @@ export const Crochet_Course_Data = [
         desc: "通常说的环起即在一个线圈中钩织而起针。钩织到每圈结尾处需要连接引拔、螺旋环钩不需要引拔。\n环起钩织的织物底面大致为圆形。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/QtpG5JZIxSglBHc.png",
+            "img_src": "./images/crochet/dzhqi.jpg",
             "img_des": "短针环起："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/aeumSkjBUt3fXFc.png",
+            "img_src": "./images/crochet/zczhqi.jpg",
             "img_des": "中长针环起："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/npxyWtCDcQGFwkO.png",
+            "img_src": "./images/crochet/czhqi.jpg",
             "img_des": "长针环起："
           },
           {
@@ -386,15 +389,15 @@ export const Crochet_Course_Data = [
         desc: "片起即在辫子针的基础上来回钩织。钩织到每排结尾处需要引拔并翻转织片继续钩织下一排。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/TI4OCM6FfLxcz5n.png",
+            "img_src": "./images/crochet/dzpqi.jpg",
             "img_des": "短针片起："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/TKOugprBfzmtJWj.png",
+            "img_src": "./images/crochet/zczpqi.jpg",
             "img_des": "中长针片起："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/ZBYboQuRdW64yrM.png",
+            "img_src": "./images/crochet/czpqi.jpg",
             "img_des": "长针片起："
           },
           {
@@ -408,19 +411,29 @@ export const Crochet_Course_Data = [
         desc: "辫子针环起即围绕辫子针边缘进行环钩。钩织到每圈结尾处需要连接引拔、螺旋环钩不需要引拔。\n辫子针环起钩织的织物底面大致为圆角矩形。",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/ZCu9pOwceGLVnoU.png",
+            "img_src": "./images/crochet/dzbzzhqi.jpg",
             "img_des": "短针-辫子针环起："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/WB3JasEeX2hHK9n.png",
+            "img_src": "./images/crochet/zczbzzhqi.jpg",
             "img_des": "中长针-辫子针环起："
           },
           {
-            "img_src": "https://s2.loli.net/2022/01/25/RCGvhMoj6OAZQKt.png",
+            "img_src": "./images/crochet/czbzzhqi.jpg",
             "img_des": "长针-辫子针环起："
           },
           {
             "img_des": "提示：辫子针-环起详细教程请前往笔记页面观看视频教程。"
+          }
+        ]
+      },
+      {
+        id: "25",
+        title: "花片环起",
+        desc: '花片环形起针即在已有轮廓的基础上通过锁针起针，再环绕钩织，通常用于花片、发夹、花边等。',
+        imgList: [
+          {
+            img_src: './images/crochet/hbqz01.jpg',
           }
         ]
       }
@@ -488,7 +501,7 @@ export const Crochet_Course_Data = [
         "title": "钩针符号合集",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/8W4sk2VcC6euXJw.png"
+            "img_src": "./images/crochet/zmfhao.jpg"
           }
         ]
       },
@@ -497,10 +510,114 @@ export const Crochet_Course_Data = [
         "title": "英文符号合集",
         "imgList": [
           {
-            "img_src": "https://s2.loli.net/2022/01/25/7BCuv3doyRwjJ6t.png"
+            "img_src": "./images/crochet/ywfhao.jpg"
           }
         ]
       }
+    ]
+  }
+]
+
+export const Knit_Course_Data = [
+  {
+    "cap_id": "1",
+    "select": "0",
+    "cap": "基础针法",
+    "contentMenuList": [
+      {
+        id: '1',
+        title: '上针',
+        decs:'上针在织物纹样中对应月牙形。',
+        imgList: [
+          {
+            img_src: './images/knit/szhen1.jpg',
+          },
+          {
+            img_src: './images/knit/szhen2.jpg',
+          },
+          {
+            img_src: './images/knit/szhen3.jpg',
+          },
+          {
+            img_src: './images/knit/szhen4.jpg',
+          },
+          {
+            img_src: './images/knit/szhen5.jpg',
+          }
+        ]
+      },
+      {
+        id: '2',
+        title: '下针',
+        decs: '下针在织物纹样中对应 V 形。',
+        imgList: [
+          {
+            img_src: './images/knit/xzhen1.jpg',
+          },
+          {
+            img_src: './images/knit/xzhen2.jpg',
+          },
+          {
+            img_src: './images/knit/xzhen3.jpg',
+          },
+          {
+            img_src: './images/knit/xzhen4.jpg',
+          },
+          {
+            img_src: './images/knit/xzhen5.jpg',
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "cap_id": "2",
+    "select": "0",
+    "cap": "起针与收针",
+    "contentMenuList": [
+      {
+        id: "21",
+        "title": "手势",
+        desc: "棒织时有一定的带线、绕线方式与持针方式，主要包括右手带线和左手带线两种",
+        "imgList": [
+          {
+            "img_src": "./images/knit/ysdxian1.jpg",
+            "img_des": "右手带线：右手如图绕线，在编织时通过右手食指前伸，带线绕过针头。右手带线是最常见的带线方式。"
+          },
+          {
+            "img_src": "./images/knit/sshi2.jpg",
+            "img_des": "左手带线：左手如图绕线，在编织时左手食指带线绕过针头。左手带线难于右手带线，但熟练后编织速度更快。"
+          }
+        ]
+      },
+      {
+        id: "22",
+        "title": "基础起针",
+        "imgList": [
+          {
+            "img_src": "./images/knit/qzhen1.jpg",
+            "img_des": "1、将毛线打一个活结，并传入一根棒针。"
+          },
+          {
+            "img_src": "./images/knit/qzhen2.jpg",
+            "img_des": "2、右手持针，左手如图绕线，如图用棒针挑线带出，左手拉紧线圈，即起好一针。"
+          }
+        ]
+      },
+      {
+        id: "23",
+        "title": "基础收针",
+        "imgList": [
+          {
+            "img_src": "./images/knit/shouzhen1.jpg",
+            "img_des": "方式1: 收针即右手棒针每织两针，则用左手棒针穿入右手棒针上的前一个线圈，右手棒针将后一个线圈从中带出，以此类推，知道右手剩最后一个线圈。"
+          },
+          {
+            "img_src": "./images/knit/shouzhen2.jpg",
+            "img_des": "方式2: 用线穿入所有线圈，收紧即可。"
+          }
+        ]
+      },
     ]
   }
 ]
@@ -933,15 +1050,15 @@ export const QC_List_Data = [
     id: 1,
     title: "新手必备",
     desc: "此处列出新手入门学习钩针编织/棒针编织的必备工具套装。其他器材可后期根据自己的需要准备。",
-    img: "https://s2.loli.net/2022/01/25/86YFO94cuXVp13P.png",
+    img: "./images/qc/xsbbei.jpg",
     detailList: [
       {
         desc: "\n1、钩针入门必备：钩针+记号扣+缝合针+剪刀",
-        img: "https://s2.loli.net/2022/01/26/AyDfnBhMY219rtq.png"
+        img: "./images/qc/xsbbei01.jpg"
       },
       {
         desc: "2、棒针入门必备：棒针+剪刀+缝合针+卷尺/密度尺",
-        img: "https://s2.loli.net/2022/01/26/VbW3XFdRKAauUE1.png"
+        img: "./images/qc/xsbbei02.jpg"
       },
       {
         desc: "新手贴士：以上工具指入门学习针法时必备工具，其他工具需要根据自己参照的具体织物选择，例如学习玩偶钩织时需准备填充棉。\n\n"
@@ -952,27 +1069,27 @@ export const QC_List_Data = [
     id: 2,
     title: "钩针",
     desc: "钩针是钩织必备工具。钩针有单头和双头之分，按材质大致分为金属制、塑料制、木制和竹制（其中最常用的为金属制钩针）。钩针有多种尺寸以满足不同类型的线材和规格。",
-    img: "https://s2.loli.net/2022/01/25/7HLzFO6WBrokXGg.png",
+    img: "./images/qc/gzhen.jpg",
     detailList: [
       {
         desc: "\n1、钩针结构图示：如图，钩针由尖端、喉部、柄部、头部、拇指托、手柄几个基本部分组成。更尖的尖端可以更容易地进入紧密的针迹，而更圆的尖端不会分裂纱线，适合绒线与粗线钩织。拇指托帮助控制和旋转钩子，手柄有助于在钩针编织时平衡钩子。",
-        img: "https://s2.loli.net/2022/01/25/BuXChR1MUZcPxOD.png"
+        img: "./images/qc/gzhen01.jpg"
       },
       {
         desc: "2、钩针材质：钩针通常由金属或塑料制成，也存在由木头或竹子制成的钩针。\n【金属钩针】光滑、坚固且经久耐用，但握感可能冰冷和僵硬。\n【木制钩针】感觉温暖而有弹性，但需要精心加工才能使其表面光滑。\n【塑料钩针】光滑且价格低廉，但与某些纱线一起使用时会发出吱吱声，并且相对容易弯曲或断裂。竹制钩针轻巧灵活，但容易碎裂或折断，尤其是较小的尺寸。",
-        img: "https://s2.loli.net/2022/01/25/sGQnm1XrTKwC5kF.png"
+        img: "./images/qc/gzhen02.jpg"
       },
       {
         desc: "3、钩针粗细度：一般用型号表示，普通钩针从2/0号（针轴直径2.0mm）到10/0号（针轴直径6.0mm），除此之外还有更细或更粗的钩针。\n新手贴士：钩针型号与线材大致对应，购买毛线时可查看或咨询其对应的钩针型号以作参考。",
-        img: "https://s2.loli.net/2022/01/25/ULyMdzH6hlQCuT3.png"
+        img: "./images/qc/gzhen03.jpg"
       },
       {
         desc: "粗型钩针：",
-        img: "https://s2.loli.net/2022/01/25/7TmFARVHiSsolv3.png"
+        img: "./images/qc/gzhen04.jpg"
       },
       {
         desc: "4、钩针图例：",
-        img: "https://s2.loli.net/2022/01/25/QkTWUqFGalyMsrP.png"
+        img: "./images/qc/gzhen05.jpg"
       },
       {
         desc: "新手贴示：入门时使用4/0号（2.5mm）钩针搭配四股牛奶棉学习。\n\n"
@@ -983,23 +1100,23 @@ export const QC_List_Data = [
     id: 3,
     title: "棒针",
     desc: "棒针是棒针编织必备工具。",
-    img: "https://s2.loli.net/2022/01/25/lZEjgK7FBPMHL1h.png",
+    img: "./images/qc/bzhen.jpg",
     detailList: [
       {
         desc: "\n1、棒针类型：棒针包括双头棒针、单头棒针、环形针、袖口针等。\n【双头棒针】最常用的棒针，编织衣物的传统选择。针数较多时可能会在针头滑线，可使用堵头解决。\n【单头棒针】单头棒针可以帮助固定织片线圈不易从针头滑下。\n【环形针】一根软线连接两个针尖，制成一对环形针。\n【袖口针】袖口针用于编织袜子等环形织物。",
-        img: "https://s2.loli.net/2022/01/25/1FZiPbGMUWf3Nm9.png"
+        img: "./images/qc/bzhen01.jpg"
       },
       {
         desc: "2、棒针材质：棒针通常有金属针、塑料针、竹针、木针。\n【金属棒针】光滑耐用。 如果发现自己编织得太紧，使用光滑的金属棒针会帮助编织者的张力松弛。\n【塑料棒针】表面平滑度介于金属和竹子之间。塑料棒针在使用过程中保持稳定的温度，这可能适合患有关节炎的人。\n【竹制棒针】竹子是一种轻巧、灵活的材料，可以制作出色的织针。它有助于保持针迹有规律地间隔，从而形成具有良好张力的均匀针织面料。竹针非常适合丝绸、丝光棉和竹纱等光滑纤维。竹针会随着使用而逐渐轻微翘曲，以适合您的手部曲率。\n【木制棒针】木针会选用品质较好的木料制成，使用起来感觉很豪华，价格较贵。木针通常具有蜡质表面，磨损后会变得光滑，从而形成柔软且有触感的表面。像竹针一样，它们有助于产生均匀的张力。",
-        img: "https://s2.loli.net/2022/01/25/I3FTgsGrpwcVf4Q.png"
+        img: "./images/qc/bzhen02.jpg"
       },
       {
         desc: "3、棒针粗细度：（新手贴士：棒针型号与线材大致对应，购买毛线时可查看或咨询其对应的棒针型号以作参考）",
-        img: "https://s2.loli.net/2022/01/25/LxKo49HlN5GZSkW.png"
+        img: "./images/qc/bzhen03.jpg"
       },
       {
         desc: "4、棒针图例：",
-        img: "https://s2.loli.net/2022/01/25/cvMaCGoQ4POfdUK.png"
+        img: "./images/qc/bzhen04.jpg"
       }
     ]
   },
@@ -1007,15 +1124,15 @@ export const QC_List_Data = [
     id: 4,
     title: "记号扣",
     desc: "记号扣也称记号别针，用于挂在针脚处，便于确认起始针目或确认行数。记号扣材质主要分为塑料和金属，最常用的为普通的塑料记号扣。",
-    img: "https://s2.loli.net/2022/01/25/yCkxNKa5hFQtzuJ.png",
+    img: "./images/qc/jhkou.jpg",
     detailList: [
       {
         desc: "\n1、记号扣类型（左图最常见、新手必备）",
-        img: "https://s2.loli.net/2022/01/25/7OFKRYps1wVCjXZ.png"
+        img: "./images/qc/jhkou01.jpg"
       },
       {
         desc: "2、使用示例:标记每一圈第一针的针目。",
-        img: "https://s2.loli.net/2022/01/25/WQnmVcseyHM4TNA.png"
+        img: "./images/qc/jhkou02.jpg"
       }
     ]
   },
@@ -1023,15 +1140,15 @@ export const QC_List_Data = [
     id: 5,
     title: "缝合针",
     desc: "缝合针在缝合织片、缝合编织主体（例如玩偶的不同部分）或藏线头时使用。缝合针按材质分为塑料和金属（钢针）",
-    img: "https://s2.loli.net/2022/01/25/63cpL5W7XMhSzYP.png",
+    img: "./images/qc/fhzhen.jpg",
     detailList: [
       {
         desc: "\n1、缝合针材质：缝合针通常有金属和塑料两种材质。\n【塑料缝合针】针孔通常较大，适合较粗毛线的缝合。\n【金属缝合针】金属针较细，缝合时不会影响织物的结构。",
-        img: "https://s2.loli.net/2022/01/25/UwVF7AokZIK49Gd.png"
+        img: "./images/qc/fhzhen01.jpg"
       },
       {
         desc: "2、使用示例：",
-        img: "https://s2.loli.net/2022/01/25/mIf85Ui7XQGH6Me.png"
+        img: "./images/qc/fhzhen02.jpg"
       },
       {
         desc: "\n新手贴士：可准备钢针和塑料针各一根以适用不同场景。\n\n"
@@ -1042,10 +1159,10 @@ export const QC_List_Data = [
     id: 6,
     title: "剪刀",
     desc: "钩织过程中推荐准备中型剪刀（处理常规线材）和U型剪刀（前端较尖、处理较细线材）两种类型，适用于不同场景。",
-    img: "https://s2.loli.net/2022/01/25/9oHI3kypTFC7l5U.png",
+    img: "./images/qc/jdao.jpg",
     detailList: [
       {
-        img: "https://s2.loli.net/2022/01/25/SXkqeuMtRmyD8ZA.png"
+        img: "./images/qc/jdao01.jpg"
       }
     ]
   },
@@ -1053,10 +1170,10 @@ export const QC_List_Data = [
     id: 7,
     title: "卷尺",
     desc: "卷尺用于测量织物尺寸，计算线材用量等。",
-    img: "https://s2.loli.net/2022/01/25/dkymibFM7xRE1jZ.png",
+    img: "./images/qc/jchi.jpg",
     detailList: [
       {
-        img: "https://s2.loli.net/2022/01/26/tM5dC8J7oIgVe2W.png"
+        img: "./images/qc/jchi01.jpg"
       }
     ]
   },
@@ -1064,15 +1181,15 @@ export const QC_List_Data = [
     id: 8,
     title: "密度尺",
     desc: "密度尺有两个作用，一是测量织片的密度，二是用于测量棒针的针号。",
-    img: "https://s2.loli.net/2022/01/25/3qRLN82pTOvQmEw.png",
+    img: "./images/qc/mdchi.jpg",
     detailList: [
       {
         desc: "\n1、密度尺图例：密度尺可以是直接整体测量的正方形，也可以是单边测量的长条形。",
-        img: "https://s2.loli.net/2022/01/26/Tc1i9mtxdEZDoF8.png"
+        img: "./images/qc/mdchi01.jpg"
       },
       {
         desc: "2、使用示例：",
-        img: "https://s2.loli.net/2022/01/26/shzPWygOX2x7LIT.png"
+        img: "./images/qc/mdchi02.jpg"
       }
     ]
   },
@@ -1080,15 +1197,15 @@ export const QC_List_Data = [
     id: 9,
     title: "麻花针",
     desc: "借助麻花针可以在棒针编织中织出各式各样的“麻花”花纹。",
-    img: "https://s2.loli.net/2022/01/25/t2LFfA7HvCn51PW.png",
+    img: "./images/qc/mhzhen.jpg",
     detailList: [
       {
         desc: "\n1、麻花针种类",
-        img: "https://s2.loli.net/2022/01/26/lh9BKrTEwtSdnX6.png"
+        img: "./images/qc/mhzhen01.jpg"
       },
       {
         desc: "2、麻花针花纹示例：",
-        img: "https://s2.loli.net/2022/01/26/Nd9QYGgjmifhEW8.png"
+        img: "./images/qc/mhzhen02.jpg"
       }
     ]
   },
@@ -1096,11 +1213,11 @@ export const QC_List_Data = [
     id: 10,
     title: "针帽/堵头",
     desc: "针帽套在棒针针头处防止线圈滑落。",
-    img: "https://s2.loli.net/2022/01/25/KNoHYwRa38Ojg5S.png",
+    img: "./images/qc/zmao.jpg",
     detailList: [
       {
         desc: "\n针帽种类:",
-        img: "https://s2.loli.net/2022/01/26/arvZVIlGA26Pxd3.png"
+        img: "h./images/qc/zmao01.jpg"
       }
     ]
   },
@@ -1108,11 +1225,11 @@ export const QC_List_Data = [
     id: 11,
     title: "计数器",
     desc: "计数器套在棒针针头处记录行数。",
-    img: "https://s2.loli.net/2022/01/25/ht2CTEbiAjw81V9.png",
+    img: "./images/qc/jsqi.jpg",
     detailList: [
       {
         desc: "\n常见计数器即左图所示，另外市场上还有用于计数的计数戒指，如右图所示，可以戴在编织者手上实时计数。",
-        img: "https://s2.loli.net/2022/01/26/YfhrwK8eQ5TMuGn.png"
+        img: "./images/qc/jsqi.jpg"
       }
     ]
   },
@@ -1120,19 +1237,19 @@ export const QC_List_Data = [
     id: 12,
     title: "绕线工具",
     desc: "绕线工具用于将散线缠绕成团。根据线材的多少选择不同的绕线器材。",
-    img: "https://s2.loli.net/2022/01/25/itr1Ev9YXeAmFTS.png",
+    img: "./images/qc/rxgju.jpg",
     detailList: [
       {
         desc: "\n1、伞架：将散线整理成绞或直接将绞线套在伞架上，搭配绕线器将散线绕成团。",
-        img: "https://s2.loli.net/2022/01/26/3VMyscPio4TXJSY.png"
+        img: "./images/qc/rxgju01.jpg"
       },
       {
         desc: "2、绕线板：散线较少时可以使用绕线板简单绕线。",
-        img: "https://s2.loli.net/2022/01/26/GWlJpPS72fHsBqc.png"
+        img: "./images/qc/rxgju02.jpg"
       },
       {
-        desc: "3、绕线器：散线较多时可以使用手摇绕线器进行绕线。",
-        img: "https://s2.loli.net/2022/01/26/ybS3vQwxIfn8HZJ.png"
+        desc: "3、手摇绕线器：散线较多时可以使用手摇绕线器进行绕线。",
+        img: "./images/qc/rxgju03.jpg"
       }
     ]
   },
@@ -1140,11 +1257,11 @@ export const QC_List_Data = [
     id: 13,
     title: "定位针",
     desc: "定位针原多用于立体剪裁，在编织中可以帮助固定织物形状及位置，便于缝合。",
-    img: "https://s2.loli.net/2022/01/25/YCl13t59EOHWpK7.png",
+    img: "./images/qc/dwzhen.jpg",
     detailList: [
       {
         desc: "\n定位针种类:最常见的定位针主要有T型针和大头珠针两种，当然市场上还存在各式各样的定位针，其用途一致。",
-        img: "https://s2.loli.net/2022/01/25/GSzV4nQuUdv9yko.png"
+        img: "./images/qc/dwzhen01.jpg"
       }
     ]
   },
@@ -1163,18 +1280,62 @@ export const QC_List_Data = [
     id: 15,
     title: "填充棉",
     desc: "填充棉用于填充织物，钩织玩偶、抱枕等需要用到。",
-    img: "https://s2.loli.net/2022/01/25/aMymFcoqKtLsPVG.png",
+    img: "./images/qc/tcmian.jpg",
     detailList: [
       {
         desc: "\n1、填充棉种类：常见的填充棉有珍珠棉和PP棉两种类型。\n【珍珠棉】高弹耐压，饱满厚实，颗粒状。\n【PP棉】蓬松柔软",
-        img: "https://s2.loli.net/2022/01/26/cdVGSRLnDhFX823.png"
+        img: "./images/qc/tcmian01.jpg"
       },
       {
         desc: "2、填充方法：织物即将钩完时留1-2圈，使用镊子或剪刀尖部向内塞填充棉。",
-        img: "https://s2.loli.net/2022/01/26/P6y2fsklSCRFDmu.png"
+        img: "./images/qc/tcmian02.jpg"
       },
       {
         desc: "新手贴示：用量参考45cm*45cm抱枕的用量约为500克，实际情况根据个人对织物的柔软度喜好而异。\n\n"
+      }
+    ]
+  },
+  {
+    id: 16,
+    title: "镊子",
+    desc: "镊子用于塞填充棉，或者辅助微钩。",
+    img: "./images/qc/nzi.jpg",
+    detailList: [
+      {
+        img: "./images/qc/nzi01.jpg"
+      }
+    ]
+  },
+  {
+    id: 17,
+    title: "染料",
+    desc: "染料常用于微钩中对原色织物染色，比如微钩水果、花卉等，燃料浓度较高，通常按照一定比例搭配稀释剂或清水使用。",
+    img: "./images/qc/rliao.jpg",
+    detailList: [
+      {
+        img: "./images/qc/rliao01.jpg"
+      }
+    ]
+  },
+  {
+    id: 18,
+    title: "尖钳",
+    desc: "尖钳用于用到金属配件的织物，比如挂件、钥匙扣、需要定型的花卉、玩偶等。",
+    img: "./images/qc/jqian.jpg",
+    detailList: [
+      {
+        img: "./images/qc/jqian01.jpg"
+      }
+    ]
+  },
+  {
+    id: 19,
+    title: "热熔胶枪",
+    desc: "热熔胶枪用于黏贴织物与配件，使用时待其冷却方可粘牢。",
+    img: "./images/qc/jqiang.jpg",
+    detailList: [
+      {
+        img: "./images/qc/jqiang01.jpg"
       }
     ]
   }

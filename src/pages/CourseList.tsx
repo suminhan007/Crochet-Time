@@ -105,16 +105,18 @@ export const StyledCourseMenu = styled.div`
     transform: translateX(0);
     .toggle-arrow {
       right: 0;
+      border-radius: 12px;
     }
   }
   .toggle-arrow {
-    top: 50%;
-    right: -12px;
-    transform: translate(50%, -50%);
-    width: 24px;
+    bottom: 48px;
+    right: -8px;
+    transform: translate(50%, 0);
+    width: 20px;
     height: 48px;
     background-color: var(--color-bg-white);
-    border-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
     border: 1px solid var(--color-border-3);
     z-index: 1;
   }

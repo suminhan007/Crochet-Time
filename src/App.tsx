@@ -7,6 +7,7 @@ import { LandFlex, LandHeader } from "@suminhan/land-design";
 import {
   ColorFill_Path_List_Data,
   Crochet_Course_Data,
+  Knit_Course_Data,
   Nav_Data,
   QC_List_Data,
   TJ_List_Data,
@@ -21,8 +22,8 @@ import styled from "styled-components";
 import PixelDrawer from "./pages/Tool/PixelDrawer";
 
 function App() {
-  const [curType, setCurType] = useState<number | string>(22);
-  const [curPage, setCurPage] = useState<number | string>(22);
+  const [curType, setCurType] = useState<number | string>(1);
+  const [curPage, setCurPage] = useState<number | string>(1);
   const [navData, setNavData] = useState<any[]>(Nav_Data);
   useEffect(() => {
     const wrap = document.querySelector("#root") || document.body;
@@ -69,7 +70,7 @@ function App() {
       />
 
       {curPage === 1 && <CourseList data={Crochet_Course_Data} />}
-      {curPage === 2 && <CourseList data={Crochet_Course_Data} />}
+      {curPage === 2 && <CourseList data={Knit_Course_Data} />}
 
       {curPage === 11 && <CardList data={XC_List_Data} />}
       {curPage === 12 && <CardList data={QC_List_Data} />}
