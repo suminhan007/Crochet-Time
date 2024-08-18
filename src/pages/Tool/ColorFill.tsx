@@ -52,7 +52,10 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
   return (
     <StyledLandContent className="flex-1 flex column items-start gap-32 pt-24 px-16 width-100">
       <div className="flex column items-center gap-12 width-100">
-        <div className="relative flex gap-12">
+        <div
+          className="relative flex gap-12 mx-auto"
+          style={{ height: "260px" }}
+        >
           {/* 样式 */}
           <div
             className="flex column gap-8 height-100 scrollbar-none"
@@ -65,7 +68,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                   setCurrentSvgId(item3.id);
                   /** 是否清空colorList */
                 }}
-                className={`flex items-center justify-center radius-6 ratio-1 ${
+                className={`flex items-center justify-center radius-6 ratio-1 shrink-0 ${
                   currentSvgId === item3.id ? "border-primary" : "border"
                 }`}
                 style={{ width: "72px" }}
@@ -74,7 +77,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
               </div>
             ))}
           </div>
-          <div ref={colorFillRef} className="flex-1 ratio-1">
+          <div ref={colorFillRef} className="relative height-100 ratio-1">
             <svg
               width="100%"
               viewBox="0 0 220 220"
@@ -88,6 +91,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                   key={index}
                   d={item}
                   fill={colorList[index] || "var(--color-bg-3)"}
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   stroke={
                     index + 1 === currentPathId
                       ? "var(--color-text-3)"
@@ -142,19 +147,22 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
             <div
               className="grid width-100 gap-8"
               style={{
-                gridTemplateColumns: "repeat(auto-fit, minmax(36px,1fr))",
+                gridTemplateColumns: "repeat(auto-fill, minmax(36px,1fr))",
               }}
             >
               {item.colors?.map((c) => (
                 <div
                   key={c.id}
-                  className={`flex items-center justify-center fs-12 color-white border radius-50 ratio-1 ${
-                    isWhite(c.value) ? "border" : ""
-                  }`}
-                  style={{ backgroundColor: c.value }}
-                  onClick={() => handleColorClick?.(c.value)}
+                  className="flex column gap-4 items-center fs-12 color-gray-4"
                 >
-                  {c.name}
+                  <div
+                    className={`width-100 border radius-50 ratio-1 shrink-0 ${
+                      isWhite(c.value) ? "border" : ""
+                    }`}
+                    style={{ backgroundColor: c.value }}
+                    onClick={() => handleColorClick?.(c.value)}
+                  ></div>
+                  {/* {c.name} */}
                 </div>
               ))}
             </div>

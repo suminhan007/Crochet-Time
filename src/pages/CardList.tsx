@@ -64,7 +64,12 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
       </StyledCourseMenu>
 
       <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
-        <LandFlex column gap={16} w="fit-content" style={{ margin: "0 auto" }}>
+        <LandFlex
+          column
+          gap={16}
+          w="fit-content"
+          style={{ width: "400px", margin: "0 auto" }}
+        >
           <LandTitle title={curItm.title} type="h2" />
           <LandFlex gap={12} className="p-12 bg-gray radius-8" w="100%">
             {curItm.img && (
