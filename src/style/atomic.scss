@@ -566,6 +566,9 @@
         transform: translateY(-4px);
     }
 }
+.transition{
+    transition: all var(--transition-2) linear;
+}
 
 /****** 特殊 ******/
 // hover显示气泡

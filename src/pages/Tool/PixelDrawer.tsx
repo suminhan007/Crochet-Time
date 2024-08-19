@@ -4,6 +4,7 @@ import {
   LandContent,
   LandFlex,
   LandNumberInput,
+  LandSwitch,
   LandTitle,
   LandUploader,
 } from "@suminhan/land-design";
@@ -74,8 +75,9 @@ const PixelDrawer: React.FC<Props> = ({}) => {
     return () => observer.disconnect();
   });
   const [color, setColor] = useState<string>("");
+  const [useBg, setUseBg] = useState<boolean>(false);
   return (
-    <StyledPixelLandContent className="flex-1 flex column items-start gap-32 py-24 px-16 width-100">
+    <StyledPixelLandContent className="flex-1 flex column items-start gap-32 py-24 px-16 width-100 height-100 scrollbar-none">
       {/* 缩放画布 */}
       <div className="flex gap-12 width-100 justify-end">
         <div
@@ -107,6 +109,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
           width: "calc(100vw - 32px - 20px)",
           maxHeight:
             "calc(100vh - 64px - 48px - 76px - 140px - 37px - 72px - 26px)",
+          minHeight: "192px",
           maxWidth: "800px",
           margin: "0 auto",
           overflow: "auto",
@@ -119,9 +122,10 @@ const PixelDrawer: React.FC<Props> = ({}) => {
             width: `${sizeX * square}px`,
             height: `${sizeY * square}px`,
             margin: "auto",
-            background: imgUrl
-              ? `url(${imgUrl}) center center/contain no-repeat`
-              : "unset",
+            background:
+              imgUrl && useBg
+                ? `url(${imgUrl}) center center/contain no-repeat`
+                : "unset",
           }}
         >
           {Array.from({ length: sizeX }).map((_itemX, indexX) => (
@@ -166,7 +170,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
         </div>
       </div>
       <StyledColorFillInput
-        className="flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6"
+        className="flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6 shrink-0"
         style={{
           background: color,
         }}
@@ -194,7 +198,13 @@ const PixelDrawer: React.FC<Props> = ({}) => {
       </LandFlex>
       <LandFlex column gap={8}>
         <PageTitle mainTitle="导入参考图" />
-        <LandFlex gap={16} bothCenter>
+        <LandSwitch checked={useBg} onChange={() => setUseBg(!useBg)} />
+        <LandFlex
+          gap={16}
+          bothCenter
+          className="overflow-hidden"
+          style={{ height: useBg ? "100px" : "0px" }}
+        >
           <LandUploader
             fileType="image/*"
             height="100px"
