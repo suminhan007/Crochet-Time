@@ -68,9 +68,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                   setCurrentSvgId(item3.id);
                   /** 是否清空colorList */
                 }}
-                className={`flex items-center justify-center radius-6 ratio-1 shrink-0 ${
-                  currentSvgId === item3.id ? "border-primary" : "border"
-                }`}
+                className={`flex items-center justify-center radius-6 ratio-1 shrink-0 ${currentSvgId === item3.id ? "border-primary" : "border"
+                  }`}
                 style={{ width: "72px" }}
               >
                 <img src={item3.img} width={58} />
@@ -97,8 +96,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                     index + 1 === currentPathId
                       ? "var(--color-text-3)"
                       : colorList[index] !== "#DDDDDD"
-                      ? colorList[index]
-                      : "#999"
+                        ? colorList[index]
+                        : "#999"
                   }
                   className="transition"
                   onClick={(e: React.UIEvent) => {
@@ -156,9 +155,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                   className="flex column gap-4 items-center fs-12 color-gray-4"
                 >
                   <div
-                    className={`width-100 border radius-50 ratio-1 shrink-0 ${
-                      isWhite(c.value) ? "border" : ""
-                    }`}
+                    className={`width-100 border radius-50 ratio-1 shrink-0 ${isWhite(c.value) ? "border" : ""
+                      }`}
                     style={{ backgroundColor: c.value }}
                     onClick={() => handleColorClick?.(c.value)}
                   ></div>
@@ -180,7 +178,7 @@ const StyledLandContent = styled(LandContent)`
   }
 `;
 
-const StyledColorFillInput = styled.label`
+export const StyledColorFillInput = styled.label`
   height: 36px;
   input {
     width: 0px;
