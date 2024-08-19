@@ -113,6 +113,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
             className="absolute"
             style={{ bottom: "12px", right: "12px" }}
             onClick={() => {
+              setCurrentPathId(0);
               downloadHtmlAsImg(
                 colorFillRef.current,
                 `crochet-time-color-fill-res`,
@@ -177,6 +178,9 @@ const StyledLandContent = styled(LandContent)`
   overflow: auto;
   @media screen and (max-width: 800px) {
     gap: 16px;
+    path {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 `;
 

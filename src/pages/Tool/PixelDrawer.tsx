@@ -18,7 +18,7 @@ import { StyledColorFillInput } from "./ColorFill";
 type Props = {};
 const PixelDrawer: React.FC<Props> = ({}) => {
   const pixelCanvasRef = useRef<HTMLDivElement>(null);
-  const [currentPixel, setCurrentPixel] = useState<string>("");
+  // const [currentPixel, setCurrentPixel] = useState<string>("");
   const [sizeX, setSizeX] = useState<number>(12);
   const [sizeY, setSizeY] = useState<number>(12);
   const [square, setSquare] = useState<number>(16);
@@ -76,6 +76,18 @@ const PixelDrawer: React.FC<Props> = ({}) => {
   });
   const [color, setColor] = useState<string>("");
   const [useBg, setUseBg] = useState<boolean>(false);
+  const handleDraw = (cur: string) => {
+    const newList = colorList.map((i) =>
+      i.map((j) => {
+        if (j.key === cur) {
+          return { key: j.key, value: color };
+        } else {
+          return j;
+        }
+      })
+    );
+    setColorList(newList);
+  };
   return (
     <StyledPixelLandContent className="flex-1 flex column items-start gap-32 py-24 px-16 width-100 height-100 scrollbar-none">
       {/* 缩放画布 */}
@@ -137,11 +149,9 @@ const PixelDrawer: React.FC<Props> = ({}) => {
               {Array.from({ length: sizeY }).map((_itemY, indexY) => (
                 <StylePixelItem
                   key={indexY}
-                  className={`relative transition ${
-                    currentPixel === `${indexX}-${indexY}` ? "active" : ""
-                  } ${indexX === 0 ? "first-column" : ""} ${
-                    indexY === 0 ? "last-row" : ""
-                  }`}
+                  className={`relative transition  ${
+                    indexX === 0 ? "first-column" : ""
+                  } ${indexY === 0 ? "last-row" : ""}`}
                   style={{
                     width: `${square}px`,
                     height: `${square}px`,
@@ -150,18 +160,8 @@ const PixelDrawer: React.FC<Props> = ({}) => {
                         ? colorList[indexX][indexY].value
                         : "transparent",
                   }}
-                  onClick={() => {
-                    setCurrentPixel(`${indexX}-${indexY}`);
-                    const newList = colorList.map((i) =>
-                      i.map((j) => {
-                        if (j.key === `${indexX}-${indexY}`) {
-                          return { key: j.key, value: color };
-                        } else {
-                          return j;
-                        }
-                      })
-                    );
-                    setColorList(newList);
+                  onTouchStart={() => {
+                    handleDraw(`${indexX}-${indexY}`);
                   }}
                 ></StylePixelItem>
               ))}
@@ -241,7 +241,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
           className="flex-1"
           style={{ maxWidth: "200px" }}
           onClick={() => {
-            downloadHtmlAsImg(pixelCanvasRef.current, "pixel-res", 1);
+            downloadHtmlAsImg(pixelCanvasRef.current, "pixel-res", 3);
           }}
         />
       </LandFlex>
