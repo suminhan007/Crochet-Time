@@ -112,7 +112,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
       >
         <div
           ref={pixelCanvasRef}
-          className="flex flex-wrap"
+          className="flex flex-wrap overflow-hidden"
           style={{
             width: `${sizeX * square}px`,
             height: `${sizeY * square}px`,
