@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { downloadHtmlAsImg } from "../../utils";
 import { PageTitle } from "../../components/PageTitle";
 import { IconDec } from "../../components/Icon";
+import { StyledColorFillInput } from "./ColorFill";
 
 type Props = {};
 const PixelDrawer: React.FC<Props> = ({}) => {
@@ -72,6 +73,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
     observer.observe(imgWrapRef.current);
     return () => observer.disconnect();
   });
+  const [color, setColor] = useState<string>("");
   return (
     <StyledPixelLandContent className="flex-1 flex column items-start gap-32 py-24 px-16 width-100">
       {/* 缩放画布 */}
@@ -112,7 +114,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
       >
         <div
           ref={pixelCanvasRef}
-          className="flex flex-wrap overflow-hidden"
+          className="flex flex-wrap"
           style={{
             width: `${sizeX * square}px`,
             height: `${sizeY * square}px`,
@@ -144,32 +146,33 @@ const PixelDrawer: React.FC<Props> = ({}) => {
                         ? colorList[indexX][indexY].value
                         : "transparent",
                   }}
-                  onClick={() => setCurrentPixel(`${indexX}-${indexY}`)}
-                  // data-row={indexX === 0 ? sizeY - indexY : ''}
-                  // data-column={indexY === 0 ? indexX + 1 : ''}
-                >
-                  <input
-                    type="color"
-                    className=" opacity-0"
-                    onChange={(e) => {
-                      const newList = colorList.map((i) =>
-                        i.map((j) => {
-                          if (j.key === currentPixel) {
-                            return { key: j.key, value: e.target.value };
-                          } else {
-                            return j;
-                          }
-                        })
-                      );
-                      setColorList(newList);
-                    }}
-                  />
-                </StylePixelItem>
+                  onClick={() => {
+                    setCurrentPixel(`${indexX}-${indexY}`);
+                    const newList = colorList.map((i) =>
+                      i.map((j) => {
+                        if (j.key === `${indexX}-${indexY}`) {
+                          return { key: j.key, value: color };
+                        } else {
+                          return j;
+                        }
+                      })
+                    );
+                    setColorList(newList);
+                  }}
+                ></StylePixelItem>
               ))}
             </div>
           ))}
         </div>
       </div>
+      <StyledColorFillInput
+        className="flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6"
+        style={{
+          background: color,
+        }}
+      >
+        <input type="color" onChange={(e: any) => setColor?.(e.target.value)} />
+      </StyledColorFillInput>
 
       <LandFlex column gap={8}>
         <PageTitle
@@ -243,7 +246,7 @@ const StyledPixelLandContent = styled(LandContent)`
     }
   }
 `;
-const StylePixelItem = styled.label`
+const StylePixelItem = styled.div`
   box-sizing: border-box;
   &::after {
     content: "";
@@ -263,6 +266,7 @@ const StylePixelItem = styled.label`
       z-index: 1;
     }
   }
+
   input {
     width: 0px;
     height: 0px;

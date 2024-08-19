@@ -180,7 +180,7 @@ const StyledLandContent = styled(LandContent)`
   }
 `;
 
-const StyledColorFillInput = styled.label`
+export const StyledColorFillInput = styled.label`
   height: 36px;
   input {
     width: 0px;

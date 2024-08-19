@@ -520,7 +520,7 @@ export const Crochet_Course_Data = [
 
 export const Knit_Course_Data = [
   {
-    "cap_id": "1",
+    "cap_id": "0",
     "select": "0",
     "cap": "基础针法",
     "contentMenuList": [
@@ -567,11 +567,148 @@ export const Knit_Course_Data = [
             img_src: './images/knit/xzhen5.jpg',
           }
         ]
+      },
+      {
+        id: '3',
+        title: '滑针',
+        imgList: [
+          {
+            img_src:'./images/knit/hzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/hzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/hzhen3.jpg',
+          },
+        ]
+      },
+      {
+        id: '4',
+        title: '空针',
+        imgList: [
+          {
+            img_src:'./images/knit/kzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/kzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/kzhen3.jpg',
+          },
+          {
+            img_src:'./images/knit/kzhen4.jpg',
+          },
+        ]
+      },
+      {
+        id: '5',
+        title: '左加针',
+        imgList: [
+          {
+            img_src:'./images/knit/zjzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/zjzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/zjzhen3.jpg',
+          },
+        ]
+      },
+      {
+        id: '6',
+        title: '右加针',
+        imgList: [
+          {
+            img_src:'./images/knit/yjzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/yjzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/yjzhen3.jpg',
+          },
+          {
+            img_src:'./images/knit/yjzhen4.jpg',
+          },
+        ]
+      },
+      {
+        id: '7',
+        title: '左减针',
+        imgList: [
+          {
+            img_src:'./images/knit/zjianzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/zjianzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/zjianzhen3.jpg',
+          },
+          {
+            img_src:'./images/knit/zjianzhen4.jpg',
+          },
+          {
+            img_src:'./images/knit/zjianzhen5.jpg',
+          },
+        ]
+      },
+      {
+        id: '8',
+        title: '右减针',
+        imgList: [
+          {
+            img_src:'./images/knit/yjianzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/yjianzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/yjianzhen3.jpg',
+          },
+          {
+            img_src:'./images/knit/yjianzhen4.jpg',
+          },{
+            img_src:'./images/knit/yjianzhen5.jpg',
+          },
+        ]
+      },
+      {
+        id: '9',
+        title: '3针并针',
+        imgList: [
+          {
+            img_src:'./images/knit/djianzhen1.jpg',
+          },
+          {
+            img_src:'./images/knit/djianzhen2.jpg',
+          },
+          {
+            img_src:'./images/knit/djianzhen3.jpg',
+          },
+        ]
+      },
+      {
+        id: '10',
+        title: '加线',
+        imgList: [
+          {
+            img_src:'./images/knit/jxian1.jpg',
+          },
+          {
+            img_src:'./images/knit/jxian2.jpg',
+          },
+          {
+            img_src:'./images/knit/jxian3.jpg',
+          },
+        ]
       }
     ]
   },
   {
-    "cap_id": "2",
+    "cap_id": "1",
     "select": "0",
     "cap": "起针与收针",
     "contentMenuList": [
