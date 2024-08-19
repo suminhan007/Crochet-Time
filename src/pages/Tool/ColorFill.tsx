@@ -98,7 +98,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                       ? "var(--color-text-3)"
                       : colorList[index] !== "#DDDDDD"
                       ? colorList[index]
-                      : "#EfEfEf"
+                      : "#999"
                   }
                   className="transition"
                   onClick={(e: React.UIEvent) => {

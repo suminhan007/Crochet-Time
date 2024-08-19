@@ -85,7 +85,7 @@ function App() {
 }
 
 const StyledLandHeader = styled(LandHeader)`
-  &.kjXciE {
+  /* &.kjXciE {
     z-index: 100;
   }
   @media screen and (max-width: 800px) {
@@ -95,7 +95,7 @@ const StyledLandHeader = styled(LandHeader)`
     .jdrwKk .land-menu {
       display: flex;
     }
-  }
+  } */
 `;
 export default App;
 

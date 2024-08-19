@@ -68,7 +68,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
           column
           gap={16}
           w="fit-content"
-          style={{ width: "400px", margin: "0 auto" }}
+          style={{ maxWidth: "400px", margin: "0 auto" }}
         >
           <LandTitle title={curItm.title} type="h2" />
           <LandFlex gap={12} className="p-12 bg-gray radius-8" w="100%">
