@@ -539,7 +539,10 @@
 .bg-primary {
     background-color: #0AA344;
 }
-
+.bg-filter{
+    background-color: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+}
 // transform
 .rotate-90 {
     transform: rotate(90deg);

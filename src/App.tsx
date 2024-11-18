@@ -21,6 +21,10 @@ import ImgColorPicker from "./pages/Tool/ImgColorPicker";
 import styled from "styled-components";
 import PixelDrawer from "./pages/Tool/PixelDrawer";
 
+import { Route, Routes } from "react-router-dom";
+
+import Editor from "./pages/Editor";
+
 function App() {
   const [curType, setCurType] = useState<number | string>(1);
   const [curPage, setCurPage] = useState<number | string>(1);
@@ -42,45 +46,57 @@ function App() {
     }
   }, []);
   return (
-    <LandFlex column className="height-100">
-      <StyledLandHeader
-        logo={<IconCTLogo />}
-        menuProps={{
-          data: navData,
-          active: curType,
-          onChange: (item) => {
-            setCurPage(item.key);
-            setCurType(item.key);
-          },
-          onDropChange: (dropItem, item) => {
-            setCurPage(dropItem.key);
-            setCurType(item.key);
-          },
-          dropProps: {
-            direction: "column",
-            active: curPage,
-          },
-          theme: {
-            lineColor: "inherit",
-            activeBg: "var(--color-bg-2)",
-          },
-        }}
-        align="end"
-        className="relative"
-      />
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LandFlex column className="height-100">
+              <StyledLandHeader
+                logo={<IconCTLogo />}
+                menuProps={{
+                  data: navData,
+                  active: curType,
+                  onChange: (item) => {
+                    setCurPage(item.key);
+                    setCurType(item.key);
+                  },
+                  onDropChange: (dropItem, item) => {
+                    setCurPage(dropItem.key);
+                    setCurType(item.key);
+                  },
+                  dropProps: {
+                    direction: "column",
+                    active: curPage,
+                  },
+                  theme: {
+                    lineColor: "inherit",
+                    activeBg: "var(--color-bg-2)",
+                  },
+                }}
+                align="end"
+                className="relative"
+              />
 
-      {curPage === 1 && <CourseList data={Crochet_Course_Data} />}
-      {curPage === 2 && <CourseList data={Knit_Course_Data} />}
+              {curPage === 1 && <CourseList data={Crochet_Course_Data} />}
+              {curPage === 2 && <CourseList data={Knit_Course_Data} />}
 
-      {curPage === 11 && <CardList data={XC_List_Data} />}
-      {curPage === 12 && <CardList data={QC_List_Data} />}
+              {curPage === 11 && <CardList data={XC_List_Data} />}
+              {curPage === 12 && <CardList data={QC_List_Data} />}
 
-      {curPage === 21 && <ImgColorPicker />}
-      {curPage === 22 && <ColorFill pathData={ColorFill_Path_List_Data} />}
-      {curPage === 23 && <PixelDrawer />}
+              {curPage === 21 && <ImgColorPicker />}
+              {curPage === 22 && (
+                <ColorFill pathData={ColorFill_Path_List_Data} />
+              )}
+              {curPage === 23 && <PixelDrawer />}
 
-      {curPage === 31 && <CardList data={TJ_List_Data} />}
-    </LandFlex>
+              {curPage === 31 && <CardList data={TJ_List_Data} />}
+            </LandFlex>
+          }
+        />
+        <Route path="/editor" element={<Editor />} />
+      </Routes>
+    </>
   );
 }
 
