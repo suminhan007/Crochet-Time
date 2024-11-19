@@ -5,7 +5,7 @@ import Design from "./Design";
 import StoreHouse from "./StoreHouse";
 
 export default function Editor() {
-  const [activePage, setActivePage] = useState<number | string>(1);
+  const [activePage, setActivePage] = useState<number | string>(2);
   return (
     <LandFlex column className="height-100">
       <LandHeader

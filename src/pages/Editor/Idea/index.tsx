@@ -1,10 +1,10 @@
-import { LandImage, LandMenu } from "@suminhan/land-design";
+import { LandMenu } from "@suminhan/land-design";
 import { useState } from "react";
 import Masonry from "../components/Masonry";
 
 type ideaDataType = {
   id: string;
-  imgUrl?: string;
+  height?: number;
   desc?: string;
 };
 export default function Idea() {
@@ -13,7 +13,7 @@ export default function Idea() {
   const [data, setData] = useState<ideaDataType[]>([
     ...Array.from({ length: 20 }).map((_i, idx) => ({
       id: `${idx} + 1`,
-      imgUrl: "https://picsum.photos/100",
+      height: Math.random() * 200 + 200,
     })),
   ]);
   return (
@@ -36,12 +36,17 @@ export default function Idea() {
           border={false}
         />
       </div>
-      <div className="flex-1" style={{ paddingTop: "64px" }}>
-        <Masonry>
+      <div className="flex-1 p-24" style={{ paddingTop: "64px" }}>
+        <Masonry options={{ column: 4, gap: 16 }}>
           {data?.map((item, index) => (
-            <div key={item.id ?? index} className="flex column shadow">
-              <LandImage url={item.imgUrl} />
-            </div>
+            <div
+              key={item.id ?? index}
+              className="flex column border width-100 radius-24"
+              style={{
+                height: item.height,
+                breakInside: "avoid",
+              }}
+            ></div>
           ))}
         </Masonry>
       </div>
