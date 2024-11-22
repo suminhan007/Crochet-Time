@@ -26,11 +26,6 @@
 .none {
     display: none;
 }
-.absolute-center{
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
 
 //布局
 .flex {
@@ -115,7 +110,6 @@
     }
 }
 .scrollbar-none {
-    overflow: auto;
     &::-webkit-scrollbar {
         width: 0;
         display: none;
@@ -390,14 +384,17 @@
 .mb-40 {
     margin-bottom: 40px;
 }
+.border-box{
+  box-sizing: border-box;
+}
+.content-box{
+  box-sizing: content-box;
+}
 
 
 //大小
 .width-100 {
     width: 100%;
-}
-.width-50 {
-    width: 50%;
 }
 .height-100 {
     height: 100%;
@@ -419,7 +416,10 @@
     border: 1px solid var(--color-border-1);
 }
 .border-primary{
-    border: 1px solid#0AA344;
+    border: 1px solid var(--color-primary-6);
+}
+.border-primary-light{
+  border: 1px solid var(--color-primary-1);
 }
 .border-dash {
     border: 1px dashed var(--color-border-1);
@@ -472,9 +472,6 @@
 }
 
 //字体
-.fs-10 {
-    font-size: 10px;
-}
 .fs-12 {
     font-size: 12px;
 }
@@ -520,6 +517,9 @@
 .text-center {
     text-align: center;
 }
+.no-wrap{
+  white-space: nowrap;
+}
 .opacity-0 {
     opacity: 0;
 }
@@ -536,13 +536,13 @@
 .bg-gray{
     background-color: var(--color-bg-1);
 }
+.hover\:bg-gray:hover{
+    background-color: var(--color-bg-2);
+}
 .bg-primary {
     background-color: #0AA344;
 }
-.bg-filter{
-    background-color: rgba(255,255,255,0.8);
-    backdrop-filter: blur(10px);
-}
+
 // transform
 .rotate-90 {
     transform: rotate(90deg);
@@ -573,7 +573,7 @@
     }
 }
 .transition{
-    transition: all var(--transition-2) linear;
+    transition: all 200ms ease-in-out;
 }
 
 /****** 特殊 ******/
@@ -583,7 +583,7 @@
         .land-pop{
             opacity: 1;
             transform: translate(-50%,-16px);
-            pointer-events: all;
+            pointer-events: auto;
         }
     }
 }

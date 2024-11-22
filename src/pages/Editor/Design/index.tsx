@@ -1,5 +1,5 @@
 import DesignLeftTaskList from "./DesignLeftTaskList";
-import DesignTopTaskList from "./DesignTopTaskList";
+import DesignTopTaskList, { TaskType } from "./DesignTopTaskList";
 
 export default function Design() {
   return (
@@ -10,9 +10,10 @@ export default function Design() {
       >
         <DesignTopTaskList
           data={[
-            { id: "1", title: "任务1" },
-            { id: "2", title: "任务2" },
+            { id: "1", title: "产品", type: TaskType.GOODS },
+            { id: "2", title: "图解", type: TaskType.GRAPH },
           ]}
+          active="2"
         />
       </div>
       <div className="flex flex-1">
