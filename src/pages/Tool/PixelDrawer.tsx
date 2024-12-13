@@ -5,6 +5,7 @@ import {
   LandContent,
   LandFlex,
   LandNumberInput,
+  LandSlider,
   LandSwitch,
   LandTitle,
   LandUploader,
@@ -75,7 +76,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
     observer.observe(imgWrapRef.current);
     return () => observer.disconnect();
   });
-  const [color, setColor] = useState<string>("");
+  const [color, setColor] = useState<string>("#333");
   const [useBg, setUseBg] = useState<boolean>(false);
   const handleDraw = (cur: string) => {
     const newList = colorList.map((i) =>
@@ -89,6 +90,9 @@ const PixelDrawer: React.FC<Props> = ({}) => {
     );
     setColorList(newList);
   };
+
+  const [usePattern, setUsePattern] = useState<boolean>(false);
+  const [opacity, setOpacity] = useState<number>(1);
   return (
     <StyledPixelLandContent className="flex-1 flex column items-start gap-32 py-24 px-16 width-100 height-100 scrollbar-none">
       {/* 缩放画布 */}
@@ -160,6 +164,7 @@ const PixelDrawer: React.FC<Props> = ({}) => {
                       colorList[indexX] && colorList[indexX][indexY]
                         ? colorList[indexX][indexY].value
                         : "transparent",
+                    opacity: opacity,
                   }}
                   onTouchStart={() => {
                     handleDraw(`${indexX}-${indexY}`);
@@ -170,14 +175,42 @@ const PixelDrawer: React.FC<Props> = ({}) => {
           ))}
         </div>
       </div>
-      <StyledColorFillInput
-        className="flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6 shrink-0"
-        style={{
-          background: color,
-        }}
-      >
-        <input type="color" onChange={(e: any) => setColor?.(e.target.value)} />
-      </StyledColorFillInput>
+      <LandFlex column gap={8}>
+        <PageTitle mainTitle="画笔颜色" />
+        <StyledColorFillInput
+          className="relative flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6 shrink-0"
+          style={{
+            background: color,
+          }}
+        >
+          <input
+            type="color"
+            onChange={(e: any) => {
+              setColor?.(e.target.value);
+            }}
+          />
+        </StyledColorFillInput>
+        <div className="flex items-center gap-8 width-100 pt-4">
+          <LandTitle title="透明度" type="p" className="no-wrap" />
+          <LandSlider
+            max={1}
+            step={0.1}
+            value={opacity}
+            onChange={(val) => setOpacity(val)}
+            height={16}
+            suffix={`${(opacity / 1) * 100}%`}
+          />
+        </div>
+      </LandFlex>
+      {/* <LandFlex column>
+        <div className="flex items-center gap-8">
+          <PageTitle mainTitle="画笔图样" />
+          <LandSwitch
+            checked={usePattern}
+            onChange={() => setUsePattern(!usePattern)}
+          />
+        </div>
+      </LandFlex> */}
 
       <LandFlex column gap={8}>
         <PageTitle
@@ -198,8 +231,10 @@ const PixelDrawer: React.FC<Props> = ({}) => {
         </LandFlex>
       </LandFlex>
       <LandFlex column gap={8}>
-        <PageTitle mainTitle="导入参考图" />
-        <LandSwitch checked={useBg} onChange={() => setUseBg(!useBg)} />
+        <div className="flex items-center gap-8">
+          <PageTitle mainTitle="导入参考图" />
+          <LandSwitch checked={useBg} onChange={() => setUseBg(!useBg)} />
+        </div>
         <LandFlex
           gap={16}
           bothCenter
