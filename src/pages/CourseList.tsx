@@ -1,11 +1,19 @@
-import { Icon, LandContent, LandFlex, LandMenu, LandTitle } from '@suminhan/land-design'
-import React, { useEffect, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import {
+  Icon,
+  LandContent,
+  LandFlex,
+  LandLoading,
+  LandMenu,
+  LandTitle,
+} from "@suminhan/land-design";
+import React, { useEffect, useMemo, useState } from "react";
+import styled from "styled-components";
 
 type Props = {
   data?: any[];
-}
+};
 const CourseList: React.FC<Props> = ({ data = [] }) => {
+  const loading = useMemo(() => !data || data?.length <= 0, [data]);
   const [open, setOpen] = useState<boolean>(true);
   const [activeCap, setActiveCap] = useState<number | string>("0");
   const [activeItm, setActiveItm] = useState<number | string>("1");
@@ -28,18 +36,29 @@ const CourseList: React.FC<Props> = ({ data = [] }) => {
   }, []);
 
   const curItm = useMemo(() => {
-    return data
-      ?.filter((itm) => itm.cap_id === activeCap)[0]
-      .contentMenuList.filter((dropItm: any) => dropItm.id === activeItm)[0];
+    if (data && data?.length > 0) {
+      return data
+        ?.filter((itm) => itm.cap_id === activeCap)[0]
+        .contentMenuList?.filter((dropItm: any) => dropItm.id === activeItm)[0];
+    }
   }, [activeItm, activeCap, data]);
   return (
-    <LandContent className="flex-1 flex width-100">
+    <LandContent className="relative flex-1 flex width-100">
+      <div
+        className={`absolute flex column gap-8 color-gray-3 fs-14 both-center width-100 height-100 bg-white ${
+          loading ? "" : "opacity-0 events-none"
+        } transition`}
+        style={{ zIndex: 100 }}
+      >
+        <LandLoading size={24} color="var(--color-primary-6)" />
+        <div>努力加载中</div>
+      </div>
       <StyledCourseMenu className={`relative ${open ? "open" : ""}`}>
         <LandMenu
           data={data?.map((itm) => ({
             key: itm.cap_id,
             title: itm.cap,
-            dropData: itm.contentMenuList.map((dropItm: any) => ({
+            dropData: itm?.contentMenuList?.map((dropItm: any) => ({
               key: dropItm.id,
               title: dropItm.title,
             })),
@@ -80,10 +99,10 @@ const CourseList: React.FC<Props> = ({ data = [] }) => {
 
       <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
         <LandFlex column gap={16} w="fit-content" style={{ margin: "0 auto" }}>
-          <LandTitle title={curItm.title} type="h2" />
+          <LandTitle title={curItm?.title} type="h2" />
           <div className="flex column gap-12">
-            {curItm.des && <LandTitle title={curItm.des} type="p" />}
-            {curItm.imgList?.map((imgItm: any) => (
+            {curItm?.des && <LandTitle title={curItm?.des} type="p" />}
+            {curItm?.imgList?.map((imgItm: any) => (
               <LandFlex column gap={8} style={{ maxWidth: "400px" }}>
                 <LandTitle title={imgItm.img_des} type="p" />
                 <img src={imgItm.img_src} width="100%" />
@@ -127,4 +146,3 @@ export const StyledCourseMenu = styled.div`
   }
 `;
 export default CourseList;
-

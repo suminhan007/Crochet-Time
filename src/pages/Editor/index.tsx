@@ -5,10 +5,8 @@ import Design from "./Design";
 import StoreHouse from "./StoreHouse";
 import FloatingProfileBtn from "./components/FloatingProfileBtn";
 import axios from "axios";
-type userType = {};
 export default function Editor() {
   const [activePage, setActivePage] = useState<number | string>(2);
-  const [user, setUser] = useState<userType>();
   const handleLogin = useCallback(async (account: string, password: string) => {
     try {
       const response = await axios.post("http://localhost:5000/api/login", {

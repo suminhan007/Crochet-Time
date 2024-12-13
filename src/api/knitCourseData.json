@@ -1,0 +1,244 @@
+{
+    "title": "KnitCourseData",
+    "data": [
+        {
+            "cap_id": "0",
+            "select": "0",
+            "cap": "基础针法",
+            "contentMenuList": [
+                {
+                    "id": "1",
+                    "title": "上针",
+                    "decs": "上针在织物纹样中对应月牙形。",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/szhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/szhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/szhen3.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/szhen4.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/szhen5.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "2",
+                    "title": "下针",
+                    "decs": "下针在织物纹样中对应 V 形。",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/xzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/xzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/xzhen3.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/xzhen4.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/xzhen5.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "3",
+                    "title": "滑针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/hzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/hzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/hzhen3.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "4",
+                    "title": "空针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/kzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/kzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/kzhen3.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/kzhen4.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "5",
+                    "title": "左加针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/zjzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/zjzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/zjzhen3.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "6",
+                    "title": "右加针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/yjzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjzhen3.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjzhen4.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "7",
+                    "title": "左减针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/zjianzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/zjianzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/zjianzhen3.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/zjianzhen4.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/zjianzhen5.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "8",
+                    "title": "右减针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/yjianzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjianzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjianzhen3.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjianzhen4.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/yjianzhen5.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "9",
+                    "title": "3针并针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/djianzhen1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/djianzhen2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/djianzhen3.jpg"
+                        }
+                    ]
+                },
+                {
+                    "id": "10",
+                    "title": "加线",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/jxian1.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/jxian2.jpg"
+                        },
+                        {
+                            "img_src": "./images/knit/jxian3.jpg"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cap_id": "1",
+            "select": "0",
+            "cap": "起针与收针",
+            "contentMenuList": [
+                {
+                    "id": "21",
+                    "title": "手势",
+                    "desc": "棒织时有一定的带线、绕线方式与持针方式，主要包括右手带线和左手带线两种",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/ysdxian1.jpg",
+                            "img_des": "右手带线：右手如图绕线，在编织时通过右手食指前伸，带线绕过针头。右手带线是最常见的带线方式。"
+                        },
+                        {
+                            "img_src": "./images/knit/sshi2.jpg",
+                            "img_des": "左手带线：左手如图绕线，在编织时左手食指带线绕过针头。左手带线难于右手带线，但熟练后编织速度更快。"
+                        }
+                    ]
+                },
+                {
+                    "id": "22",
+                    "title": "基础起针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/qzhen1.jpg",
+                            "img_des": "1、将毛线打一个活结，并传入一根棒针。"
+                        },
+                        {
+                            "img_src": "./images/knit/qzhen2.jpg",
+                            "img_des": "2、右手持针，左手如图绕线，如图用棒针挑线带出，左手拉紧线圈，即起好一针。"
+                        }
+                    ]
+                },
+                {
+                    "id": "23",
+                    "title": "基础收针",
+                    "imgList": [
+                        {
+                            "img_src": "./images/knit/shouzhen1.jpg",
+                            "img_des": "方式1: 收针即右手棒针每织两针，则用左手棒针穿入右手棒针上的前一个线圈，右手棒针将后一个线圈从中带出，以此类推，知道右手剩最后一个线圈。"
+                        },
+                        {
+                            "img_src": "./images/knit/shouzhen2.jpg",
+                            "img_des": "方式2: 用线穿入所有线圈，收紧即可。"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

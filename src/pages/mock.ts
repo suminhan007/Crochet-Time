@@ -1597,6 +1597,31 @@ export const ColorFill_Path_List_Data = [
 
 export const ColorFill_Color_List_Data = [
   {
+    id: 100,
+    title: 'BigGift 2mm 空心棉',
+    colors: [
+      { name: '红色', value: '#AB3C38' }, { name: '深蓝色', value: '#47596E' }, { name: '黑色', value: '#1A1C19' },
+      {name: '粉红色', value:'#E6A3C5'},{name: '天蓝色',value:'#95C8DE'},{name: '脏粉色',value:'#E1CED1'},
+     
+      { name: '深灰色', value: '#73777A' }, { name: '浅灰色', value: '#C3C6C7' }, { name: '奶茶色', value: '#C4BDB2' },
+      { name: '驼色', value: '#D4C8B6' }, { name: '紫红色', value: '#763B3F' }, { name: '绯红', value: '#8E5543' }, 
+      
+      { name: '香芋色', value: '#A18A9D' }, { name: '米白色', value: '#ECEBE0' }, { name: '藏青色', value: '#46505C' },
+      { name: '深棕色', value: '#5D5249' }, { name: '棕色', value: '#6E513A' }, { name: '姜黄色', value: '#BAAB80' },
+      
+      { name: '墨绿色', value: '#4C655D' }, { name: '橘黄色', value: '#D77C55' }, { name: '圣诞绿', value: '#5C9272' },
+      { name: '淡绿色', value: '#AA9F7E' }, { name: '奶黄色', value: '#F5F1D4' }, { name: '荧光绿', value: '#E0EB90' },
+      
+      { name: '浅粉绿', value: '#CCE3CA' }, { name: '嫩芽绿', value: '#84CE7A' }, { name: '宝蓝色', value: '#3C5CA4' },
+      { name: 'tifuni蓝', value: '#BBDCDF' }, { name: '浅粉色', value: '#DCC4D9' }, { name: '浅紫色', value: '#A69CC5' },
+      
+      { name: '玫红色', value: '#BF607C' }, { name: '桃红色', value: '#DEB3B0' }, { name: '祖母绿', value: '#4FA0AD' },
+      { name: '军绿色', value: '#627053' }, { name: '水蓝色', value: '#AFC4DB' }, { name: '藏红花', value: '#8D3C63' },
+      
+      { name: '柠檬黄', value: '#ECD968' }
+    ]
+  },
+  {
     id: 1,
     title: '萌4',
     colors: [
