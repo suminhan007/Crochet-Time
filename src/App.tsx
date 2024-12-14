@@ -4,7 +4,7 @@ import './style/atomic.scss';
 import './style/reset.scss';
 import './style/variable.scss';
 import { LandFlex, LandHeader } from "@suminhan/land-design";
-import { Nav_Data } from "./pages/mock";
+import { ColorFill_Path_List_Data, Nav_Data } from "./pages/mock";
 import { IconCTLogo } from "./components/Icon";
 import CardList from "./pages/CardList";
 import CourseList from "./pages/CourseList";
@@ -44,7 +44,7 @@ function App() {
   const [xcListData, setXcListData] = useState<any[]>([]);
   const [qcListData, setQcListData] = useState<any[]>([]);
   const [tjListData, setTjListData] = useState<any[]>([]);
-  const [colorsFillPathData, setColorsFillPathData] = useState<any[]>([]);
+  // const [colorsFillPathData, setColorsFillPathData] = useState<any[]>([]);
   useEffect(() => {
     let fetchData = async () => {
       try {
@@ -95,16 +95,16 @@ function App() {
           }
         };
         break;
-      case 22:
-        fetchData = async () => {
-          try {
-            const response = await axios.get("./api/colorFIllPathData.json");
-            setColorsFillPathData(response.data.data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        break;
+      // case 22:
+      //   fetchData = async () => {
+      //     try {
+      //       const response = await axios.get("./api/colorFIllPathData.json");
+      //       setColorsFillPathData(response.data.data);
+      //     } catch (error) {
+      //       console.log(error);
+      //     }
+      //   };
+      //   break;
       case 31:
         fetchData = async () => {
           try {
@@ -163,7 +163,9 @@ function App() {
               {curPage === 12 && <CardList data={qcListData} />}
 
               {curPage === 21 && <ImgColorPicker />}
-              {curPage === 22 && <ColorFill pathData={colorsFillPathData} />}
+              {curPage === 22 && (
+                <ColorFill pathData={ColorFill_Path_List_Data} />
+              )}
               {curPage === 23 && <PixelDrawer />}
 
               {curPage === 31 && <CardList data={tjListData} />}

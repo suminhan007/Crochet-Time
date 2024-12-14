@@ -130,7 +130,7 @@ const Masonry: React.FC<MasonryProps> = ({
 
   return (
     <div
-      className={`relative items-center flex-1 flex-column ${
+      className={`relative items-center flex-1 column ${
         isEmpty || !children ? "flex justify-center" : ""
       } ${className ? className : ""}`}
       style={{
