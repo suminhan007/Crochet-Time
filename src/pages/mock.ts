@@ -1597,7 +1597,7 @@ export const ColorFill_Path_List_Data = [
 
 export const ColorFill_Color_List_Data = [
   {
-    id: 100,
+    id: "gift-2mm",
     title: 'BigGift 2mm 空心棉',
     colors: [
       { name: '红色', value: '#AB3C38' }, { name: '深蓝色', value: '#47596E' }, { name: '黑色', value: '#1A1C19' },
@@ -1622,7 +1622,7 @@ export const ColorFill_Color_List_Data = [
     ]
   },
   {
-    id: 1,
+    id: '萌4',
     title: '萌4',
     colors: [
       {
@@ -1896,7 +1896,7 @@ export const ColorFill_Color_List_Data = [
     ]
   },
   {
-    id: 2,
+    id: 'lifeyarn 羽',
     title: 'lifeyarn 羽',
     colors: [
       {
@@ -2014,7 +2014,7 @@ export const ColorFill_Color_List_Data = [
     ]
   },
   {
-    id: 3,
+    id: 'superwash merino',
     title: 'superwash merino',
     colors: [
       {

@@ -2,7 +2,7 @@
     "title": "colorsData",
     "data": [
         {
-            "id": 100,
+            "id": "gift-2mm",
             "title": "BigGift 2mm 空心棉",
             "colors": [
                 {
@@ -156,7 +156,7 @@
             ]
         },
         {
-            "id": 1,
+            "id": "萌4",
             "title": "萌4",
             "colors": [
                 {
@@ -430,7 +430,7 @@
             ]
         },
         {
-            "id": 2,
+            "id": "lifeyarn 羽",
             "title": "lifeyarn 羽",
             "colors": [
                 {
@@ -548,7 +548,7 @@
             ]
         },
         {
-            "id": 3,
+            "id": "superwash merino",
             "title": "superwash merino",
             "colors": [
                 {

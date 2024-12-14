@@ -74,8 +74,9 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
   const colorFillRef = useRef<HTMLOrSVGElement>(null);
 
   const [activeTab, setActiveTab] = useState<string | number>("style");
+  const [activeColorTab, setActiveColorTab] = useState<string>("gift-2mm");
   return (
-    <StyledLandContent className="flex-1 flex column items-start gap-32 pt-24 px-16 width-100">
+    <StyledLandContent className="flex-1 flex items-start gap-32 pt-24 px-16 width-100">
       <div className="flex column items-center gap-12 width-100">
         <div
           className="relative flex gap-12 mx-auto"
@@ -142,7 +143,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
           style={{ height: "64px" }}
         />
       </div>
-      <div className="relative flex-1 height-1 width-100 overflow-auto">
+      <div className="relative flex-1 flex column height-1 width-100 overflow-auto">
         {activeTab === "style" && (
           <div
             className="grid gap-8 width-100 scrollbar-none"
@@ -183,7 +184,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
           <>
             <div
               className={`absolute flex column gap-8 color-gray-3 fs-14 both-center width-100 height-100 bg-white ${
-                colorsLoading ? "" : "opacity-0 events-none"
+                false ? "" : "opacity-0 events-none"
               } transition`}
               style={{ zIndex: 100 }}
             >
@@ -199,41 +200,46 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
               自定义颜色
             </StyledColorFillInput>
             <div
-              className="flex-1 flex column width-100 pb-24"
+              className="flex-1 flex column width-100"
               style={{ overflow: "auto" }}
             >
-              {colorsData?.map((item) => (
-                <LandFlex key={item.id} column>
-                  <LandTitle
-                    title={`【${item.title}】`}
-                    type="p"
-                    style={{ margin: "12px auto" }}
-                  />
-                  <div
-                    className="grid width-100 gap-8"
-                    style={{
-                      gridTemplateColumns:
-                        "repeat(auto-fill, minmax(36px,1fr))",
-                    }}
-                  >
-                    {item.colors?.map((c) => (
+              <div
+                className="overflow-auto mt-12 shrink-0"
+                style={{ height: "48px" }}
+              >
+                <LandMenu
+                  data={colorsData?.map((item) => ({
+                    key: item.id,
+                    title: item.title,
+                  }))}
+                  active={activeColorTab}
+                  onChange={(item) => setActiveColorTab(item.key)}
+                />
+              </div>
+              <div
+                className="grid width-100 gap-8 pt-12 overflow-auto pb-24"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fill, minmax(36px,1fr))",
+                }}
+              >
+                {colorsData
+                  ?.filter((i) => i.id === activeColorTab)[0]
+                  ?.colors?.map((c) => (
+                    <div
+                      key={c.id}
+                      className="flex column gap-4 items-center fs-12 color-gray-4"
+                    >
                       <div
-                        key={c.id}
-                        className="flex column gap-4 items-center fs-12 color-gray-4"
-                      >
-                        <div
-                          className={`width-100 border radius-50 ratio-1 shrink-0 ${
-                            isWhite(c.value) ? "border" : ""
-                          }`}
-                          style={{ backgroundColor: c.value }}
-                          onClick={() => handleColorClick?.(c.value)}
-                        ></div>
-                        {/* {c.name} */}
-                      </div>
-                    ))}
-                  </div>
-                </LandFlex>
-              ))}
+                        className={`width-100 border radius-50 ratio-1 shrink-0 ${
+                          isWhite(c.value) ? "border" : ""
+                        }`}
+                        style={{ backgroundColor: c.value }}
+                        onClick={() => handleColorClick?.(c.value)}
+                      ></div>
+                      <p className="width-100 ellipsis">{c.name}</p>
+                    </div>
+                  ))}
+              </div>
             </div>
           </>
         )}
@@ -244,7 +250,8 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
 
 const StyledLandContent = styled(LandContent)`
   height: calc(100vh - 64px);
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
     gap: 16px;
     path {
       -webkit-tap-highlight-color: transparent;
