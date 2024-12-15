@@ -123,55 +123,53 @@ function App() {
     fetchData();
   }, [curPage]);
 
+  const publicElement = (
+    <LandFlex column className="height-100">
+      <StyledLandHeader
+        logo={<IconCTLogo />}
+        menuProps={{
+          data: navData,
+          active: curType,
+          onChange: (item) => {
+            setCurPage(item.key);
+            setCurType(item.key);
+          },
+          onDropChange: (dropItem, item) => {
+            setCurPage(dropItem.key);
+            setCurType(item.key);
+          },
+          dropProps: {
+            direction: "column",
+            active: curPage,
+          },
+          theme: {
+            lineColor: "inherit",
+            activeBg: "var(--color-bg-2)",
+          },
+        }}
+        align="end"
+        className="relative"
+      />
+
+      {curPage === 1 && <CourseList data={crochetCourseData} />}
+      {curPage === 2 && <CourseList data={knitCourseData} />}
+
+      {curPage === 11 && <CardList data={xcListData} />}
+      {curPage === 12 && <CardList data={qcListData} />}
+
+      {curPage === 21 && <ImgColorPicker />}
+      {curPage === 22 && <ColorFill pathData={ColorFill_Path_List_Data} />}
+      {curPage === 23 && <PixelDrawer />}
+
+      {curPage === 31 && <CardList data={tjListData} />}
+    </LandFlex>
+  );
+
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <LandFlex column className="height-100">
-              <StyledLandHeader
-                logo={<IconCTLogo />}
-                menuProps={{
-                  data: navData,
-                  active: curType,
-                  onChange: (item) => {
-                    setCurPage(item.key);
-                    setCurType(item.key);
-                  },
-                  onDropChange: (dropItem, item) => {
-                    setCurPage(dropItem.key);
-                    setCurType(item.key);
-                  },
-                  dropProps: {
-                    direction: "column",
-                    active: curPage,
-                  },
-                  theme: {
-                    lineColor: "inherit",
-                    activeBg: "var(--color-bg-2)",
-                  },
-                }}
-                align="end"
-                className="relative"
-              />
-
-              {curPage === 1 && <CourseList data={crochetCourseData} />}
-              {curPage === 2 && <CourseList data={knitCourseData} />}
-
-              {curPage === 11 && <CardList data={xcListData} />}
-              {curPage === 12 && <CardList data={qcListData} />}
-
-              {curPage === 21 && <ImgColorPicker />}
-              {curPage === 22 && (
-                <ColorFill pathData={ColorFill_Path_List_Data} />
-              )}
-              {curPage === 23 && <PixelDrawer />}
-
-              {curPage === 31 && <CardList data={tjListData} />}
-            </LandFlex>
-          }
-        />
+        <Route path="/" element={publicElement} />
+        <Route path="/suumhan" element={publicElement} />
         <Route path="/editor" element={<Editor />} />
       </Routes>
     </>

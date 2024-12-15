@@ -40,11 +40,18 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
     fetchData();
   }, []);
 
+  const newPathData = useMemo(() => {
+    if (location.hash.includes("#/suumhan")) {
+      return pathData;
+    } else {
+      return pathData?.filter((i) => !i.private);
+    }
+  }, [window.location, pathData]);
   /** 当前选中的样式 */
   const [currentSvgId, setCurrentSvgId] = useState<number>(1);
   const currentSvg = useMemo(
-    () => pathData?.filter((itm) => itm.id === currentSvgId)[0],
-    [currentSvgId, pathData]
+    () => newPathData?.filter((itm) => itm.id === currentSvgId)[0],
+    [currentSvgId, newPathData]
   );
   /** 当前选中的path */
   const [currentPathId, setCurrentPathId] = useState<number>(0);
@@ -159,7 +166,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                 <LandLoading size={24} color="var(--color-primary-6)" />
                 <div>款式加载中</div>
               </div>
-              {pathData?.map((item3, index3) => (
+              {newPathData?.map((item3, index3) => (
                 <div
                   key={index3}
                   onClick={() => {
@@ -267,14 +274,11 @@ const StyledLandContent = styled(LandContent)`
   }
   .options-panel {
     flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     padding-inline: 24px;
     height: 100%;
-    label {
-      margin-top: 32px;
-    }
-  }
-  .style-grid-container {
-    margin-top: 32px;
   }
   @media screen and (max-width: 1024px) {
     padding-top: 32px;
