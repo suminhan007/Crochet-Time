@@ -27,19 +27,16 @@ const Image: React.FC<ImageProps> = ({
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgLoading, setImgLoading] = useState<boolean>(true);
   const [loadDefaultImg, setLoadDefaultImg] = useState<boolean>(false);
-  const handleLoad = () => {
-    setTimeout(() => {
-      setImgLoading(false);
-    }, 300);
-  };
-  const handleError = () => {
-    setImgLoading(false);
-    setLoadDefaultImg(true);
-  };
   // 判断是否加载
   useEffect(() => {
     const imageElement = imgRef.current;
-
+    const handleLoad = () => {
+      setImgLoading(false);
+    };
+    const handleError = () => {
+      setImgLoading(false);
+      setLoadDefaultImg(true);
+    };
     if (!imageElement) return;
     if (imageElement.complete) {
       setImgLoading(false);
@@ -53,8 +50,9 @@ const Image: React.FC<ImageProps> = ({
   }, []);
   return (
     <div
-      className={`relative flex items-center justify-center ${imgLoading || loadDefaultImg ? "bg-gray radius-6 overflow-hidden" : ""
-        } ${className}`}
+      className={`relative flex items-center justify-center ${
+        imgLoading || loadDefaultImg ? "bg-gray radius-6 overflow-hidden" : ""
+      } ${className}`}
       style={{
         aspectRatio: imgLoading || loadDefaultImg ? `${ratio}` : "auto",
         ...style,
@@ -71,6 +69,7 @@ const Image: React.FC<ImageProps> = ({
         <Icon name="error-fill" fill="var(--color-red-03)" />
       ) : (
         <img
+          ref={imgRef}
           src={url}
           alt=""
           className={imgClassName}

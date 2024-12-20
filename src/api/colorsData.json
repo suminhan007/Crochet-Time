@@ -1,0 +1,1209 @@
+{
+    "title": "colorsData",
+    "data": [
+        {
+            "id": "gift-2mm",
+            "title": "BigGift 2mm 空心棉",
+            "colors": [
+                {
+                    "name": "红色",
+                    "value": "#AB3C38"
+                },
+                {
+                    "name": "深蓝色",
+                    "value": "#47596E"
+                },
+                {
+                    "name": "黑色",
+                    "value": "#1A1C19"
+                },
+                {
+                    "name": "粉红色",
+                    "value": "#E6A3C5"
+                },
+                {
+                    "name": "天蓝色",
+                    "value": "#95C8DE"
+                },
+                {
+                    "name": "脏粉色",
+                    "value": "#E1CED1"
+                },
+                {
+                    "name": "深灰色",
+                    "value": "#73777A"
+                },
+                {
+                    "name": "浅灰色",
+                    "value": "#C3C6C7"
+                },
+                {
+                    "name": "奶茶色",
+                    "value": "#C4BDB2"
+                },
+                {
+                    "name": "驼色",
+                    "value": "#D4C8B6"
+                },
+                {
+                    "name": "紫红色",
+                    "value": "#763B3F"
+                },
+                {
+                    "name": "绯红",
+                    "value": "#8E5543"
+                },
+                {
+                    "name": "香芋色",
+                    "value": "#A18A9D"
+                },
+                {
+                    "name": "米白色",
+                    "value": "#ECEBE0"
+                },
+                {
+                    "name": "藏青色",
+                    "value": "#46505C"
+                },
+                {
+                    "name": "深棕色",
+                    "value": "#5D5249"
+                },
+                {
+                    "name": "棕色",
+                    "value": "#6E513A"
+                },
+                {
+                    "name": "姜黄色",
+                    "value": "#BAAB80"
+                },
+                {
+                    "name": "墨绿色",
+                    "value": "#4C655D"
+                },
+                {
+                    "name": "橘黄色",
+                    "value": "#D77C55"
+                },
+                {
+                    "name": "圣诞绿",
+                    "value": "#5C9272"
+                },
+                {
+                    "name": "淡绿色",
+                    "value": "#AA9F7E"
+                },
+                {
+                    "name": "奶黄色",
+                    "value": "#F5F1D4"
+                },
+                {
+                    "name": "荧光绿",
+                    "value": "#E0EB90"
+                },
+                {
+                    "name": "浅粉绿",
+                    "value": "#CCE3CA"
+                },
+                {
+                    "name": "嫩芽绿",
+                    "value": "#84CE7A"
+                },
+                {
+                    "name": "宝蓝色",
+                    "value": "#3C5CA4"
+                },
+                {
+                    "name": "tifuni蓝",
+                    "value": "#BBDCDF"
+                },
+                {
+                    "name": "浅粉色",
+                    "value": "#DCC4D9"
+                },
+                {
+                    "name": "浅紫色",
+                    "value": "#A69CC5"
+                },
+                {
+                    "name": "玫红色",
+                    "value": "#BF607C"
+                },
+                {
+                    "name": "桃红色",
+                    "value": "#DEB3B0"
+                },
+                {
+                    "name": "祖母绿",
+                    "value": "#4FA0AD"
+                },
+                {
+                    "name": "军绿色",
+                    "value": "#627053"
+                },
+                {
+                    "name": "水蓝色",
+                    "value": "#AFC4DB"
+                },
+                {
+                    "name": "藏红花",
+                    "value": "#8D3C63"
+                },
+                {
+                    "name": "柠檬黄",
+                    "value": "#ECD968"
+                }
+            ]
+        },
+        {
+            "id": "gift-1mm",
+            "title": "BigGift 1mm 空心棉",
+            "colors": [
+                {
+                    "name": "米白色",
+                    "value": "#FFF3E7"
+                },
+                {
+                    "name": "驼色",
+                    "value": "#DEC7B5"
+                },
+                {
+                    "name": "焦糖色",
+                    "value": "#9D5F45"
+                },
+                {
+                    "name": "紫色",
+                    "value": "#5C366C"
+                },
+                {
+                    "name": "淡紫色",
+                    "value": "#A395B9"
+                },
+                {
+                    "name": "宝蓝色",
+                    "value": "#304082"
+                },
+                {
+                    "name": "明黄色",
+                    "value": "#DDA443"
+                },
+                {
+                    "name": "棕色",
+                    "value": "#795237"
+                },
+                {
+                    "name": "牛仔蓝",
+                    "value": "#38425D"
+                },
+                {
+                    "name": "红色",
+                    "value": "#AF3130"
+                },
+                {
+                    "name": "圣诞绿",
+                    "value": "#4A9167"
+                },
+                {
+                    "name": "粉红色",
+                    "value": "#DDB4BD"
+                },
+                {
+                    "name": "桔红色",
+                    "value": "#CB4831"
+                },
+                {
+                    "name": "淡绿色",
+                    "value": "#BAA663"
+                },
+                {
+                    "name": "淡蓝色",
+                    "value": "#97BBD7"
+                },
+                {
+                    "name": "浅灰色",
+                    "value": "#A3A1A3"
+                },
+                {
+                    "name": "黑色",
+                    "value": "#232323"
+                },
+                {
+                    "name": "深灰色",
+                    "value": "#4C4C4C"
+                },
+                {
+                    "name": "军绿色",
+                    "value": "#737854"
+                },
+                {
+                    "name": "荧光绿",
+                    "value": "#C9DB7A"
+                },
+                {
+                    "name": "玫红色",
+                    "value": "#C84B6B"
+                },
+                {
+                    "name": "森林绿",
+                    "value": "#2E5F46"
+                },
+                {
+                    "name": "湖水绿",
+                    "value": "#C0CBC2"
+                }
+            ]
+        },
+        {
+            "id": "萌4",
+            "title": "萌4",
+            "colors": [
+                {
+                    "name": "01纯白",
+                    "value": "#F3F2F0"
+                },
+                {
+                    "name": "02奶白",
+                    "value": "#F5F6F1"
+                },
+                {
+                    "name": "03肤色",
+                    "value": "#F3EADB"
+                },
+                {
+                    "name": "04浅肉粉",
+                    "value": "#FAE9E1"
+                },
+                {
+                    "name": "05粉红",
+                    "value": "#FED5DD"
+                },
+                {
+                    "name": "06深粉",
+                    "value": "#FBA3C9"
+                },
+                {
+                    "name": "07胭脂红",
+                    "value": "#F67B97"
+                },
+                {
+                    "name": "08玫红",
+                    "value": "#FF6CBC"
+                },
+                {
+                    "name": "09大红",
+                    "value": "#C52D2C"
+                },
+                {
+                    "name": "10浅黄",
+                    "value": "#F0E4BC"
+                },
+                {
+                    "name": "11金黄",
+                    "value": "#FCE281"
+                },
+                {
+                    "name": "12亮黄",
+                    "value": "#F2E15D"
+                },
+                {
+                    "name": "13橘黄",
+                    "value": "#F6B453"
+                },
+                {
+                    "name": "14橘红",
+                    "value": "#DF5F3C"
+                },
+                {
+                    "name": "15粉紫",
+                    "value": "#D5B6DC"
+                },
+                {
+                    "name": "16紫色",
+                    "value": "#D08BDE"
+                },
+                {
+                    "name": "17若水",
+                    "value": "#E2FAE6"
+                },
+                {
+                    "name": "18天蓝",
+                    "value": "#98CAFA"
+                },
+                {
+                    "name": "19深蓝",
+                    "value": "#83A0E7"
+                },
+                {
+                    "name": "20宝蓝",
+                    "value": "#3850B0"
+                },
+                {
+                    "name": "21藏青",
+                    "value": "#272954"
+                },
+                {
+                    "name": "22湖绿",
+                    "value": "#AEE5E2"
+                },
+                {
+                    "name": "23祖母绿",
+                    "value": "#59A3BA"
+                },
+                {
+                    "name": "24嫩绿",
+                    "value": "#DCFAD3"
+                },
+                {
+                    "name": "25芽绿",
+                    "value": "#98BC44"
+                },
+                {
+                    "name": "26军绿",
+                    "value": "#415B2E"
+                },
+                {
+                    "name": "27翠绿",
+                    "value": "#048C62"
+                },
+                {
+                    "name": "28米色",
+                    "value": "#EAE1D0"
+                },
+                {
+                    "name": "29奶茶",
+                    "value": "#F0C892"
+                },
+                {
+                    "name": "30黄棕",
+                    "value": "#D5A268"
+                },
+                {
+                    "name": "31浅咖",
+                    "value": "#9B734C"
+                },
+                {
+                    "name": "32深咖",
+                    "value": "#6D473C"
+                },
+                {
+                    "name": "33灰色",
+                    "value": "#A4A4A4"
+                },
+                {
+                    "name": "34黑色",
+                    "value": "#000000"
+                },
+                {
+                    "name": "35麦香",
+                    "value": "#E8CEA2"
+                },
+                {
+                    "name": "36浅灰",
+                    "value": "#E4E4E4"
+                },
+                {
+                    "name": "37肉色",
+                    "value": "#FAB6AA"
+                },
+                {
+                    "name": "38烟紫",
+                    "value": "#D5A7BE"
+                },
+                {
+                    "name": "39桔色",
+                    "value": "#FD780F"
+                },
+                {
+                    "name": "40黄绿",
+                    "value": "#DAD46A"
+                },
+                {
+                    "name": "41间青",
+                    "value": "#81C7C7"
+                },
+                {
+                    "name": "42牛仔蓝",
+                    "value": "#6783A1"
+                },
+                {
+                    "name": "43樱花粉",
+                    "value": "#F2DDD5"
+                },
+                {
+                    "name": "44珊瑚粉",
+                    "value": "#EEC3C4"
+                },
+                {
+                    "name": "45群蓝",
+                    "value": "#70B8BE"
+                },
+                {
+                    "name": "46靛蓝",
+                    "value": "#196182"
+                },
+                {
+                    "name": "47薄荷",
+                    "value": "#BDCE9E"
+                },
+                {
+                    "name": "48秋黄",
+                    "value": "#D3B358"
+                },
+                {
+                    "name": "49深紫",
+                    "value": "#6A447A"
+                },
+                {
+                    "name": "50深红",
+                    "value": "#7F2735"
+                },
+                {
+                    "name": "51乳白",
+                    "value": "#F8F8F1"
+                },
+                {
+                    "name": "52桃红",
+                    "value": "#F49CB7"
+                },
+                {
+                    "name": "53紫红",
+                    "value": "#E4AFCF"
+                },
+                {
+                    "name": "54森林绿",
+                    "value": "#02937E"
+                },
+                {
+                    "name": "55浅军绿",
+                    "value": "#7F9351"
+                },
+                {
+                    "name": "56淡雪青",
+                    "value": "#C5B7D3"
+                },
+                {
+                    "name": "57雪青",
+                    "value": "#A58CBB"
+                },
+                {
+                    "name": "58湖蓝",
+                    "value": "#04A4C5"
+                },
+                {
+                    "name": "59仙踪绿",
+                    "value": "#1F6F5F"
+                },
+                {
+                    "name": "60浅棕",
+                    "value": "#995920"
+                },
+                {
+                    "name": "61棕色",
+                    "value": "#7D5121"
+                },
+                {
+                    "name": "62红棕",
+                    "value": "#944928"
+                },
+                {
+                    "name": "63小鸡黄",
+                    "value": "#F5C73D"
+                },
+                {
+                    "name": "64浅橘",
+                    "value": "#EABE8D"
+                },
+                {
+                    "name": "65橘粉",
+                    "value": "#EEA48F"
+                },
+                {
+                    "name": "66酒红",
+                    "value": "#99282D"
+                },
+                {
+                    "name": "67浅罗马红",
+                    "value": "#B15249"
+                }
+            ]
+        },
+        {
+            "id": "lifeyarn 羽",
+            "title": "lifeyarn 羽",
+            "colors": [
+                {
+                    "name": "本白",
+                    "value": "#EDEEE9"
+                },
+                {
+                    "name": "霜灰",
+                    "value": "#C9CACC"
+                },
+                {
+                    "name": "羊驼皮",
+                    "value": "#DFC6A7"
+                },
+                {
+                    "name": "浅蓝",
+                    "value": "#D5E5E8"
+                },
+                {
+                    "name": "珊瑚砂",
+                    "value": "#E4C0B4"
+                },
+                {
+                    "name": "香蕉色",
+                    "value": "#F7BE3F"
+                },
+                {
+                    "name": "森巴红",
+                    "value": "#A01D35"
+                },
+                {
+                    "name": "爬山虎",
+                    "value": "#9DAB70"
+                },
+                {
+                    "name": "雨林绿",
+                    "value": "#428271"
+                },
+                {
+                    "name": "森林",
+                    "value": "#436B50"
+                },
+                {
+                    "name": "公正绿",
+                    "value": "#A6C197"
+                },
+                {
+                    "name": "阳光橙",
+                    "value": "#E9884A"
+                },
+                {
+                    "name": "嫩绿",
+                    "value": "#D4DAC2"
+                },
+                {
+                    "name": "矿物灰",
+                    "value": "#A7B1B0"
+                },
+                {
+                    "name": "薰衣草",
+                    "value": "#A592BC"
+                },
+                {
+                    "name": "北欧蓝",
+                    "value": "#78B8CD"
+                },
+                {
+                    "name": "深度蓝",
+                    "value": "#283266"
+                },
+                {
+                    "name": "酒红",
+                    "value": "#6A3945"
+                },
+                {
+                    "name": "蘑菇灰",
+                    "value": "#A49B8F"
+                },
+                {
+                    "name": "咖啡棕",
+                    "value": "#524536"
+                },
+                {
+                    "name": "海草绿",
+                    "value": "#90CE57"
+                },
+                {
+                    "name": "马里蓝",
+                    "value": "#7A9CE0"
+                },
+                {
+                    "name": "春桃粉",
+                    "value": "#EDDFDB"
+                },
+                {
+                    "name": "香草奶昔",
+                    "value": "#F2EFDB"
+                },
+                {
+                    "name": "嫩黄",
+                    "value": "#F2E896"
+                },
+                {
+                    "name": "贝壳珊瑚",
+                    "value": "#DFA58E"
+                },
+                {
+                    "name": "尼罗河蓝",
+                    "value": "#96C9C8"
+                },
+                {
+                    "name": "钴蓝",
+                    "value": "#224AA1"
+                },
+                {
+                    "name": "紫罗兰",
+                    "value": "#453B6F"
+                },
+                {
+                    "name": "石蕊红",
+                    "value": "#D6C0C5"
+                },
+                {
+                    "name": "草莓冰",
+                    "value": "#E3A1AA"
+                },
+                {
+                    "name": "紫酱",
+                    "value": "#895E69"
+                },
+                {
+                    "name": "魆黑",
+                    "value": "#28272C"
+                },
+                {
+                    "name": "芝士",
+                    "value": "#E6E3DC"
+                }
+            ]
+        },
+        {
+            "id": "superwash merino",
+            "title": "superwash merino",
+            "colors": [
+                {
+                    "name": "1 ecru",
+                    "value": "#FBF6F4"
+                },
+                {
+                    "name": "2 lime",
+                    "value": "#D1CB6B"
+                },
+                {
+                    "name": "3 olive",
+                    "value": "#6F784B"
+                },
+                {
+                    "name": "4 cobalt blue",
+                    "value": "#61A3D2"
+                },
+                {
+                    "name": "5 indigo blue",
+                    "value": "#3E4B82"
+                },
+                {
+                    "name": "6 red",
+                    "value": "#AD251F"
+                },
+                {
+                    "name": "7 chocolate",
+                    "value": "#59342E"
+                },
+                {
+                    "name": "8 light grey",
+                    "value": "#C0C0C3"
+                }
+            ]
+        },
+        {
+            "id": "九色鸟棉线",
+            "title": "九色鸟棉线",
+            "colors": [
+                {
+                    "name": "嫩黄",
+                    "value": "#F7EBAA"
+                },
+                {
+                    "name": "鹅黄",
+                    "value": "#F5D67D"
+                },
+                {
+                    "name": "橘黄",
+                    "value": "#EC9952"
+                },
+                {
+                    "name": "青绿",
+                    "value": "#A5CC9B"
+                },
+                {
+                    "name": "粉蓝",
+                    "value": "#AFE7F4"
+                },
+                {
+                    "name": "浅蓝",
+                    "value": "#A1BBDE"
+                },
+                {
+                    "name": "湖蓝",
+                    "value": "#5FB5D5"
+                },
+                {
+                    "name": "浅灰",
+                    "value": "#D7D6CE"
+                },
+                {
+                    "name": "卡其",
+                    "value": "#DFD1AD"
+                },
+                {
+                    "name": "玫红",
+                    "value": "#C0324F"
+                },
+                {
+                    "name": "大红",
+                    "value": "#C03432"
+                },
+                {
+                    "name": "紫兰",
+                    "value": "#352131"
+                },
+                {
+                    "name": "宝蓝",
+                    "value": "#34416C"
+                },
+                {
+                    "name": "咖啡",
+                    "value": "#5B423E"
+                },
+                {
+                    "name": "乳白",
+                    "value": "#F3F1E0"
+                },
+                {
+                    "name": "黑色",
+                    "value": "#141415"
+                },
+                {
+                    "name": "浅粉",
+                    "value": "#F3E1E6"
+                },
+                {
+                    "name": "玫粉",
+                    "value": "#E985AB"
+                },
+                {
+                    "name": "肉粉",
+                    "value": "#F1CCCB"
+                },
+                {
+                    "name": "淡黄",
+                    "value": "#F0E4C2"
+                },
+                {
+                    "name": "浅紫",
+                    "value": "#C9B2D0"
+                },
+                {
+                    "name": "纯白",
+                    "value": "#F7F6F8"
+                },
+                {
+                    "name": "水粉",
+                    "value": "#F4C8D4"
+                },
+                {
+                    "name": "西瓜红",
+                    "value": "#EC9B95"
+                },
+                {
+                    "name": "橡皮红",
+                    "value": "#B8818A"
+                },
+                {
+                    "name": "水绿",
+                    "value": "#C9EFCD"
+                },
+                {
+                    "name": "秋菊",
+                    "value": "#F4D5BC"
+                },
+                {
+                    "name": "暗绿",
+                    "value": "#9BAC9D"
+                },
+                {
+                    "name": "暗粉",
+                    "value": "#DFB0A8"
+                },
+                {
+                    "name": "灰蓝",
+                    "value": "#D0D0D3"
+                },
+                {
+                    "name": "卡其白",
+                    "value": "#D0C7B8"
+                }
+            ]
+        },
+        {
+            "id": "九色鸟8#类似线",
+            "title": "九色鸟8#类似线",
+            "colors": [
+                {
+                    "name": "浅粉",
+                    "value": "#ECDBE0"
+                },
+                {
+                    "name": "中粉",
+                    "value": "#E09FB1"
+                },
+                {
+                    "name": "桃粉",
+                    "value": "#DA7F97"
+                },
+                {
+                    "name": "肉粉",
+                    "value": "#CE767F"
+                },
+                {
+                    "name": "水绿",
+                    "value": "#CFEBC5"
+                },
+                {
+                    "name": "果绿",
+                    "value": "#7A9C6F"
+                },
+                {
+                    "name": "天蓝",
+                    "value": "#83A5D6"
+                },
+                {
+                    "name": "浅肉粉",
+                    "value": "#DEC4C2"
+                },
+                {
+                    "name": "卡其白",
+                    "value": "#DAD3C6"
+                },
+                {
+                    "name": "深驼",
+                    "value": "#786D65"
+                },
+                {
+                    "name": "黑色",
+                    "value": "#262627"
+                },
+                {
+                    "name": "纯白",
+                    "value": "#F5F5F5"
+                },
+                {
+                    "name": "大红",
+                    "value": "#BA3136"
+                },
+                {
+                    "name": "嫩黄",
+                    "value": "#F1E29D"
+                },
+                {
+                    "name": "小鸡黄",
+                    "value": "#F1C76F"
+                },
+                {
+                    "name": "湖蓝",
+                    "value": "#77C7E8"
+                },
+                {
+                    "name": "玫红",
+                    "value": "#D33F6A"
+                },
+                {
+                    "name": "肉粉",
+                    "value": "#E3C0C0"
+                },
+                {
+                    "name": "奶白",
+                    "value": "#EDEEE2"
+                },
+                {
+                    "name": "浅灰",
+                    "value": "#CBD0D8"
+                },
+                {
+                    "name": "浅驼",
+                    "value": "#C9BDB1"
+                },
+                {
+                    "name": "中灰",
+                    "value": "#8F8F8D"
+                },
+                {
+                    "name": "橘黄",
+                    "value": "#8F8F8D"
+                },
+                {
+                    "name": "宝蓝",
+                    "value": "#2B2C59"
+                },
+                {
+                    "name": "深驼",
+                    "value": "#7D5E52"
+                }
+            ]
+        },
+        {
+            "id": "手鞠球8#类似线",
+            "title": "手鞠球8#类似线",
+            "colors": [
+                {
+                    "name": "玫粉",
+                    "value": "#901E3B"
+                },
+                {
+                    "name": "桃红",
+                    "value": "#A04158"
+                },
+                {
+                    "name": "浅粉",
+                    "value": "#CBA7AD"
+                },
+                {
+                    "name": "牡丹粉",
+                    "value": "#972859"
+                },
+                {
+                    "name": "白色",
+                    "value": "#F9FAFA"
+                },
+                {
+                    "name": "酒红",
+                    "value": "#7D182D"
+                },
+                {
+                    "name": "红色",
+                    "value": "#911C1A"
+                },
+                {
+                    "name": "淡葱香红",
+                    "value": "#B35759"
+                },
+                {
+                    "name": "霞光红",
+                    "value": "#D7ADAC"
+                },
+                {
+                    "name": "宝石蓝",
+                    "value": "#3B82AA"
+                },
+                {
+                    "name": "雾霾蓝",
+                    "value": "#8397A7"
+                },
+                {
+                    "name": "冰蓝",
+                    "value": "#B5CBCC"
+                },
+                {
+                    "name": "绽蓝",
+                    "value": "#435F8A"
+                },
+                {
+                    "name": "群青",
+                    "value": "#2F6697"
+                },
+                {
+                    "name": "晴蓝",
+                    "value": "#5EA0B8"
+                },
+                {
+                    "name": "橘黄",
+                    "value": "#B3471E"
+                },
+                {
+                    "name": "杏黄",
+                    "value": "#C8832E"
+                },
+                {
+                    "name": "金瓜黄",
+                    "value": "#D4B657"
+                },
+                {
+                    "name": "浅黄",
+                    "value": "#E3D789"
+                },
+                {
+                    "name": "深紫",
+                    "value": "#35204A"
+                },
+                {
+                    "name": "茄子紫",
+                    "value": "#5C4586"
+                },
+                {
+                    "name": "槿紫",
+                    "value": "#8A749A"
+                },
+                {
+                    "name": "浅紫",
+                    "value": "#B6AAC8"
+                },
+                {
+                    "name": "美蝶绿",
+                    "value": "#5B957D"
+                },
+                {
+                    "name": "竹绿",
+                    "value": "#88AA80"
+                },
+                {
+                    "name": "石绿",
+                    "value": "#A2C7BB"
+                },
+                {
+                    "name": "绿色",
+                    "value": "#2D603C"
+                },
+                {
+                    "name": "草绿",
+                    "value": "#557A49"
+                },
+                {
+                    "name": "黄绿",
+                    "value": "#9BB669"
+                },
+                {
+                    "name": "浅绿",
+                    "value": "#D6DDBA"
+                },
+                {
+                    "name": "卡其色",
+                    "value": "#DBC09E"
+                },
+                {
+                    "name": "肤色",
+                    "value": "#D3C8B9"
+                },
+                {
+                    "name": "青莲紫",
+                    "value": "#793965"
+                },
+                {
+                    "name": "芋紫",
+                    "value": "#6C4C6D"
+                },
+                {
+                    "name": "深蓝",
+                    "value": "#222B49"
+                },
+                {
+                    "name": "深灰",
+                    "value": "#5D6062"
+                },
+                {
+                    "name": "咖色",
+                    "value": "#483A2F"
+                },
+                {
+                    "name": "黑色",
+                    "value": "#1F2023"
+                },
+                {
+                    "name": "深绿",
+                    "value": "#445D47"
+                },
+                {
+                    "name": "西瓜红",
+                    "value": "#8A4440"
+                },
+                {
+                    "name": "藕色",
+                    "value": "#916564"
+                },
+                {
+                    "name": "鹅黄",
+                    "value": "#E4DCB4"
+                },
+                {
+                    "name": "浅米色",
+                    "value": "#E3E0CF"
+                },
+                {
+                    "name": "水粉",
+                    "value": "#E2D7D0"
+                },
+                {
+                    "name": "冰湖蓝",
+                    "value": "#79B7C4"
+                },
+                {
+                    "name": "孔雀绿",
+                    "value": "#A4B4A7"
+                },
+                {
+                    "name": "浅咖色",
+                    "value": "#C59D6D"
+                },
+                {
+                    "name": "驼色",
+                    "value": "#AD7E53"
+                },
+                {
+                    "name": "杏红色",
+                    "value": "#C18B78"
+                },
+                {
+                    "name": "浅灰",
+                    "value": "#B0B3B2"
+                },
+                {
+                    "name": "宝石绿",
+                    "value": "#327461"
+                },
+                {
+                    "name": "湖绿",
+                    "value": "#68B1A9"
+                },
+                {
+                    "name": "浅冰蓝",
+                    "value": "#C7D7D3"
+                },
+                {
+                    "name": "奶咖色",
+                    "value": "#916D72"
+                },
+                {
+                    "name": "可可糖",
+                    "value": "#BCA7A6"
+                },
+                {
+                    "name": "藕紫",
+                    "value": "#938890"
+                },
+                {
+                    "name": "红檀",
+                    "value": "#8E5756"
+                },
+                {
+                    "name": "珊瑚色",
+                    "value": "#CFA59A"
+                },
+                {
+                    "name": "浅杏",
+                    "value": "#DEB4A0"
+                },
+                {
+                    "name": "浅墨蓝",
+                    "value": "#6E8197"
+                },
+                {
+                    "name": "藕荷色",
+                    "value": "#B78091"
+                },
+                {
+                    "name": "薄红色",
+                    "value": "#C98288"
+                },
+                {
+                    "name": "艾草绿",
+                    "value": "#A1B3A7"
+                },
+                {
+                    "name": "本白",
+                    "value": "#EEEDEA"
+                }
+            ]
+        }
+    ]
+}

@@ -234,6 +234,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
               setColorArr([]);
             }}
             desc="点击上传图片或将图片拖拽于此"
+            height="240px"
             className="radius-12"
           >
             {imgUrl && (
@@ -335,7 +336,9 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                   className="flex column items-center relative justify-center gap-4 disabled"
                 >
                   <LandColorPicker value={item0.value} size={36} border />
-                  <div className="fs-10 color-gray-4">{item0.value}</div>
+                  <div className="color-gray-4" style={{ fontSize: "10px" }}>
+                    {item0.value}
+                  </div>
                 </StyleColorItem>
               ))
             : colorArr?.map((item: any, index: number) => (
@@ -514,13 +517,14 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
           ))}
         </StyleColorCardWrap>
       )}
-      <LandMessage show={toast} text={toastText} />
+      {toast && <LandMessage show={toast} text={toastText} />}
     </LandContent>
   );
 };
 
 export const StyleColorItem = styled.div`
   width: 48px;
+  font-size: 12px;
   &.disabled {
     opacity: var(--opacity-02);
     pointer-events: none;
