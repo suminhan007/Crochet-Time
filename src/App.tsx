@@ -17,6 +17,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Editor from "./pages/Editor";
 import axios from "axios";
+import WorktopPages from './pages/Editor/Design/WorktopPages';
 
 function App() {
   const [curType, setCurType] = useState<number | string>(1);
@@ -171,6 +172,7 @@ function App() {
         <Route path="/" element={publicElement} />
         <Route path="/suumhan" element={publicElement} />
         <Route path="/editor" element={<Editor />} />
+        <Route path="/editor/worktop" element={<WorktopPages />} />
       </Routes>
     </>
   );

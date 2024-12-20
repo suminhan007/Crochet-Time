@@ -6,9 +6,10 @@ import {
 import { useState } from "react";
 import { WorksType } from "./type";
 import styled from "styled-components";
-import WorktopPages from "./WorktopPages";
+import { useNavigate } from "react-router-dom";
 
-const Design: React.FC<{}> = ({}) => {
+const Design: React.FC<{}> = ({ }) => {
+  const navigate = useNavigate();
   //@ts-ignore
   const [data, setData] = useState<any[]>(DESIGN_HOME_WORKS_DATA);
   const getTypeIcon = (type: string) => {
@@ -70,7 +71,6 @@ const Design: React.FC<{}> = ({}) => {
         break;
     }
   };
-  const [title, setTitle] = useState<string>("");
   return (
     <div className="flex-1 flex column items-center gap-24 width-100 overflow-auto p-32">
       <div
@@ -103,7 +103,7 @@ const Design: React.FC<{}> = ({}) => {
                 <div
                   key={item.value ?? index}
                   className="flex items-center gap-4 px-12 py-8 cursor-pointer hover:bg-gray transition"
-                  onClick={() => setTitle(item.label)}
+                  onClick={() => navigate(`/editor/worktop?type=${item.value}`)}
                 >
                   {getTypeIcon(item.value)}
                   {item.label}
@@ -134,7 +134,6 @@ const Design: React.FC<{}> = ({}) => {
           </div>
         ))}
       </div>
-      <WorktopPages show={Boolean(title)} title={title} />
     </div>
   );
 };
