@@ -1,8 +1,8 @@
 import React from "react";
 
-const WorktopWool: React.FC<{}> = ({}) => {
+const WorktopWool: React.FC<{}> = ({ }) => {
   return <div>
-    
+
   </div>;
 };
 

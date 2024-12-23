@@ -5,7 +5,7 @@ interface Point {
   y: number;
 }
 
-interface Path {
+export interface Path {
   path: Point[];
   color: string;
   width: number;
@@ -14,12 +14,16 @@ type Props = {
   strokeColor?: string;
   lineWidth?: number;
   ratio?: number;
+  canvasClassName?: string;
+  drawEnd?: (data: Path[]) => void;
 }
 
 const CanvasBoard: React.FC<Props> = ({
   strokeColor = '#000',
   lineWidth = 2,
-  ratio = 1
+  ratio = 1,
+  canvasClassName = '',
+  drawEnd
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -65,6 +69,7 @@ const CanvasBoard: React.FC<Props> = ({
     setIsDrawing(false);
     setPaths((prevPaths) => [...prevPaths, { path: currentPath, color: strokeColor, width: lineWidth }]);
     setCurrentPath([]);
+    drawEnd?.(paths);
   };
 
   // 缩放逻辑
@@ -118,7 +123,7 @@ const CanvasBoard: React.FC<Props> = ({
         onMouseUp={endDrawing}
         onMouseLeave={endDrawing}
         onWheel={handleWheel}
-        className='bg-white'
+        className={`${canvasClassName} bg-white`}
         style={{ transform: `scale(${0.8 * scale})` }}
       />
     </div>
