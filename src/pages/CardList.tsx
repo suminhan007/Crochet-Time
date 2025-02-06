@@ -10,8 +10,9 @@ import { StyledCourseMenu } from "./CourseList";
 
 type Props = {
   data?: any[];
+  isEnglish?:boolean;
 };
-const CardList: React.FC<Props> = ({ data = [] }) => {
+const CardList: React.FC<Props> = ({ data = [],isEnglish }) => {
   const loading = useMemo(() => !data || data?.length <= 0, [data]);
   const [open, setOpen] = useState<boolean>(true);
   const [mobile, setMobile] = useState<boolean>(false);
@@ -43,7 +44,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
         style={{ zIndex: 100 }}
       >
         <LandLoading size={24} color="var(--color-primary-6)" />
-        <div>努力加载中</div>
+        <div>{isEnglish ? 'loading...':'努力加载中'}</div>
       </div>
       <StyledCourseMenu className={`relative ${open ? "open" : ""}`}>
         <div className="height-100 width-100 overflow-auto pb-24">
@@ -60,7 +61,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
                   className="radius-8 overflow-hidden"
                   style={{ width: "64px", height: "64px" }}
                 />
-                <div className="fs-14 color-gray-3">{item.title}</div>
+                <div className="fs-14 color-gray-3">{isEnglish ? (item?.enTitle||item?.title):item?.title}</div>
               </div>
             ))}
           </div>
@@ -85,7 +86,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
           w="fit-content"
           style={{ maxWidth: "400px", margin: "0 auto" }}
         >
-          <LandTitle title={curItm?.title} type="h2" />
+          <LandTitle title={isEnglish ? (curItm?.enTitle||curItm?.title):curItm?.title} type="h2" />
           <LandFlex column gap={12} className="p-12 bg-gray radius-8" w="100%">
             {curItm?.img && (
               <img
@@ -95,7 +96,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
               />
             )}
             {curItm?.desc && (
-              <div className="fs-12 color-gray-3">{curItm?.desc}</div>
+              <div className="fs-12 color-gray-3">{isEnglish?(curItm?.enDesc||curItm?.desc):curItm?.desc}</div>
             )}
           </LandFlex>
           {curItm?.detail && <img src={curItm?.detail} width="100%" />}
@@ -103,7 +104,7 @@ const CardList: React.FC<Props> = ({ data = [] }) => {
             <div className="flex column gap-12">
               {curItm?.detailList?.map((imgItm: any) => (
                 <LandFlex column gap={8}>
-                  {imgItm.desc && <LandTitle title={imgItm.desc} type="p" />}
+                  {imgItm.desc && <LandTitle title={isEnglish?(imgItm?.enDesc||imgItm?.desc):imgItm?.desc} type="p" />}
                   {imgItm.img && (
                     <img
                       src={imgItm.img}

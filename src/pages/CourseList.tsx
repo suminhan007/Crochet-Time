@@ -11,12 +11,13 @@ import styled from "styled-components";
 
 type Props = {
   data?: any[];
+  isEnglish?: boolean;
 };
-const CourseList: React.FC<Props> = ({ data = [] }) => {
+const CourseList: React.FC<Props> = ({ data = [],isEnglish }) => {
   const loading = useMemo(() => !data || data?.length <= 0, [data]);
   const [open, setOpen] = useState<boolean>(true);
-  const [activeCap, setActiveCap] = useState<number | string>("0");
-  const [activeItm, setActiveItm] = useState<number | string>("1");
+  const [activeCap, setActiveCap] = useState<string>("0");
+  const [activeItm, setActiveItm] = useState<string>("1");
 
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => {
@@ -51,16 +52,16 @@ const CourseList: React.FC<Props> = ({ data = [] }) => {
         style={{ zIndex: 100 }}
       >
         <LandLoading size={24} color="var(--color-primary-6)" />
-        <div>努力加载中</div>
+        <div>{isEnglish ? 'loading...':'努力加载中'}</div>
       </div>
       <StyledCourseMenu className={`relative ${open ? "open" : ""}`}>
         <LandMenu
           data={data?.map((itm) => ({
             key: itm.cap_id,
-            title: itm.cap,
+            title: isEnglish ? itm.enCap:itm.cap,
             dropData: itm?.contentMenuList?.map((dropItm: any) => ({
               key: dropItm.id,
-              title: dropItm.title,
+              title: isEnglish ? (dropItm?.enTitle||dropItm.title):dropItm.title,
             })),
             open: true,
           }))}
@@ -99,12 +100,12 @@ const CourseList: React.FC<Props> = ({ data = [] }) => {
 
       <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
         <LandFlex column gap={16} w="fit-content" style={{ margin: "0 auto" }}>
-          <LandTitle title={curItm?.title} type="h2" />
+          <LandTitle title={isEnglish ? (curItm?.enTitle||curItm?.title):curItm?.title} type="h2" />
           <div className="flex column gap-12">
-            {curItm?.des && <LandTitle title={curItm?.des} type="p" />}
+            {curItm?.des && <LandTitle title={isEnglish?(curItm?.enDes||curItm?.des):curItm?.des} type="p" />}
             {curItm?.imgList?.map((imgItm: any) => (
               <LandFlex column gap={8} style={{ maxWidth: "400px" }}>
-                <LandTitle title={imgItm.img_des} type="p" />
+                <LandTitle title={isEnglish ? (imgItm?.en_img_des||imgItm.img_des) : imgItm.img_des} type="p" />
                 <img src={imgItm.img_src} width="100%" />
               </LandFlex>
             ))}

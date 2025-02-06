@@ -13,8 +13,9 @@ import styled from "styled-components";
 
 type Props = {
   data?: any[];
+  isEnglish?: boolean;
 };
-const CourseList: React.FC<Props> = ({ data }) => {
+const CourseList: React.FC<Props> = ({ data,isEnglish }) => {
   const [open, setOpen] = useState<boolean>(true);
   const [activeCap, setActiveCap] = useState<number | string>("0");
   const [activeItm, setActiveItm] = useState<number | string>("1");

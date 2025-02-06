@@ -35,8 +35,8 @@ const unitColorArr = [
   { id: "6", value: "#cab8ba" },
 ];
 
-type Props = {};
-const ImgColorPicker: React.FC<Props> = ({}) => {
+type Props = {isEnglish?:boolean;};
+const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
   const [imgUrl, setImgUrl] = useState<string>("");
   const imgRef = useRef<HTMLImageElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
@@ -67,7 +67,6 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
       }
     });
     observer.observe(imgWrapRef.current);
-    console.log("设置了图片wrap尺寸");
     return () => observer.disconnect();
   }, [imgWrapRef, imgUrl]);
 
@@ -78,7 +77,8 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
         let color: string = "";
         // @ts-ignore
         if (!window.EyeDropper) {
-          handleShowToast(true, "你的浏览器不支持此功能");
+          const msg = isEnglish ? '':'你的浏览器不支持此功能'
+          handleShowToast(true, msg);
         }
         // @ts-ignore
         const eyeDropper = new EyeDropper();
@@ -223,8 +223,8 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
       {/* 上传框 */}
       <LandFlex column gap={24}>
         <PageTitle
-          mainTitle="Step 01: 上传文件"
-          subTitle="点击或拖拽来上传图片，以像素为单位对颜色计数"
+          mainTitle={isEnglish ? 'Step 01: Upload File':"Step 01：上传图片"}
+          subTitle={isEnglish ? "Click or drag to upload images, counting colors in pixels.":"点击或拖拽来上传图片，以像素为单位对颜色计数"}
         />
         <div className="width-100" style={{ height: "240px" }}>
           <LandUploader
@@ -233,7 +233,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
               setImgUrl(url);
               setColorArr([]);
             }}
-            desc="点击上传图片或将图片拖拽于此"
+            desc={isEnglish ? 'Click to upload an image or drag and drop an image here':"点击上传图片或将图片拖拽于此"}
             height="240px"
             className="radius-12"
           >
@@ -258,10 +258,16 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
       <div className="flex column width-100">
         {/* 取色配置 */}
         <div className="width-100 flex column">
-          <LandTitle title="Step 02: 取色配置" type="h3" />
+          <LandTitle title={isEnglish ? "Step 02: Color configuration":"Step 02：取色配置"} type="h3" />
           <LandTitle
-            title={
-              <>
+            title={isEnglish ? <>
+                  ·Filter Colors: Setting the range for filtering neutral colors
+                  <br/>
+                  ·Quantity of extraction: Can extract 6, 8, 10 colors at a time
+                  <br/>
+                  ·Edit Color: Support to delete, add and modify the list of extracted colors
+                </> :
+                <>
                 【过滤颜色】设置过滤中性色的范围
                 <br />
                 【提取数量】可一次提取6、8、10个颜色
@@ -276,12 +282,12 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
             <div className="flex gap-24 mt-12">
               <div className="flex column gap-8" style={{ width: "124px" }}>
                 <LandCheck
-                  text="过滤中性色"
+                    text={isEnglish ? 'Filter Neutral Colors':"过滤中性色"}
                   checked={filterChecked}
                   onChange={() => {
                     setFilterChecked(!filterChecked);
                   }}
-                  pop="勾选后将自动过滤饱和度或纯度低于 10 的颜色<br/>支持输入自定义过滤范围（≤35）"
+                  pop={isEnglish?<>·When checked, colors with saturation or purity below 10 will be automatically filtered.<br/>·Support for entering customized filter ranges (≤35)</>:<>勾选后将自动过滤饱和度或纯度低于 10 的颜色<br/>支持输入自定义过滤范围（≤35）</>}
                 />
                 <LandNumberInput
                   max={35}
@@ -292,7 +298,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                 />
               </div>
               <LandSelect
-                title="数量"
+                title={isEnglish ? 'quantities':"数量"}
                 width={124}
                 data={[
                   { value: "1", label: "4" },
@@ -318,7 +324,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                 <LandLoading />
               ) : (
                 <LandButton
-                  text="提取颜色"
+                  text={isEnglish? 'color extraction':"提取颜色"}
                   type="background"
                   status="primary"
                   onClick={() => {
@@ -377,7 +383,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
               onClick={() => handlePick()}
             >
               <IconColorPicker />
-              <LandPop content="点击吸取颜色" theme="dark" />
+              <LandPop content={isEnglish?'Click to draw color':"点击吸取颜色"} theme="dark" />
             </StyleAddColorBtn>
           )}
         </div>
@@ -386,9 +392,9 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
       {/* </Flex> */}
       {/* 色卡 */}
       <LandFlex column gap={8}>
-        <LandTitle title="Step 03: 下载 & 保存色卡" type="h3" />
+        <LandTitle title={isEnglish ? 'Step 03: Download & Save Color Cards':"Step 03：下载 & 保存色卡"} type="h3" />
         <LandTitle
-          title="调整颜色至满意值后，点击下载色卡，即可保存到本地"
+          title={isEnglish ?'After adjusting the color to a satisfactory value, click Download Color Swatch to save it locally':"调整颜色至满意值后，点击下载色卡，即可保存到本地"}
           type="p"
           className="color-gray-4"
         />
@@ -445,7 +451,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
               <LandButton
                 type="background"
                 className="width-100"
-                text="下载色卡"
+                text={isEnglish ?'Download':"下载色卡"}
                 icon={<Icon name="download" />}
               />
             </div>
@@ -488,7 +494,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
               </StyleColorCardBox>
               <div className="width-100 flex gap-12">
                 <LandInput
-                  placeholder="自定义色卡名称"
+                  placeholder={isEnglish ? 'Custom Color Card Names':"自定义色卡名称"}
                   value={cardName[index]}
                   onChange={(val) => {
                     const newArr = cardName.map((n, i) => {
@@ -505,7 +511,7 @@ const ImgColorPicker: React.FC<Props> = ({}) => {
                 <LandButton
                   type="background"
                   className="flex-1"
-                  text="下载色卡"
+                  text={isEnglish ?'Download':"下载色卡"}
                   icon={<Icon name="download" />}
                   onClick={() => {
                     const card = document.querySelectorAll(".color-card");

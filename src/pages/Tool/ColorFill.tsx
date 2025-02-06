@@ -15,8 +15,9 @@ import { ColorFill_Color_List_Data } from "../mock";
 
 type Props = {
   pathData?: { id: number; img: string; path: string[] }[];
+  isEnglish?: boolean;
 };
-const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
+const ColorFill: React.FC<Props> = ({ pathData = [],isEnglish }) => {
   const styleLoading = useMemo(
     () => !pathData || pathData?.length <= 0,
     [pathData]
@@ -83,6 +84,13 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
 
   const [activeTab, setActiveTab] = useState<string | number>("style");
   const [activeColorTab, setActiveColorTab] = useState<string>("gift-2mm");
+  const menuData = useMemo(() => isEnglish ? [
+    { key: "style", title: "style" },
+    { key: "colors", title: "color" },
+  ]:[
+    { key: "style", title: "款式" },
+    { key: "colors", title: "颜色" },
+  ],[isEnglish])
   return (
     <StyledLandContent className="flex-1 flex items-start gap-32 width-100">
       <div className="canvas-container flex column items-center gap-12">
@@ -140,10 +148,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
         <div className="flex justify-center width-100">
           <LandMenu
             border={false}
-            data={[
-              { key: "style", title: "款式" },
-              { key: "colors", title: "颜色" },
-            ]}
+            data={menuData}
             active={activeTab}
             onChange={(item) => setActiveTab(item.key)}
             style={{ height: "64px" }}
@@ -163,7 +168,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                 style={{ zIndex: 100 }}
               >
                 <LandLoading size={24} color="var(--color-primary-6)" />
-                <div>款式加载中</div>
+                  <div>{isEnglish ? 'styles loading...': '款式加载中'}</div>
               </div>
               {newPathData?.map((item3, index3) => (
                 <div
@@ -193,7 +198,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                   style={{ zIndex: 100 }}
                 >
                   <LandLoading size={24} color="var(--color-primary-6)" />
-                  <div>颜色列表加载中</div>
+                  <div>{isEnglish ? 'colors list loading...': '颜色列表加载中'}</div>
                 </div>
                 {/* 颜色 */}
                 <StyledColorFillInput className="flex items-center justify-center fs-12 color-gray-2 width-100 border radius-8">
@@ -201,7 +206,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [] }) => {
                     type="color"
                     onChange={(e: any) => handleColorClick?.(e.target.value)}
                   />
-                  自定义颜色
+                  {isEnglish ? 'Custom colors': '自定义颜色'}
                 </StyledColorFillInput>
                 <div
                   className="flex-1 flex column width-100"

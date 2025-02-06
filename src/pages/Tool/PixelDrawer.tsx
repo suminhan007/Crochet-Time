@@ -17,8 +17,8 @@ import { PageTitle } from "../../components/PageTitle";
 import { IconDec } from "../../components/Icon";
 import { StyledColorFillInput } from "./ColorFill";
 
-type Props = {};
-const PixelDrawer: React.FC<Props> = ({ }) => {
+type Props = {isEnglish?: boolean};
+const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
   const pixelCanvasRef = useRef<HTMLDivElement>(null);
   const [sizeX, setSizeX] = useState<number>(12);
   const [sizeY, setSizeY] = useState<number>(12);
@@ -233,7 +233,7 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
       </div>
       <LandFlex gap={12}>
         <div className="flex-2">
-          <PageTitle mainTitle="画笔颜色" />
+          <PageTitle mainTitle={isEnglish ? 'Brush Color':"画笔颜色"} />
           <StyledColorFillInput
             className="relative flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6 shrink-0"
             style={{
@@ -249,7 +249,7 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
           </StyledColorFillInput>
         </div>
         <div className="flex-1">
-          <PageTitle mainTitle="画布底色" />
+          <PageTitle mainTitle={isEnglish?'Canvas BackgroundColor':"画布底色"} />
           <StyledColorFillInput
             className="relative flex items-center justify-center fs-12 color-gray-2 width-100 border radius-6 shrink-0"
             style={{
@@ -265,7 +265,7 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
       </LandFlex>
       <LandFlex column>
         <div className="flex items-center gap-8">
-          <PageTitle mainTitle="画笔图样" />
+          <PageTitle mainTitle={isEnglish?'Brush Pattern':"画笔图样"} />
           <LandSwitch
             checked={usePattern}
             onChange={() => setUsePattern(!usePattern)}
@@ -274,24 +274,24 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
       </LandFlex>
 
       <LandFlex column gap={8}>
-        <PageTitle mainTitle="画布透明度" />
+        <PageTitle mainTitle={isEnglish ? 'Canvas Opacity':"画布透明度"} />
         <LandSlider
           max={1}
           step={0.1}
           value={opacity}
           onChange={(val) => setOpacity(val)}
           height={16}
-          suffix={`${(opacity / 1) * 100}%`}
+          suffix={`${(opacity) * 100}%`}
         />
       </LandFlex>
 
       <LandFlex column gap={8}>
         <PageTitle
-          mainTitle="设置画布大小"
-          mainInfo="画布大小范围为 4x4 - 48x48"
+          mainTitle={isEnglish ? 'Setting the canvas size':"设置画布大小"}
+          mainInfo={isEnglish ? 'Canvas size range of 4x4 - 48x48':"画布大小范围为 4x4 - 48x48"}
         />
         <LandFlex gap={16} bothCenter>
-          <LandTitle title="宽:" type="p" />
+          <LandTitle title={isEnglish ? 'width:':"宽:"} type="p" />
           <LandNumberInput
             value={sizeX}
             max={48}
@@ -301,7 +301,7 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
               handleSizeChange(val, sizeY);
             }}
           />
-          <LandTitle title="高:" type="p" />
+          <LandTitle title={isEnglish ? 'height:':"高:"} type="p" />
           <LandNumberInput
             value={sizeY}
             max={48}
@@ -315,7 +315,7 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
       </LandFlex>
       <LandFlex column gap={8}>
         <div className="flex items-center gap-8">
-          <PageTitle mainTitle="导入参考图" />
+          <PageTitle mainTitle={isEnglish ? 'Import Reference Image':"导入参考图"} />
           <LandSwitch
             checked={useBg}
             onChange={() => {
@@ -335,7 +335,7 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
             fileType="image/*"
             height="100px"
             onUpload={(url) => setImgUrl(url)}
-            desc="点击上传图片或将图片拖拽于此"
+            desc={isEnglish?'Click to upload an image or drag and drop an image here':"点击上传图片或将图片拖拽于此"}
             className="radius-12"
             width="100%"
           >
@@ -357,11 +357,11 @@ const PixelDrawer: React.FC<Props> = ({ }) => {
       </LandFlex>
       <LandFlex justify="center" gap={12}>
         <LandButton
-          text="清空画布"
+          text={isEnglish?'Clear Canvas':"清空画布"}
           onClick={() => setColorList(defaultColorList)}
         />
         <LandButton
-          text="立即下载"
+          text={isEnglish ? 'Download':"立即下载"}
           type="background"
           className="flex-1"
           style={{ maxWidth: "200px" }}
@@ -407,9 +407,9 @@ const StylePixelItem = styled.div`
   }
 
   input {
-    width: 0px;
-    height: 0px;
-    inline-size: 0px;
+    width: 0;
+    height: 0;
+    inline-size: 0;
     padding: 0;
   }
 `;

@@ -1,42 +1,50 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import './style/atomic.scss';
-import './style/reset.scss';
-import './style/variable.scss';
-import { LandFlex, LandHeader } from "@suminhan/land-design";
-import { ColorFill_Path_List_Data, Nav_Data } from "./pages/mock";
+import {useEffect, useState} from 'react';
+import './style/index.less';
+import './style/reset.less';
+import './style/atomic.less';
+import './style/variable.less';
+import {Icon, LandHeader} from "@suminhan/land-design";
+import {ColorFill_Path_List_Data, English_Nav_Data, Nav_Data} from "./pages/mock";
 import { IconCTLogo } from "./components/Icon";
 import CardList from "./pages/CardList";
 import CourseList from "./pages/CourseList";
 import ColorFill from "./pages/Tool/ColorFill";
 import ImgColorPicker from "./pages/Tool/ImgColorPicker";
-import styled from "styled-components";
 import PixelDrawer from "./pages/Tool/PixelDrawer";
-
-import { Route, Routes } from "react-router-dom";
-
-import Editor from "./pages/Editor";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import axios from "axios";
-import WorktopPages from './pages/Editor/Design/WorktopPages';
 
-function App() {
-  const [curType, setCurType] = useState<number | string>(1);
-  const [curPage, setCurPage] = useState<number | string>(1);
-  const [navData, setNavData] = useState<any[]>(Nav_Data);
+function App (){
+  const navigate = useNavigate();
+  const [language, setLanguage] = useState<string>('en');
+  const [navData,setNavData] = useState<any[]>(language==='en' ? English_Nav_Data :Nav_Data);
+  useEffect(() => {
+    language==='en' ? setNavData(English_Nav_Data):setNavData(Nav_Data);
+  }, [language]);
+  const [active, setActive] = useState<string>("course-crochet");
+  const [dropActive, setDropActive] = useState<string>("course-crochet");
+  useEffect(() => {
+    const href = window.location.href.split('/type=');
+    if(href.length>=2){
+      const targetHref = href[1]?.split('/type=')[0];
+      setDropActive(targetHref);
+    }
+  }, [window.location.href]);
   useEffect(() => {
     const wrap = document.querySelector("#root") || document.body;
     const rect = wrap.getBoundingClientRect();
-    if (rect.width > 800) {
+    const data = language==='en' ? English_Nav_Data : Nav_Data;
+    if (rect.width <= 768) {
       setNavData(
-        Nav_Data.map((itm) => ({
+        data.map((itm) => ({
           key: itm.key,
           title: itm.title,
           dropData: itm.dropData,
-          open: false,
+          open: open,
         }))
       );
     } else {
-      setNavData(Nav_Data);
+      setNavData(data);
     }
   }, []);
 
@@ -55,8 +63,8 @@ function App() {
         console.log(error);
       }
     };
-    switch (curPage) {
-      case 1:
+    switch (dropActive) {
+      case 'course-crochet':
         fetchData = async () => {
           try {
             const response = await axios.get("./api/crochetCourseData.json");
@@ -66,7 +74,7 @@ function App() {
           }
         };
         break;
-      case 2:
+      case 'course-knit':
         fetchData = async () => {
           try {
             const response = await axios.get("./api/knitCourseData.json");
@@ -76,7 +84,7 @@ function App() {
           }
         };
         break;
-      case 11:
+      case 'wire':
         fetchData = async () => {
           try {
             const response = await axios.get("./api/xcListData.json");
@@ -86,7 +94,7 @@ function App() {
           }
         };
         break;
-      case 12:
+      case 'tool':
         fetchData = async () => {
           try {
             const response = await axios.get("./api/qcListData.json");
@@ -96,17 +104,7 @@ function App() {
           }
         };
         break;
-      // case 22:
-      //   fetchData = async () => {
-      //     try {
-      //       const response = await axios.get("./api/colorFIllPathData.json");
-      //       setColorsFillPathData(response.data.data);
-      //     } catch (error) {
-      //       console.log(error);
-      //     }
-      //   };
-      //   break;
-      case 31:
+      case 'pattern':
         fetchData = async () => {
           try {
             const response = await axios.get("./api/tjListData.json");
@@ -122,74 +120,69 @@ function App() {
 
     // 调用获取数据的函数
     fetchData();
-  }, [curPage]);
-
-  const publicElement = (
-    <LandFlex column className="height-100">
-      <StyledLandHeader
-        logo={<IconCTLogo />}
-        menuProps={{
-          data: navData,
-          active: curType,
-          onChange: (item) => {
-            setCurPage(item.key);
-            setCurType(item.key);
-          },
-          onDropChange: (dropItem, item) => {
-            setCurPage(dropItem.key);
-            setCurType(item.key);
-          },
-          dropProps: {
-            direction: "column",
-            active: curPage,
-          },
-          theme: {
-            lineColor: "inherit",
-            activeBg: "var(--color-bg-2)",
-          },
-        }}
-        align="end"
-        className="relative"
-      />
-
-      {curPage === 1 && <CourseList data={crochetCourseData} />}
-      {curPage === 2 && <CourseList data={knitCourseData} />}
-
-      {curPage === 11 && <CardList data={xcListData} />}
-      {curPage === 12 && <CardList data={qcListData} />}
-
-      {curPage === 21 && <ImgColorPicker />}
-      {curPage === 22 && <ColorFill pathData={ColorFill_Path_List_Data} />}
-      {curPage === 23 && <PixelDrawer />}
-
-      {curPage === 31 && <CardList data={tjListData} />}
-    </LandFlex>
-  );
+  }, [dropActive]);
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={publicElement} />
-        <Route path="/suumhan" element={publicElement} />
-        <Route path="/editor" element={<Editor />} />
-        <Route path="/editor/worktop" element={<WorktopPages />} />
-      </Routes>
+        <LandHeader
+            fixed
+            logo={<IconCTLogo />}
+            menuProps={{
+              data: navData,
+              active: active,
+              onChange: (item) => {
+                setActive(item.key);
+                setDropActive(item.key);
+                navigate(`/type=${item.key}`);
+              },
+              onDropChange: (dropItem,parentItem) => {
+                setActive(parentItem.key);
+                setDropActive(dropItem.key);
+                navigate(`/type=${dropItem.key}`);
+              },
+              dropProps: {
+                direction: "column",
+                active: dropActive,
+                theme: {activeBg: "var(--color-bg-2)",lineColor: "transparent",}
+              },
+            }}
+            rightComponent={<button
+                className={'flex items-center gap-4 px-12 py-4 fs-12 color-gray-3 cursor-pointer no-wrap border radius-24'}
+                onClick={() => {
+                  if (language === 'en') {
+                    setLanguage('zh');
+                  } else {
+                    setLanguage('en');
+                  }
+                  navigate(`/type=${dropActive}`);
+                }}
+            >
+              {language==='en' ? '中文':'English'}<Icon name='sort' size={12} strokeWidth={3} className={'rotate-90'}/>
+        </button>}
+            align="end"
+            className="relative"
+        />
+       <div className={'height-100vh overflow-auto'} style={{paddingTop: '88px'}}>
+         <Routes>
+           <Route path="/" element={<CourseList data={crochetCourseData} isEnglish={language==='en'}/>} />
+           <Route path="/type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language==='en'}/>} />
+           <Route path="/type=course-knit" element={<CardList data={knitCourseData} isEnglish={language==='en'}/>} />
+
+           <Route path='/type=wire' element={<CardList data={xcListData} isEnglish={language==='en'}/>}/>
+           <Route path='/type=tool' element={<CardList data={qcListData} isEnglish={language==='en'}/>}/>
+
+           <Route path='/type=color-picker' element={<ImgColorPicker isEnglish={language==='en'}/>}/>
+           <Route path='/type=color-fill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language==='en'}/>}/>
+           <Route path='/type=pixel-drawer' element={<PixelDrawer isEnglish={language==='en'}/>}/>
+
+           <Route path='/type=pattern' element={<CardList data={tjListData} isEnglish={language==='en'}/>}/>
+
+
+         </Routes>
+       </div>
     </>
   );
 }
 
-const StyledLandHeader = styled(LandHeader)`
-  /* &.kjXciE {
-    z-index: 100;
-  }
-  @media screen and (max-width: 800px) {
-    .land-menu {
-      display: none;
-    }
-    .jdrwKk .land-menu {
-      display: flex;
-    }
-  } */
-`;
 export default App;
 
