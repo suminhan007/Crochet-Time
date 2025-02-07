@@ -1,7 +1,7 @@
 
 export const Nav_Data = [
   {
-    key: 'wire',
+    key: 'basic',
     title: "编织基础",
     enTitle:'waveBase',
     dropData: [
@@ -10,21 +10,21 @@ export const Nav_Data = [
     ],
   },
   {
-    key: 'course-crochet',
+    key: 'course',
     title: "插图教程",
     enTitle: 'ImageCourse',
     dropData: [
-      { key: 'course-crochet', title: "钩针" },
-      { key: 'course-knit', title: "棒针" },
+      { key: 'crochet', title: "钩针" },
+      { key: 'knit', title: "棒针" },
     ],
   },
   {
-    key: 'color-picker',
+    key: 'aids',
     title: "辅助工具",
     dropData: [
-      { key: 'color-picker', title: "取色" },
-      { key: 'color-fill', title: "配色" },
-      { key: 'pixel-drawer', title: "像素格" },
+      { key: 'colorPicker', title: "取色" },
+      { key: 'colorFill', title: "配色" },
+      { key: 'pixelDrawer', title: "像素格" },
     ],
   },
   { key: 'pattern', title: "图解收录" },
@@ -32,7 +32,7 @@ export const Nav_Data = [
 
 export const English_Nav_Data = [
   {
-    key: 'wire',
+    key: 'basic',
     title: "Weaving Basics",
     dropData: [
       { key: 'wire', title: "Wire Material" },
@@ -40,20 +40,20 @@ export const English_Nav_Data = [
     ],
   },
   {
-    key: 'course-crochet',
+    key: 'course',
     title: "Illustration Tutorial",
     dropData: [
-      { key: 'course-crochet', title: "Crochet" },
-      { key: 'course-knit', title: "Knit" },
+      { key: 'crochet', title: "Crochet" },
+      { key: 'knit', title: "Knit" },
     ],
   },
   {
-    key: 'color-picker',
+    key: 'aids',
     title: "Online aids",
     dropData: [
-      { key: 'color-picker', title: "Extract image colors" },
-      { key: 'color-fill', title: "Match Colors" },
-      { key: 'pixel-drawer', title: "Draw Pixel Patterns" },
+      { key: 'colorPicker', title: "Extract image colors" },
+      { key: 'colorFill', title: "Match Colors" },
+      { key: 'pixelDrawer', title: "Draw Pixel Patterns" },
     ],
   },
   { key: 'pattern', title: "Illustrated Inclusion" },

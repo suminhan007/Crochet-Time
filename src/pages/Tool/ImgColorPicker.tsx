@@ -35,8 +35,8 @@ const unitColorArr = [
   { id: "6", value: "#cab8ba" },
 ];
 
-type Props = {isEnglish?:boolean;};
-const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
+type Props = { isEnglish?: boolean; };
+const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
   const [imgUrl, setImgUrl] = useState<string>("");
   const imgRef = useRef<HTMLImageElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
@@ -72,12 +72,12 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
 
   // 吸管
   const handlePick = () => {
-    if (colorArr.length >= 0) {
-      if (colorArr.length < 8) {
+    if (colorArr?.length >= 0) {
+      if (colorArr?.length < 8) {
         let color: string = "";
         // @ts-ignore
         if (!window.EyeDropper) {
-          const msg = isEnglish ? '':'你的浏览器不支持此功能'
+          const msg = isEnglish ? '' : '你的浏览器不支持此功能'
           handleShowToast(true, msg);
         }
         // @ts-ignore
@@ -148,7 +148,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
     const pixelData: Uint8ClampedArray | undefined = getPixelData(img);
     if (!pixelData) return;
     const colorCountMap = new Map();
-    for (let i = 0; i < pixelData.length; i += 4) {
+    for (let i = 0; i < pixelData?.length; i += 4) {
       const color = [pixelData[i], pixelData[i + 1], pixelData[i + 2]];
       const key = color.join(",");
 
@@ -173,7 +173,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
       ) {
         filteredColors.push(color);
       }
-      if (filteredColors.length >= colorNum) {
+      if (filteredColors?.length >= colorNum) {
         break;
       }
     }
@@ -223,8 +223,8 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
       {/* 上传框 */}
       <LandFlex column gap={24}>
         <PageTitle
-          mainTitle={isEnglish ? 'Step 01: Upload File':"Step 01：上传图片"}
-          subTitle={isEnglish ? "Click or drag to upload images, counting colors in pixels.":"点击或拖拽来上传图片，以像素为单位对颜色计数"}
+          mainTitle={isEnglish ? 'Step 01: Upload File' : "Step 01：上传图片"}
+          subTitle={isEnglish ? "Click or drag to upload images, counting colors in pixels." : "点击或拖拽来上传图片，以像素为单位对颜色计数"}
         />
         <div className="width-100" style={{ height: "240px" }}>
           <LandUploader
@@ -233,7 +233,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
               setImgUrl(url);
               setColorArr([]);
             }}
-            desc={isEnglish ? 'Click to upload an image or drag and drop an image here':"点击上传图片或将图片拖拽于此"}
+            desc={isEnglish ? 'Click to upload an image or drag and drop an image here' : "点击上传图片或将图片拖拽于此"}
             height="240px"
             className="radius-12"
           >
@@ -245,9 +245,8 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
                 <img
                   ref={imgRef}
                   src={imgUrl}
-                  className={`radius-8 ${
-                    size.ratio < wrapRatio ? "height-100" : "width-100"
-                  }`}
+                  className={`radius-8 ${size.ratio < wrapRatio ? "height-100" : "width-100"
+                    }`}
                 />
               </div>
             )}
@@ -258,16 +257,16 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
       <div className="flex column width-100">
         {/* 取色配置 */}
         <div className="width-100 flex column">
-          <LandTitle title={isEnglish ? "Step 02: Color configuration":"Step 02：取色配置"} type="h3" />
+          <LandTitle title={isEnglish ? "Step 02: Color configuration" : "Step 02：取色配置"} type="h3" />
           <LandTitle
             title={isEnglish ? <>
-                  ·Filter Colors: Setting the range for filtering neutral colors
-                  <br/>
-                  ·Quantity of extraction: Can extract 6, 8, 10 colors at a time
-                  <br/>
-                  ·Edit Color: Support to delete, add and modify the list of extracted colors
-                </> :
-                <>
+              ·Filter Colors: Setting the range for filtering neutral colors
+              <br />
+              ·Quantity of extraction: Can extract 6, 8, 10 colors at a time
+              <br />
+              ·Edit Color: Support to delete, add and modify the list of extracted colors
+            </> :
+              <>
                 【过滤颜色】设置过滤中性色的范围
                 <br />
                 【提取数量】可一次提取6、8、10个颜色
@@ -280,14 +279,14 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
           />
           {colorArr?.length !== 0 && (
             <div className="flex gap-24 mt-12">
-              <div className="flex column gap-8" style={{ width: isEnglish ? "200px":"124px" }}>
+              <div className="flex column gap-8" style={{ width: isEnglish ? "200px" : "124px" }}>
                 <LandCheck
-                    text={isEnglish ? 'Filter Neutral Colors':"过滤中性色"}
+                  text={isEnglish ? 'Filter Neutral Colors' : "过滤中性色"}
                   checked={filterChecked}
                   onChange={() => {
                     setFilterChecked(!filterChecked);
                   }}
-                  pop={isEnglish?<>·When checked, colors with saturation or purity below 10 will be automatically filtered.<br/>·Support for entering customized filter ranges (≤35)</>:<>勾选后将自动过滤饱和度或纯度低于 10 的颜色<br/>支持输入自定义过滤范围（≤35）</>}
+                  pop={isEnglish ? <>·When checked, colors with saturation or purity below 10 will be automatically filtered.<br />·Support for entering customized filter ranges (≤35)</> : <>勾选后将自动过滤饱和度或纯度低于 10 的颜色<br />支持输入自定义过滤范围（≤35）</>}
                 />
                 <LandNumberInput
                   max={35}
@@ -298,7 +297,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
                 />
               </div>
               <LandSelect
-                title={isEnglish ? 'quantities':"数量"}
+                title={isEnglish ? 'quantities' : "数量"}
                 width={124}
                 data={[
                   { value: "1", label: "4" },
@@ -318,13 +317,13 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
           className={`relative flex items-center justify-center flex-wrap gap-12 p-24 flex-1`}
           style={{ minWidth: "325px" }}
         >
-          {colorArr.length === 0 && imgUrl && (
+          {colorArr?.length === 0 && imgUrl && (
             <div className="absolute" style={{ zIndex: 1 }}>
               {picking ? (
                 <LandLoading />
               ) : (
                 <LandButton
-                  text={isEnglish? 'color extraction':"提取颜色"}
+                  text={isEnglish ? 'color extraction' : "提取颜色"}
                   type="background"
                   status="primary"
                   onClick={() => {
@@ -335,55 +334,55 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
               )}
             </div>
           )}
-          {colorArr.length === 0
+          {colorArr?.length === 0
             ? unitColorArr?.map((item0: any, index0: number) => (
-                <StyleColorItem
-                  key={index0}
-                  className="flex column items-center relative justify-center gap-4 disabled"
-                >
-                  <LandColorPicker value={item0.value} size={36} border />
-                  <div className="color-gray-4" style={{ fontSize: "10px" }}>
-                    {item0.value}
-                  </div>
-                </StyleColorItem>
-              ))
+              <StyleColorItem
+                key={index0}
+                className="flex column items-center relative justify-center gap-4 disabled"
+              >
+                <LandColorPicker value={item0.value} size={36} border />
+                <div className="color-gray-4" style={{ fontSize: "10px" }}>
+                  {item0.value}
+                </div>
+              </StyleColorItem>
+            ))
             : colorArr?.map((item: any, index: number) => (
-                <HoverCardIcon
+              <HoverCardIcon
+                key={index}
+                onClick={() => handleDeleteColor(item.id)}
+              >
+                <StyleColorItem
                   key={index}
-                  onClick={() => handleDeleteColor(item.id)}
+                  className="flex column items-center relative justify-center gap-4"
                 >
-                  <StyleColorItem
-                    key={index}
-                    className="flex column items-center relative justify-center gap-4"
-                  >
-                    <LandColorPicker
-                      value={item.value}
-                      size={36}
-                      border
-                      onChange={(color) => {
-                        const newColorArr = colorArr.map((itm) => {
-                          return {
-                            id: itm.id,
-                            value:
-                              itm.id == item.id
-                                ? `#${tinycolor(color).toHex()}`
-                                : itm.value,
-                          };
-                        });
-                        setColorArr(newColorArr);
-                      }}
-                    />
-                    <div className="fs-10 color-gray-4">{item.value}</div>
-                  </StyleColorItem>
-                </HoverCardIcon>
-              ))}
-          {colorArr.length !== 0 && colorArr.length < 8 && (
+                  <LandColorPicker
+                    value={item.value}
+                    size={36}
+                    border
+                    onChange={(color) => {
+                      const newColorArr = colorArr.map((itm) => {
+                        return {
+                          id: itm.id,
+                          value:
+                            itm.id == item.id
+                              ? `#${tinycolor(color).toHex()}`
+                              : itm.value,
+                        };
+                      });
+                      setColorArr(newColorArr);
+                    }}
+                  />
+                  <div className="fs-10 color-gray-4">{item.value}</div>
+                </StyleColorItem>
+              </HoverCardIcon>
+            ))}
+          {colorArr?.length !== 0 && colorArr?.length < 8 && (
             <StyleAddColorBtn
               className="StyleAddColorBtn relative flex both-center border radius-50 cursor-pointer hover-pop"
               onClick={() => handlePick()}
             >
               <IconColorPicker />
-              <LandPop content={isEnglish?'Click to draw color':"点击吸取颜色"} theme="dark" />
+              <LandPop content={isEnglish ? 'Click to draw color' : "点击吸取颜色"} theme="dark" />
             </StyleAddColorBtn>
           )}
         </div>
@@ -392,9 +391,9 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
       {/* </Flex> */}
       {/* 色卡 */}
       <LandFlex column gap={8}>
-        <LandTitle title={isEnglish ? 'Step 03: Download & Save Color Cards':"Step 03：下载 & 保存色卡"} type="h3" />
+        <LandTitle title={isEnglish ? 'Step 03: Download & Save Color Cards' : "Step 03：下载 & 保存色卡"} type="h3" />
         <LandTitle
-          title={isEnglish ?'After adjusting the color to a satisfactory value, click Download Color Swatch to save it locally':"调整颜色至满意值后，点击下载色卡，即可保存到本地"}
+          title={isEnglish ? 'After adjusting the color to a satisfactory value, click Download Color Swatch to save it locally' : "调整颜色至满意值后，点击下载色卡，即可保存到本地"}
           type="p"
           className="color-gray-4"
         />
@@ -419,39 +418,39 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
                 <div className="color-list grid gap-4">
                   {colorArr?.length === 0
                     ? unitColorArr.map((itm0: any) => (
+                      <div
+                        key={itm0.id}
+                        className="color-item flex column items-center gap-4"
+                      >
                         <div
-                          key={itm0.id}
-                          className="color-item flex column items-center gap-4"
-                        >
-                          <div
-                            style={{
-                              background: itm0.value,
-                            }}
-                            className="width-100 flex-1"
-                          ></div>
-                          <p>{itm0.value}</p>
-                        </div>
-                      ))
+                          style={{
+                            background: itm0.value,
+                          }}
+                          className="width-100 flex-1"
+                        ></div>
+                        <p>{itm0.value}</p>
+                      </div>
+                    ))
                     : colorArr.map((itm: any) => (
+                      <div
+                        key={itm.id}
+                        className="color-item flex column items-center gap-4"
+                      >
                         <div
-                          key={itm.id}
-                          className="color-item flex column items-center gap-4"
-                        >
-                          <div
-                            style={{
-                              background: itm.value,
-                            }}
-                            className="width-100 flex-1"
-                          ></div>
-                          <p>{itm.value}</p>
-                        </div>
-                      ))}
+                          style={{
+                            background: itm.value,
+                          }}
+                          className="width-100 flex-1"
+                        ></div>
+                        <p>{itm.value}</p>
+                      </div>
+                    ))}
                 </div>
               </StyleColorCardBox>
               <LandButton
                 type="background"
                 className="width-100"
-                text={isEnglish ?'Download':"下载色卡"}
+                text={isEnglish ? 'Download' : "下载色卡"}
                 icon={<Icon name="download" />}
               />
             </div>
@@ -460,14 +459,13 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
       ) : (
         <StyleColorCardWrap
           className="grid mx-32 gap-24 pb-24"
-          length={colorArr.length}
+          length={colorArr?.length}
         >
           {Array.from({ length: 6 }).map((_itm, index) => (
             <div key={index} className="flex column items-center gap-12">
               <StyleColorCardBox
-                className={`relative p-24 flex gap-4 width-100 border color-card card-${index} ${
-                  size.ratio < 1 ? "" : "column"
-                }`}
+                className={`relative p-24 flex gap-4 width-100 border color-card card-${index} ${size.ratio < 1 ? "" : "column"
+                  }`}
                 width={size.w}
                 height={size.h}
                 ratio={size.ratio}
@@ -494,7 +492,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
               </StyleColorCardBox>
               <div className="width-100 flex gap-12">
                 <LandInput
-                  placeholder={isEnglish ? 'Custom Color Card Names':"自定义色卡名称"}
+                  placeholder={isEnglish ? 'Custom Color Card Names' : "自定义色卡名称"}
                   value={cardName[index]}
                   onChange={(val) => {
                     const newArr = cardName.map((n, i) => {
@@ -511,7 +509,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
                 <LandButton
                   type="background"
                   className="flex-1"
-                  text={isEnglish ?'Download':"下载色卡"}
+                  text={isEnglish ? 'Download' : "下载色卡"}
                   icon={<Icon name="download" />}
                   onClick={() => {
                     const card = document.querySelectorAll(".color-card");
@@ -557,7 +555,7 @@ const StyleColorCardWrap = styled.div<{
 }>`
   width: 100%;
   grid-template-columns: ${(props) =>
-    `repeat(auto-fit, minmax(${props.length * 40 + 48}px, 1fr))`};
+    `repeat(auto-fit, minmax(${props?.length * 40 + 48}px, 1fr))`};
   &.disabled {
     opacity: var(--opacity-02);
     pointer-events: none;
@@ -629,7 +627,7 @@ const StyleColorCardBox = styled.div<{
       border-radius: var(--radius-4);
       background-color: var(--color-bg-white);
       transform: ${(props) =>
-        props.ratio >= 1 ? "translateX(-50%)" : "translateY(-50%)"};
+    props.ratio >= 1 ? "translateX(-50%)" : "translateY(-50%)"};
     }
     .color-item div {
       border-radius: 4px;
@@ -672,7 +670,7 @@ const StyleColorCardBox = styled.div<{
       height: 40px;
       width: ${(props) => (props.ratio >= 1 ? "calc(100% - 48px)" : "48px")};
       transform: ${(props) =>
-        props.ratio >= 1 ? "translateX(4px)" : "translate(-50%,50%)"};
+    props.ratio >= 1 ? "translateX(4px)" : "translate(-50%,50%)"};
     }
     .color-item div {
       border-radius: 50%;
