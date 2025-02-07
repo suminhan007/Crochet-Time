@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@suminhan/land-design": "^0.0.67",
+    "@suminhan/land-design": "^0.0.69",
     "axios": "^1.7.7",
     "html2canvas": "^1.4.1",
     "less": "^4.2.2",

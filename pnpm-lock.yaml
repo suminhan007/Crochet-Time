@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@suminhan/land-design': ^0.0.67
+  '@suminhan/land-design': ^0.0.69
   '@types/react': ^18.2.43
   '@types/react-dom': ^18.2.17
   '@typescript-eslint/eslint-plugin': ^6.14.0
@@ -22,7 +22,7 @@ specifiers:
   vite: ^5.0.8
 
 dependencies:
-  '@suminhan/land-design': 0.0.67_j6j2mnilr56d7jsvrq7rd5hsey
+  '@suminhan/land-design': 0.0.69_j6j2mnilr56d7jsvrq7rd5hsey
   axios: 1.7.9
   html2canvas: 1.4.1
   less: 4.2.2
@@ -909,8 +909,8 @@ packages:
       - '@types/node'
     dev: false
 
-  /@suminhan/land-design/0.0.67_j6j2mnilr56d7jsvrq7rd5hsey:
-    resolution: {integrity: sha512-66XmSmJTULinMQY6Xz9o+/F2RW/vVvhxfQUDQXTmjW/zvztyyvZSJ3P/AIP30fpkVn1FxO1VDzMbgDyxJGr6Mw==}
+  /@suminhan/land-design/0.0.69_j6j2mnilr56d7jsvrq7rd5hsey:
+    resolution: {integrity: sha512-thcOj19QoH5vqimW9klmMt+xaJcbyUXXMtwX5D/8gcWroDU+kp5neQsVqJurjKNXYQgBKwWIDwBstpI8s9GtCQ==}
     dependencies:
       '@vitejs/plugin-react-swc': 3.7.2_vite@5.4.11
       axios: 1.7.9

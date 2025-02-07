@@ -280,7 +280,7 @@ const ImgColorPicker: React.FC<Props> = ({isEnglish}) => {
           />
           {colorArr?.length !== 0 && (
             <div className="flex gap-24 mt-12">
-              <div className="flex column gap-8" style={{ width: "124px" }}>
+              <div className="flex column gap-8" style={{ width: isEnglish ? "200px":"124px" }}>
                 <LandCheck
                     text={isEnglish ? 'Filter Neutral Colors':"过滤中性色"}
                   checked={filterChecked}

@@ -3,7 +3,7 @@ import './style/index.less';
 import './style/reset.less';
 import './style/atomic.less';
 import './style/variable.less';
-import {Icon, LandHeader} from "@suminhan/land-design";
+import { LandHeader, LandSelect} from "@suminhan/land-design";
 import {ColorFill_Path_List_Data, English_Nav_Data, Nav_Data} from "./pages/mock";
 import { IconCTLogo } from "./components/Icon";
 import CardList from "./pages/CardList";
@@ -24,9 +24,9 @@ function App (){
   const [active, setActive] = useState<string>("course-crochet");
   const [dropActive, setDropActive] = useState<string>("course-crochet");
   useEffect(() => {
-    const href = window.location.href.split('/type=');
+    const href = window.location.href.split('type=');
     if(href.length>=2){
-      const targetHref = href[1]?.split('/type=')[0];
+      const targetHref = href[1]?.split('type=')[0];
       setDropActive(targetHref);
     }
   }, [window.location.href]);
@@ -122,6 +122,10 @@ function App (){
     fetchData();
   }, [dropActive]);
 
+  const languageSelectData  = [
+    {value:'en',label:'English'},
+    {value:'zh',label:'中文'},
+  ]
   return (
     <>
         <LandHeader
@@ -133,12 +137,12 @@ function App (){
               onChange: (item) => {
                 setActive(item.key);
                 setDropActive(item.key);
-                navigate(`/type=${item.key}`);
+                navigate(`type=${item.key}`);
               },
               onDropChange: (dropItem,parentItem) => {
                 setActive(parentItem.key);
                 setDropActive(dropItem.key);
-                navigate(`/type=${dropItem.key}`);
+                navigate(`type=${dropItem.key}`);
               },
               dropProps: {
                 direction: "column",
@@ -146,36 +150,24 @@ function App (){
                 theme: {activeBg: "var(--color-bg-2)",lineColor: "transparent",}
               },
             }}
-            rightComponent={<button
-                className={'flex items-center gap-4 px-12 py-4 fs-12 color-gray-3 cursor-pointer no-wrap border radius-24'}
-                onClick={() => {
-                  if (language === 'en') {
-                    setLanguage('zh');
-                  } else {
-                    setLanguage('en');
-                  }
-                  navigate(`/type=${dropActive}`);
-                }}
-            >
-              {language==='en' ? '中文':'English'}<Icon name='sort' size={12} strokeWidth={3} className={'rotate-90'}/>
-        </button>}
+            rightComponent={<LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)} selected={language}/>}
             align="end"
             className="relative"
         />
        <div className={'height-100vh overflow-auto'} style={{paddingTop: '88px'}}>
          <Routes>
            <Route path="/" element={<CourseList data={crochetCourseData} isEnglish={language==='en'}/>} />
-           <Route path="/type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language==='en'}/>} />
-           <Route path="/type=course-knit" element={<CardList data={knitCourseData} isEnglish={language==='en'}/>} />
+           <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language==='en'}/>} />
+           <Route path="type=course-knit" element={<CardList data={knitCourseData} isEnglish={language==='en'}/>} />
 
-           <Route path='/type=wire' element={<CardList data={xcListData} isEnglish={language==='en'}/>}/>
-           <Route path='/type=tool' element={<CardList data={qcListData} isEnglish={language==='en'}/>}/>
+           <Route path='type=wire' element={<CardList data={xcListData} isEnglish={language==='en'}/>}/>
+           <Route path='type=tool' element={<CardList data={qcListData} isEnglish={language==='en'}/>}/>
 
-           <Route path='/type=color-picker' element={<ImgColorPicker isEnglish={language==='en'}/>}/>
-           <Route path='/type=color-fill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language==='en'}/>}/>
-           <Route path='/type=pixel-drawer' element={<PixelDrawer isEnglish={language==='en'}/>}/>
+           <Route path='type=color-picker' element={<ImgColorPicker isEnglish={language==='en'}/>}/>
+           <Route path='type=color-fill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language==='en'}/>}/>
+           <Route path='type=pixel-drawer' element={<PixelDrawer isEnglish={language==='en'}/>}/>
 
-           <Route path='/type=pattern' element={<CardList data={tjListData} isEnglish={language==='en'}/>}/>
+           <Route path='type=pattern' element={<CardList data={tjListData} isEnglish={language==='en'}/>}/>
 
 
          </Routes>
