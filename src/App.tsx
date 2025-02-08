@@ -1,10 +1,18 @@
-//@ts-nocheck
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
 import './style/atomic.less';
 import './style/variable.less';
-import { LandHeader, LandSelect } from "@suminhan/land-design";
+import {
+  LandAvatar, LandButton,
+  LandDialog, LandDropdown,
+  LandHeader,
+  LandInput,
+  LandLoading,
+  LandMenu, LandPop,
+  LandRadio,
+  LandSelect
+} from "@suminhan/land-design";
 import { ColorFill_Path_List_Data, English_Nav_Data, Nav_Data } from "./pages/mock";
 import { IconCTLogo } from "./components/Icon";
 import CardList from "./pages/CardList";
@@ -14,6 +22,7 @@ import ImgColorPicker from "./pages/Tool/ImgColorPicker";
 import PixelDrawer from "./pages/Tool/PixelDrawer";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import axios from "axios";
+import supabase from "./utils/supabse.ts";
 
 function App() {
   const navigate = useNavigate();
@@ -25,6 +34,14 @@ function App() {
   const [active, setActive] = useState<string>("course");
   const [dropActive, setDropActive] = useState<string>("crochet");
   useEffect(() => {
+    if(window.location.href.split('#/').length>=2){
+      const singleHref = window.location.href.split('#/')[1];
+      if(singleHref === 'register'||singleHref === 'login'){
+        setShowDialog(singleHref)
+      }else{
+        setShowDialog('')
+      }
+    }
     const href = window.location.href.split('type=')[1]?.split('-');
     if (href?.length >= 2) {
       setDropActive(href[1]);
@@ -54,7 +71,6 @@ function App() {
   const [xcListData, setXcListData] = useState<any[]>([]);
   const [qcListData, setQcListData] = useState<any[]>([]);
   const [tjListData, setTjListData] = useState<any[]>([]);
-  // const [colorsFillPathData, setColorsFillPathData] = useState<any[]>([]);
   useEffect(() => {
     let fetchData = async () => {
       try {
@@ -128,37 +144,76 @@ function App() {
     { value: 'zh', label: '中文' },
   ]
 
-  const register = async (email: string, password: string) => {
-    const response = await fetch('https://croknittime.com/server/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
+  const [showDialog,setShowDialog] = useState<string>('');
+  const registerMenuData = [
+    {key: 'register', title:'注册'},
+    {key: 'login', title:'登录'}
+  ]
+  const registerSexData = [
+    {value: 'male', label: '男'},
+    {value: 'female', label: '女'},
+    {value: '', label: '神秘'},
+  ]
+  const [username, setUsername] = useState<string>('');
+  const [sex, setSex] = useState<number|string>('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user,setUser] = useState<{ username:string }>();
+  const [loginLoading, setLoginLoading] = useState<boolean>(false);
+  const login = async () => {
+    setLoginLoading(true)
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
     });
-    const data = await response.json();
-    if (response.ok) {
-      console.log('User registered:', data.user);
+
+    if (error) {
+      console.error('登录失败:', error);
+      setLoginLoading(false);
     } else {
-      console.error('Error registering:', data.error);
+      const {data:croknitUsers,error:selectError} = await supabase.from('croknitUsers').select('username');
+      if(selectError){
+        console.error('登录失败:', error);
+      }else{
+        setLoginLoading(false);
+        setUser({username:croknitUsers[0].username});
+        console.log(data,croknitUsers)
+        setShowDialog('');
+        navigate('/')
+      }
+    }
+  };
+  const register = async () => {
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (signUpError) {
+        throw signUpError;
+      }
+      const {  error: profileError } = await supabase
+          .from('croknitUsers')
+          .insert([
+            {
+              id: data.user?.id,
+              email,
+              username,
+              sex:String(sex),
+            },
+          ]);
+
+      if (profileError) {
+        throw profileError;
+      }
+      console.log(data.user);
+      login();
+    } catch (error) {
+      console.error('Error during registration:', error);
     }
   };
 
-  const login = async (email: string, password: string) => {
-    const response = await fetch('https://croknittime.com/server/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      console.log('User logged in:', data.user);
-    } else {
-      console.error('Error logging in:', data.error);
-    }
-  };
   return (
     <>
       <LandHeader
@@ -186,9 +241,22 @@ function App() {
         }}
         rightComponent={
           <div className='flex items-center gap-12'>
-            <a className='fs-14 color-white bg-primary px-12 py-4 radius-4 cursor-pointer' onClick={() => register?.('1766085642@qq.com', '521100SUminhan')}>注册</a>
-            <a className='fs-14 color-gray-3 hover:bg-gray px-12 py-4 radius-4 cursor-pointer transition' onClick={() => login?.('1766085642@qq.com', '521100SUminhan')}>登录</a>
-            <LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)} selected={language} />
+            <LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}
+                        selected={language}/>
+            {user ? <div className={'relative hover-pop cursor-pointer'}>{user.username}
+              <LandPop placement={'bottom'} content={<a>退出登录</a>}/>
+            </div> : <div className='flex items-center gap-12'>
+              <a className='fs-14 color-white bg-primary px-12 py-4 radius-4 cursor-pointer'
+                 onClick={() => {
+                   setShowDialog('register');
+                   navigate('register');
+                 }}>注册</a>
+              <a className='fs-14 color-gray-3 hover:bg-gray px-12 py-4 radius-4 cursor-pointer transition'
+                 onClick={() => {
+                   setShowDialog('login');
+                   navigate('login');
+                 }}>登录</a>
+            </div>}
           </div>
         }
         align="end"
@@ -211,6 +279,25 @@ function App() {
 
         </Routes>
       </div>
+      <LandDialog
+          mask
+          show={Boolean(showDialog)}
+          onClose={() => setShowDialog('')}
+          onCancel={() => setShowDialog('')}
+          onSubmit={() => showDialog === 'register' ? register():login()}
+          submitLabel={'提交'}
+          headerLeftComponent={<LandMenu data={registerMenuData} active={showDialog} onChange={item => setShowDialog(item.key)} border={false}/>}
+      >
+        {loginLoading ? <div style={{height:'164px'}} className={'flex column both-center gap-8'}>
+          <LandLoading/>
+          {showDialog === 'register' ? '自动登录中...' : '登录中...'}
+        </div>:<div className={'flex column gap-12'}>
+          <LandInput width={'100%'} prefix={'昵称：'} onChange={val => setUsername(val)}/>
+          <LandRadio data={registerSexData} checked={sex} onChange={item => setSex(item.value)}/>
+          <LandInput width={'100%'} prefix={'邮箱：'} onChange={val => setEmail(val)}/>
+          <LandInput width={'100%'} prefix={'密码：'} onChange={val => setPassword(val)}/>
+        </div>}
+      </LandDialog>
     </>
   );
 }
