@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   Icon,
   LandButton,
@@ -23,6 +22,8 @@ import { PageTitle } from "../../components/PageTitle";
 import { downloadHtmlAsImg } from "../../utils";
 import HoverCardIcon from "../../components/HoverCardIcon";
 import { IconColorPicker } from "../../components/Icon";
+import supabase from "../../utils/supabse.ts";
+import html2canvas from "html2canvas";
 
 const unitImg =
   "https://ingenueland.online/crochet-time/images/colorcard_default.jpeg";
@@ -218,6 +219,47 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
 
   //  自定义色卡名称
   const [cardName, setCardName] = useState<string[]>(["", "", "", "", "", ""]);
+
+  async function saveImageToDatabase(imagePath:any) {
+    const { data, error } = await supabase
+        .from('colorFetchImageCollect') // 替换为你的素材库表名称
+        .insert([{ image_url: imagePath }]);
+
+    if (error) {
+      console.error('Error saving image to database:', error);
+    } else {
+      console.log('Image saved to database:', data);
+    }
+  }
+  async function uploadImageToSupabase(imageData:any) {
+    const blob = await fetch(imageData).then(res => res.blob());
+    const fileName = `color-card-${Date.now()}.png`;
+    // 上传图片到 Supabase 存储
+    const { data, error } = await supabase
+        .storage
+        .from('ColorCardCollect') // 替换为你的存储桶名称
+        .upload(fileName, blob);
+
+    if (error) {
+      console.error('Error uploading image:', error);
+    } else {
+      console.log('Image uploaded successfully:', data);
+      saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
+    }
+  }
+
+  const saveColorCard = (e: any) => {
+    const card = e.target.parentElement.previousSibling;
+    if(card){
+      html2canvas(card,{
+        scale: 2,
+        useCORS: true,
+      }).then(canvas => {
+        const image = canvas.toDataURL('image/png');
+        uploadImageToSupabase(image);
+      });
+    }
+  }
   return (
     <LandContent className="flex-1 flex column items-start gap-32 pt-32 px-24 pb-24 width-100">
       {/* 上传框 */}
@@ -515,6 +557,14 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
                     const card = document.querySelectorAll(".color-card");
                     downloadHtmlAsImg(card[index], cardName[index], 4);
                   }}
+                />
+                <LandButton
+                    type="background"
+                    status={'primary'}
+                    className="flex-1"
+                    text={isEnglish ? 'Save' : "保存到仓库"}
+                    icon={<Icon name="download" />}
+                    onClick={(e) => saveColorCard?.(e)}
                 />
               </div>
             </div>
