@@ -27,7 +27,7 @@ import supabase from "../../utils/supabse.ts";
 import html2canvas from "html2canvas";
 
 const unitImg =
-  "https://ingenueland.online/crochet-time/images/colorcard_default.jpeg";
+  "https://croknittime.com/images/colorcard_default.jpeg";
 const unitColorArr = [
   { id: "1", value: "#b9a78f" },
   { id: "2", value: "#7e6d5b" },
@@ -225,7 +225,11 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     if(user){
       const { data, error } = await supabase
           .from('colorFetchImageCollect') // 替换为你的素材库表名称
-          .insert([{ img_url: imagePath,user_id: user.id }]);
+          .insert([{
+            img_url: imagePath,
+            user_id: user.id,
+            colors: Object(colorArr)
+          }]);
 
       if (error) {
         console.error('Error saving image to database:', error);
@@ -238,7 +242,6 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
   async function uploadImageToSupabase(imageData:any) {
     const blob = await fetch(imageData).then(res => res.blob());
     const fileName = `color-card-${Date.now()}.png`;
-    // 上传图片到 Supabase 存储
     const { data, error } = await supabase
         .storage
         .from('ColorCardCollect') // 替换为你的存储桶名称
@@ -247,7 +250,6 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     if (error) {
       console.error('Error uploading image:', error);
     } else {
-      console.log('Image uploaded successfully:', data);
       saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
     }
   }
