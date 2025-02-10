@@ -29,7 +29,8 @@ const Register:React.FC<Props> = ({
                     data: {
                         username,
                         sex:String(sex),
-                    }
+                    },
+                    emailRedirectTo: 'http://localhost:5173',
                 }
             });
 
@@ -54,7 +55,7 @@ const Register:React.FC<Props> = ({
             <LandInput width={'100%'} prefix={'昵称：'} onChange={val => setUsername(val)}/>
             <LandRadio data={registerSexData} checked={sex} onChange={item => setSex(item.value)}/>
             <LandInput width={'100%'} prefix={'邮箱：'} onChange={val => setEmail(val)}/>
-            <LandInput width={'100%'} prefix={'密码：'} onChange={val => setPassword(val)}/>
+            <LandInput inputType={'password'} width={'100%'} prefix={'密码：'} onChange={val => setPassword(val)}/>
         </div>
     </LandDialog>)
 }

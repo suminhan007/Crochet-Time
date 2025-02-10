@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
@@ -19,7 +18,10 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Register from "./pages/Home/Register.tsx";
 import Login from "./pages/Home/Login.tsx";
-import User from "./pages/Home/User.tsx";
+import UserAvatar from "./pages/Home/./UserAvatar.tsx";
+import LoginButtons from "./pages/Home/LoginButtons.tsx";
+import {User} from "@supabase/supabase-js";
+import supabase from "./utils/supabse.ts";
 
 function App() {
   const navigate = useNavigate();
@@ -133,7 +135,7 @@ function App() {
     { value: 'zh', label: '中文' },
   ]
 
-  const [user,setUser] = useState<{ username:string }>();
+  const [user,setUser] = useState<User>();
 
   return (
     <>
@@ -164,19 +166,10 @@ function App() {
           <div className='flex items-center gap-12'>
             <LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}
                         selected={language}/>
-            {user ? <User username={user.username}/> : <div className='flex items-center gap-12'>
-              <a className='fs-14 color-white bg-primary px-12 py-4 radius-4 cursor-pointer'
-                 onClick={() => {
-                   navigate('/register');
-                 }}>注册</a>
-              <a className='fs-14 color-gray-3 hover:bg-gray px-12 py-4 radius-4 cursor-pointer transition'
-                 onClick={() => {
-                   navigate('/login');
-                 }}>登录</a>
-            </div>}
+            {user ? <UserAvatar username={user?.user_metadata.username} onLogoutSuccess={() => setUser(undefined)} onDeleteSuccess={() => setUser(undefined)}/> : <LoginButtons/>}
           </div>
         }
-        align="end"
+        align="center"
         className="relative"
       />
       <div className={'height-100vh overflow-auto'} style={{ paddingTop: '88px' }}>
@@ -195,7 +188,7 @@ function App() {
           <Route path='type=pattern' element={<CardList data={tjListData} isEnglish={language === 'en'} />} />
 
           <Route path={'register'} element={<Register/>}/>
-          <Route path={'login'} element={<Login/>}/>
+          <Route path={'login'} element={<Login onLogined={user => setUser(user)} />}/>
         </Routes>
       </div>
     </>

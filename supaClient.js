@@ -10,7 +10,7 @@ const register = async (email, password) => {
   if (error) {
     console.error('Error registering:', error);
   } else {
-    console.log('User registered:', user);
+    console.log('UserAvatar registered:', user);
   }
 };
 
@@ -19,6 +19,6 @@ const login = async (email, password) => {
   if (error) {
     console.error('Error logging in:', error);
   } else {
-    console.log('User logged in:', user);
+    console.log('UserAvatar logged in:', user);
   }
 };
