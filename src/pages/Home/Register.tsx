@@ -25,26 +25,18 @@ const Register:React.FC<Props> = ({
             const { data, error: signUpError } = await supabase.auth.signUp({
                 email,
                 password,
+                options: {
+                    data: {
+                        username,
+                        sex:String(sex),
+                    }
+                }
             });
 
             if (signUpError) {
                 throw signUpError;
             }
-            const {  error: profileError } = await supabase
-                .from('croknitUsers')
-                .insert([
-                    {
-                        id: data.user?.id,
-                        email,
-                        username,
-                        sex:String(sex),
-                    },
-                ]);
-
-            if (profileError) {
-                throw profileError;
-            }
-            console.log(data.user);
+            console.log(data);
         } catch (error) {
             console.error('Error during registration:', error);
         }
