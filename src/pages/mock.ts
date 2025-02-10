@@ -28,6 +28,7 @@ export const Nav_Data = [
     ],
   },
   { key: 'pattern', title: "图解收录" },
+  { key: 'assets', title: "仓库" },
 ]
 
 export const English_Nav_Data = [
@@ -57,6 +58,7 @@ export const English_Nav_Data = [
     ],
   },
   { key: 'pattern', title: "Illustrated Inclusion" },
+  { key: 'assets', title: "Assets" },
 ]
 
 export const Crochet_Course_Data = [

@@ -29,6 +29,8 @@ const Register:React.FC<Props> = ({
                     data: {
                         username,
                         sex:String(sex),
+                        level: '1',
+                        coins:0,
                     },
                     emailRedirectTo: 'http://localhost:5173',
                 }
@@ -36,8 +38,20 @@ const Register:React.FC<Props> = ({
 
             if (signUpError) {
                 throw signUpError;
+            }else{
+                const {error: createUserError} = await supabase.from('users').insert({
+                    id: data.user?.id,
+                    email,
+                    password,
+                    username,
+                    sex:String(sex),
+                    level: '1',
+                    coins:0,
+                })
+                if(!createUserError){
+                    console.log(data);
+                }
             }
-            console.log(data);
         } catch (error) {
             console.error('Error during registration:', error);
         }

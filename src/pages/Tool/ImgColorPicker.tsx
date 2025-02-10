@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   Icon,
   LandButton,
@@ -219,16 +220,19 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
 
   //  自定义色卡名称
   const [cardName, setCardName] = useState<string[]>(["", "", "", "", "", ""]);
-
   async function saveImageToDatabase(imagePath:any) {
-    const { data, error } = await supabase
-        .from('colorFetchImageCollect') // 替换为你的素材库表名称
-        .insert([{ image_url: imagePath }]);
+    const {data:{user}} = await supabase.auth.getUser();
+    if(user){
+      const { data, error } = await supabase
+          .from('colorFetchImageCollect') // 替换为你的素材库表名称
+          .insert([{ img_url: imagePath,user_id: user.id }]);
 
-    if (error) {
-      console.error('Error saving image to database:', error);
-    } else {
-      console.log('Image saved to database:', data);
+      if (error) {
+        console.error('Error saving image to database:', error);
+      } else {
+        console.log('Image saved to database:', data);
+        handleShowToast(true,'保存成功，前往仓库查看')
+      }
     }
   }
   async function uploadImageToSupabase(imageData:any) {
@@ -248,7 +252,12 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     }
   }
 
-  const saveColorCard = (e: any) => {
+  const saveColorCard = async  (e: any) => {
+    const {data:{user}} = await supabase.auth.getUser();
+    if(!user) {
+      handleShowToast(true, '请先登录')
+      return;
+    }
     const card = e.target.parentElement.previousSibling;
     if(card){
       html2canvas(card,{

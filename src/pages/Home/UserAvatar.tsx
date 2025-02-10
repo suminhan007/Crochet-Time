@@ -50,7 +50,7 @@ const UserAvatar: React.FC<Props> = ({
                 placement={'right'}
                 dropClassName={'mt-4 shadow-light'}
                 toggleClassName={`${loading ? 'events-none':''}`}
-                toggle={<LandAvatar name={loading ? undefined:username} content={loading ? <LandLoading size={16} color={'var(--color-primary-6)'}/> : ""}/>}
+                toggle={<LandAvatar size={36} name={loading ? undefined:username} content={loading ? <LandLoading size={16} color={'var(--color-primary-6)'}/> : ""}/>}
                 dropContent={<div className={'flex column'}>
                     <a onClick={() => navigate('/login')}
                        className={'px-12 py-8 fs-14 color-gray-2 hover:bg-gray transition cursor-pointer no-wrap'}>切换账号</a>

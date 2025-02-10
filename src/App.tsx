@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
@@ -21,6 +22,7 @@ import Login from "./pages/Home/Login.tsx";
 import UserAvatar from "./pages/Home/./UserAvatar.tsx";
 import LoginButtons from "./pages/Home/LoginButtons.tsx";
 import {User} from "@supabase/supabase-js";
+import Assets from "./pages/Assets";
 import supabase from "./utils/supabse.ts";
 
 function App() {
@@ -33,9 +35,13 @@ function App() {
   const [active, setActive] = useState<string>("course");
   const [dropActive, setDropActive] = useState<string>("crochet");
   useEffect(() => {
+    if(!window.location.href.includes('type=')) return;
     const href = window.location.href.split('type=')[1]?.split('-');
     if (href?.length >= 2) {
       setDropActive(href[1]);
+      setActive(href[0]);
+    }else{
+      setDropActive(href[0]);
       setActive(href[0]);
     }
   }, [window.location.href]);
@@ -136,6 +142,15 @@ function App() {
   ]
 
   const [user,setUser] = useState<User>();
+  const getUser = async () => {
+    const {data: {user}} = await supabase.auth.getUser();
+    if(user) {
+      setUser(user)
+    }
+  }
+  useEffect(() => {
+    getUser()
+  }, []);
 
   return (
     <>
@@ -147,9 +162,17 @@ function App() {
           active: active,
           onChange: (item) => {
             setActive(item.key);
-            const targetDropKey = navData.filter((itm) => itm.key === item.key)[0]?.dropData[0]?.key;
-            setDropActive(targetDropKey);
-            navigate(`type=${item.key}-${targetDropKey}`);
+            // const targetDropKey = navData.filter((itm) => itm.key === item.key)[0]?.dropData[0]?.key;
+            const targetItem = navData.filter((itm) => itm.key === item.key)[0];
+            if(targetItem?.dropData) {
+              const targetDropKey = targetItem?.dropData[0]?.key;
+              setDropActive(targetDropKey);
+              navigate(`type=${item.key}-${targetDropKey}`);
+            }
+            else {
+              setDropActive(item.key);
+              navigate(`type=${item.key}`);
+            }
           },
           onDropChange: (dropItem, parentItem) => {
             setActive(parentItem.key);
@@ -172,7 +195,7 @@ function App() {
         align="center"
         className="relative"
       />
-      <div className={'height-100vh overflow-auto'} style={{ paddingTop: '88px' }}>
+      <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
         <Routes>
           <Route path="/" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
           <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
@@ -186,6 +209,8 @@ function App() {
           <Route path='type=aids-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
 
           <Route path='type=pattern' element={<CardList data={tjListData} isEnglish={language === 'en'} />} />
+
+          <Route path={'type=assets'} element={<Assets/>}/>
 
           <Route path={'register'} element={<Register/>}/>
           <Route path={'login'} element={<Login onLogined={user => setUser(user)} />}/>
