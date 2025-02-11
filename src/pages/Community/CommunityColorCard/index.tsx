@@ -23,7 +23,8 @@ const CommunityColorCard:React.FC = () => {
               users (
                 id,
                 username,
-                sex
+                sex,
+                is_official
               ),
               colorFetchImageCollect (
                 id,
@@ -104,7 +105,7 @@ const CommunityColorCard:React.FC = () => {
                         }
                     </div>
                     <div className={'flex items-center justify-between'}>
-                        <div className={'fs-12 color-gray-3'}>{i?.user?.username}</div>
+                        <div className={'flex items-center gap-4 fs-12 color-gray-3'}>{i?.user?.username}{i?.user?.is_official && <div style={{width:'12px',height:'12px'}} className={'flex both-center fs-12 bg-primary radius-8 color-white'}>v</div>}</div>
                         <LandButton type={'text'}
                                     icon={<Icon name={'download'}/>} size={'small'} onClick={() =>handleDownloadColorCard?.(i.img_url)}></LandButton>
                     </div>
