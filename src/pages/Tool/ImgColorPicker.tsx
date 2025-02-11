@@ -286,7 +286,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
         }
       }else{
         html2canvas(card,{
-          scale: 2,
+          scale: 3,
           useCORS: true,
         }).then(canvas => {
           const image = canvas.toDataURL('image/png');
