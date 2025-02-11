@@ -6,7 +6,7 @@ import {
   LandTitle,
 } from "@suminhan/land-design";
 import React, { useEffect, useMemo, useState } from "react";
-import { StyledCourseMenu } from "./CourseList";
+import { StyledCourseMenu } from "./CourseList.tsx";
 
 type Props = {
   data?: any[];

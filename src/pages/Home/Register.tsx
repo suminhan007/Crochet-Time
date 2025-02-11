@@ -31,8 +31,7 @@ const Register:React.FC<Props> = ({
                         sex:String(sex),
                         level: '1',
                         coins:0,
-                    },
-                    emailRedirectTo: 'http://localhost:5173',
+                    }
                 }
             });
 

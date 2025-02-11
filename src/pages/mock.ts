@@ -1,25 +1,24 @@
 
 export const Nav_Data = [
   {
-    key: 'basic',
-    title: "编织基础",
-    enTitle:'waveBase',
-    dropData: [
-      { key: 'wire', title: "线材" },
-      { key: 'tool', title: "器材" },
-    ],
+    key: 'community',
+    title: "社区",
+    enTitle:'Community',
   },
   {
     key: 'course',
-    title: "插图教程",
+    title: "教程",
     enTitle: 'ImageCourse',
     dropData: [
-      { key: 'crochet', title: "钩针" },
-      { key: 'knit', title: "棒针" },
+      { key: 'wire', title: "线材" },
+      { key: 'tool', title: "器材" },
+      { key: 'crochet', title: "钩针插图教程" },
+      { key: 'knit', title: "棒针插图教程" },
     ],
   },
+  {key: 'studio', title: "工作台", enTitle: 'Studio',},
   {
-    key: 'aids',
+    key: 'tools',
     title: "辅助工具",
     dropData: [
       { key: 'colorPicker', title: "取色" },
@@ -27,38 +26,35 @@ export const Nav_Data = [
       { key: 'pixelDrawer', title: "像素格" },
     ],
   },
-  { key: 'pattern', title: "图解收录" },
-  { key: 'assets', title: "仓库" },
+  { key: 'repository', title: "仓库" },
 ]
 
 export const English_Nav_Data = [
   {
-    key: 'basic',
-    title: "Weaving Basics",
-    dropData: [
-      { key: 'wire', title: "Wire Material" },
-      { key: 'tool', title: "Wave Tools" },
-    ],
+    key: 'community',
+    title: "Community",
   },
   {
     key: 'course',
-    title: "Illustration Tutorial",
+    title: "Course",
     dropData: [
-      { key: 'crochet', title: "Crochet" },
-      { key: 'knit', title: "Knit" },
+      { key: 'wire', title: "Wire Material" },
+      { key: 'tool', title: "Wave Tools" },
+      { key: 'crochet', title: "Crochet Illustration Tutorial" },
+      { key: 'knit', title: "Knit Illustration Tutorial" },
     ],
   },
+  {key: 'studio', title: "Studio"},
   {
-    key: 'aids',
-    title: "Online aids",
+    key: 'tools',
+    title: "Online Tools",
     dropData: [
       { key: 'colorPicker', title: "Extract image colors" },
       { key: 'colorFill', title: "Match Colors" },
       { key: 'pixelDrawer', title: "Draw Pixel Patterns" },
     ],
   },
-  { key: 'pattern', title: "Illustrated Inclusion" },
-  { key: 'assets', title: "Assets" },
+  { key: 'repository', title: "Repository" },
 ]
 
 export const Crochet_Course_Data = [

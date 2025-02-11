@@ -220,7 +220,8 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
 
   //  自定义色卡名称
   const [cardName, setCardName] = useState<string[]>(["", "", "", "", "", ""]);
-  async function saveImageToDatabase(imagePath:any) {
+  const [originUrl,setOriginUrl] = useState<string>('');
+  async function saveImageToDatabase(imagePath:any,index:number,origin:string) {
     const {data:{user}} = await supabase.auth.getUser();
     if(user){
       const { data, error } = await supabase
@@ -228,7 +229,9 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
           .insert([{
             img_url: imagePath,
             user_id: user.id,
-            colors: Object(colorArr)
+            colors: Object(colorArr),
+            description: cardName[index],
+            origin_img_url: origin ?? ''
           }]);
 
       if (error) {
@@ -239,7 +242,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
       }
     }
   }
-  async function uploadImageToSupabase(imageData:any) {
+  async function uploadImageToSupabase(imageData:any,index:number,origin:string) {
     const blob = await fetch(imageData).then(res => res.blob());
     const fileName = `color-card-${Date.now()}.png`;
     const { data, error } = await supabase
@@ -250,11 +253,11 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     if (error) {
       console.error('Error uploading image:', error);
     } else {
-      saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
+      saveImageToDatabase(data.path,index,origin); // 将图片路径保存到素材库表中
     }
   }
 
-  const saveColorCard = async  (e: any) => {
+  const saveColorCard = async  (e: any,index:number) => {
     const {data:{user}} = await supabase.auth.getUser();
     if(!user) {
       handleShowToast(true, '请先登录')
@@ -262,13 +265,34 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     }
     const card = e.target.parentElement.previousSibling;
     if(card){
-      html2canvas(card,{
-        scale: 2,
-        useCORS: true,
-      }).then(canvas => {
-        const image = canvas.toDataURL('image/png');
-        uploadImageToSupabase(image);
-      });
+      // 先存原图
+      if(!originUrl){
+        const blob = await fetch(imgUrl).then(res => res.blob());
+        const fileName = `color-card-origin-${Date.now()}.png`;
+        const { data:OriginData, error } = await supabase
+            .storage
+            .from('ColorCardCollect') // 替换为你的存储桶名称
+            .upload(fileName, blob);
+        if (error) {
+          console.error('Error uploading image:', error);
+        } else {
+          html2canvas(card,{
+            scale: 2,
+            useCORS: true,
+          }).then(canvas => {
+            const image = canvas.toDataURL('image/png');
+            uploadImageToSupabase(image,index,OriginData.path);
+          });
+        }
+      }else{
+        html2canvas(card,{
+          scale: 2,
+          useCORS: true,
+        }).then(canvas => {
+          const image = canvas.toDataURL('image/png');
+          uploadImageToSupabase(image,index);
+        });
+      }
     }
   }
   return (
@@ -285,6 +309,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
             onUpload={(url) => {
               setImgUrl(url);
               setColorArr([]);
+              setOriginUrl('');
             }}
             desc={isEnglish ? 'Click to upload an image or drag and drop an image here' : "点击上传图片或将图片拖拽于此"}
             height="240px"
@@ -575,7 +600,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
                     className="flex-1"
                     text={isEnglish ? 'Save' : "保存到仓库"}
                     icon={<Icon name="download" />}
-                    onClick={(e) => saveColorCard?.(e)}
+                    onClick={(e) => saveColorCard?.(e,index)}
                 />
               </div>
             </div>

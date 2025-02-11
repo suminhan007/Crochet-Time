@@ -10,8 +10,9 @@ import {
 } from "@suminhan/land-design";
 import { ColorFill_Path_List_Data, English_Nav_Data, Nav_Data } from "./pages/mock";
 import { IconCTLogo } from "./components/Icon";
-import CardList from "./pages/CardList";
-import CourseList from "./pages/CourseList";
+import Course from "./pages/Course";
+import CardList from "./pages/Course/CardList.tsx";
+import CourseList from "./pages/Course/CourseList.tsx";
 import ColorFill from "./pages/Tool/ColorFill";
 import ImgColorPicker from "./pages/Tool/ImgColorPicker";
 import PixelDrawer from "./pages/Tool/PixelDrawer";
@@ -24,6 +25,9 @@ import LoginButtons from "./pages/Home/LoginButtons.tsx";
 import {User} from "@supabase/supabase-js";
 import Assets from "./pages/Assets";
 import supabase from "./utils/supabse.ts";
+import Community from "./pages/Community";
+import Studio from "./pages/Studio";
+import WorktopPages from "./pages/Studio/WorktopPages";
 
 function App() {
   const navigate = useNavigate();
@@ -67,7 +71,6 @@ function App() {
   const [knitCourseData, setKnitCourseData] = useState<any[]>([]);
   const [xcListData, setXcListData] = useState<any[]>([]);
   const [qcListData, setQcListData] = useState<any[]>([]);
-  const [tjListData, setTjListData] = useState<any[]>([]);
   useEffect(() => {
     let fetchData = async () => {
       try {
@@ -118,16 +121,6 @@ function App() {
           }
         };
         break;
-      case 'pattern':
-        fetchData = async () => {
-          try {
-            const response = await axios.get("./api/tjListData.json");
-            setTjListData(response.data.data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        break;
       default:
         break;
     }
@@ -162,17 +155,18 @@ function App() {
           active: active,
           onChange: (item) => {
             setActive(item.key);
+            navigate(`type=${item.key}`);
             // const targetDropKey = navData.filter((itm) => itm.key === item.key)[0]?.dropData[0]?.key;
-            const targetItem = navData.filter((itm) => itm.key === item.key)[0];
-            if(targetItem?.dropData) {
-              const targetDropKey = targetItem?.dropData[0]?.key;
-              setDropActive(targetDropKey);
-              navigate(`type=${item.key}-${targetDropKey}`);
-            }
-            else {
-              setDropActive(item.key);
-              navigate(`type=${item.key}`);
-            }
+            // const targetItem = navData.filter((itm) => itm.key === item.key)[0];
+            // if(targetItem?.dropData) {
+            //   const targetDropKey = targetItem?.dropData[0]?.key;
+            //   setDropActive(targetDropKey);
+            //   navigate(`type=${item.key}-${targetDropKey}`);
+            // }
+            // else {
+            //   setDropActive(item.key);
+            //   navigate(`type=${item.key}`);
+            // }
           },
           onDropChange: (dropItem, parentItem) => {
             setActive(parentItem.key);
@@ -197,21 +191,32 @@ function App() {
       />
       <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
         <Routes>
-          <Route path="/" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
+          <Route path="/" element={<Community isEnglish={language === 'en'} />} />
+          <Route path="/type=community" element={<Community isEnglish={language === 'en'} />} />
+
+          {/*教程*/}
+          <Route path={'type=course'} element={<Course/>}/>
+          <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
           <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
           <Route path="type=course-knit" element={<CardList data={knitCourseData} isEnglish={language === 'en'} />} />
 
-          <Route path='type=basic-wire' element={<CardList data={xcListData} isEnglish={language === 'en'} />} />
-          <Route path='type=basic-tool' element={<CardList data={qcListData} isEnglish={language === 'en'} />} />
+          <Route path='type=course-wire' element={<CardList data={xcListData} isEnglish={language === 'en'} />} />
+          <Route path='type=course-tool' element={<CardList data={qcListData} isEnglish={language === 'en'} />} />
 
-          <Route path='type=aids-colorPicker' element={<ImgColorPicker isEnglish={language === 'en'} />} />
-          <Route path='type=aids-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
-          <Route path='type=aids-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
+          {/*工作台*/}
+          <Route path='type=studio' element={<Studio isEnglish={language === 'en'} />} />
+          <Route path='type=studio/worktop' element={<WorktopPages isEnglish={language === 'en'} />} />
 
-          <Route path='type=pattern' element={<CardList data={tjListData} isEnglish={language === 'en'} />} />
+          {/*工具*/}
+          <Route path='type=tools' element={<ImgColorPicker isEnglish={language === 'en'} />} />
+          <Route path='type=tools-colorPicker' element={<ImgColorPicker isEnglish={language === 'en'} />} />
+          <Route path='type=tools-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
+          <Route path='type=tools-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
 
-          <Route path={'type=assets'} element={<Assets/>}/>
+          {/*资产*/}
+          <Route path={'type=repository'} element={<Assets/>}/>
 
+          {/*注册&登录*/}
           <Route path={'register'} element={<Register/>}/>
           <Route path={'login'} element={<Login onLogined={user => setUser(user)} />}/>
         </Routes>

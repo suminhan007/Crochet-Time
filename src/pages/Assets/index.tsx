@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import supabase from "../../utils/supabse.ts";
-import {LandLink, LandLoading, LandMenu, LandState} from "@suminhan/land-design";
+import {LandMenu} from "@suminhan/land-design";
 import {Assets_Menu_Data} from './mock.ts';
-import {useNavigate} from "react-router-dom";
 import ColorCardList from "./ColorCardList.tsx";
 
 type Props = {
@@ -11,31 +10,36 @@ type Props = {
 const Assets:React.FC<Props> = ({
 
 }) => {
-    const navigate = useNavigate();
     const [menu, setMenu] = useState<string>('color_card');
     const [loading, setLoading] = useState<boolean>(false);
-    const [images, setImages] = useState<string[]>([]);
+    const [images, setImages] = useState<{ id:string,img_url:string,origin_img_url:string,colors: { id:number,value:string }[],description:string }[]>([]);
     // 获取最新图片
     const fetchLatestImage = async () => {
         const {data:{user}} = await supabase.auth.getUser();
         const userId = user?.id;
         const { data:ImgData, error } = await supabase
             .from('colorFetchImageCollect') // 替换为你的表名
-            .select('img_url')
+            .select('id,img_url, colors, description, origin_img_url')
             .eq('user_id',userId)
             .order('created_at', { ascending: false })// 按创建时间倒序排列
 
         if (error) {
             console.error('Error fetching image:', error);
         } else if (ImgData && ImgData.length > 0) {
-            const { data: UrlData, error } = await supabase
+            const { data: UrlData, error:UrlError } = await supabase
                 .storage
                 .from('ColorCardCollect')
                 .createSignedUrls(ImgData?.map(i => i.img_url), 60)
-            if(error){
+            const { data: OriginUrlData, error:OriginUrlError } = await supabase
+                .storage
+                .from('ColorCardCollect')
+                .createSignedUrls(ImgData?.map(i => i.origin_img_url), 60)
+            if(UrlError||OriginUrlError){
 
             }else{
-                setImages(UrlData?.map(j => j.signedUrl)); // 更新图片 URL
+                const imgData = ImgData?.map((i,idx) => Object.assign(i, { img_url: UrlData[idx].signedUrl,origin_img_url:OriginUrlData[idx].signedUrl }))
+                setImages(imgData); // 更新图片 URL
+                console.log(ImgData,OriginUrlData[0],imgData)
             }
         }
         setLoading(false);
@@ -48,33 +52,32 @@ const Assets:React.FC<Props> = ({
     }, []);
 
     // 监听实时插入事件
-    useEffect(() => {
-        const subscription = supabase
-            .channel('ColorCardCollect') // 自定义频道名称
-            .on(
-                'postgres_changes',
-                { event: 'INSERT', schema: 'public', table: 'colorFetchImageCollect' },
-                async (payload) => {
-                    const newImageUrl = payload.new.img_url; // 获取新插入的图片 URL
-                    const { data, error } = await supabase
-                        .storage
-                        .from('ColorCardCollect')
-                        .createSignedUrl(newImageUrl, 60)
-                    if(error){
-
-                    }else{
-                        console.log(data)
-                        setImages([...images,newImageUrl]); // 更新图片 URL
-                    }
-                }
-            )
-            .subscribe();
-
-        // 清理监听器
-        return () => {
-            subscription.unsubscribe();
-        };
-    }, []);
+    // useEffect(() => {
+    //     const subscription = supabase
+    //         .channel('ColorCardCollect') // 自定义频道名称
+    //         .on(
+    //             'postgres_changes',
+    //             { event: 'INSERT', schema: 'public', table: 'colorFetchImageCollect' },
+    //             async (payload) => {
+    //                 const newImageUrl = payload.new.img_url; // 获取新插入的图片 URL
+    //                 const { error } = await supabase
+    //                     .storage
+    //                     .from('ColorCardCollect')
+    //                     .createSignedUrl(newImageUrl, 60)
+    //                 if(error){
+    //
+    //                 }else{
+    //                     setImages([...images,newImageUrl]); // 更新图片 URL
+    //                 }
+    //             }
+    //         )
+    //         .subscribe();
+    //
+    //     // 清理监听器
+    //     return () => {
+    //         subscription.unsubscribe();
+    //     };
+    // }, []);
 
  return (
      <div className={'flex width-100 height-100 bg-gray'}>
@@ -92,7 +95,7 @@ const Assets:React.FC<Props> = ({
              />
          </div>
          <div className={'flex-1 pr-16 py-16 height-100'}>
-             <div className={'flex column both-center width-100 height-100 p-24 bg-white radius-12'}>
+             <div className={'flex column width-100 height-100 p-24 bg-white radius-12'}>
                  <ColorCardList loading={loading} data={images}/>
              </div>
          </div>

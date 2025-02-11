@@ -1,45 +1,67 @@
-//@ts-nocheck
 import {
   Icon,
   LandContent,
   LandFlex,
-  LandImage,
+  LandLoading,
   LandMenu,
   LandTitle,
 } from "@suminhan/land-design";
 import React, { useEffect, useMemo, useState } from "react";
-import { Crochet_Course_Data } from "../mock";
 import styled from "styled-components";
 
 type Props = {
   data?: any[];
   isEnglish?: boolean;
 };
-const CourseList: React.FC<Props> = ({ data,isEnglish }) => {
+const CourseList: React.FC<Props> = ({ data = [],isEnglish }) => {
+  const loading = useMemo(() => !data || data?.length <= 0, [data]);
   const [open, setOpen] = useState<boolean>(true);
-  const [activeCap, setActiveCap] = useState<number | string>("0");
-  const [activeItm, setActiveItm] = useState<number | string>("1");
+  const [activeCap, setActiveCap] = useState<string>("0");
+  const [activeItm, setActiveItm] = useState<string>("1");
+
+  const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => {
-    setTimeout(() => {
-      setOpen(false);
-    }, 1000);
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.contentRect.width <= 800) {
+          setMobile(true);
+        } else {
+          setMobile(false);
+        }
+      }
+    });
+    observer.observe(document.body);
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   const curItm = useMemo(() => {
-    return Crochet_Course_Data.filter(
-      (itm) => itm.cap_id === activeCap
-    )[0].contentMenuList.filter((dropItm) => dropItm.id === activeItm)[0];
-  }, [activeItm, activeCap]);
+    if (data && data?.length > 0) {
+      return data
+        ?.filter((itm) => itm.cap_id === activeCap)[0]
+        .contentMenuList?.filter((dropItm: any) => dropItm.id === activeItm)[0];
+    }
+  }, [activeItm, activeCap, data]);
   return (
-    <LandContent className="flex-1 flex width-100">
+    <LandContent className="relative flex-1 flex width-100">
+      <div
+        className={`absolute flex column gap-8 color-gray-3 fs-14 both-center width-100 height-100 bg-white ${
+          loading ? "" : "opacity-0 events-none"
+        } transition`}
+        style={{ zIndex: 100 }}
+      >
+        <LandLoading size={24} color="var(--color-primary-6)" />
+        <div>{isEnglish ? 'loading...':'努力加载中'}</div>
+      </div>
       <StyledCourseMenu className={`relative ${open ? "open" : ""}`}>
         <LandMenu
-          data={Crochet_Course_Data.map((itm) => ({
+          data={data?.map((itm) => ({
             key: itm.cap_id,
-            title: itm.cap,
-            dropData: itm.contentMenuList.map((dropItm) => ({
+            title: isEnglish ? itm.enCap:itm.cap,
+            dropData: itm?.contentMenuList?.map((dropItm: any) => ({
               key: dropItm.id,
-              title: dropItm.title,
+              title: isEnglish ? (dropItm?.enTitle||dropItm.title):dropItm.title,
             })),
             open: true,
           }))}
@@ -63,22 +85,28 @@ const CourseList: React.FC<Props> = ({ data,isEnglish }) => {
           }}
           className="pt-24 height-100 border-right overflow-auto scrollbar-none"
         />
-        <div
-          className="toggle-arrow absolute flex items-center justify-center border cursor-pointer"
-          onClick={() => setOpen(!open)}
-        >
-          <Icon name="arrow" />
-        </div>
+        {mobile && (
+          <div
+            className="toggle-arrow absolute flex items-center jusity-center border"
+            onClick={() => setOpen(!open)}
+          >
+            <Icon
+              name="arrow"
+              className={`${open ? "rotate-90" : "-rotate-90"}`}
+            />
+          </div>
+        )}
       </StyledCourseMenu>
+
       <div className="p-24 flex-1  height-100 overflow-auto scrollbar-none shrink-0">
         <LandFlex column gap={16} w="fit-content" style={{ margin: "0 auto" }}>
-          <LandTitle title={curItm.title} type="h2" />
+          <LandTitle title={isEnglish ? (curItm?.enTitle||curItm?.title):curItm?.title} type="h2" />
           <div className="flex column gap-12">
-            {curItm.des && <LandTitle title={curItm.des} type="p" />}
-            {curItm.imgList?.map((imgItm) => (
-              <LandFlex column gap={8}>
-                <LandTitle title={imgItm.img_des} type="p" />
-                <LandImage src={imgItm.img_src} ratio={1} />
+            {curItm?.des && <LandTitle title={isEnglish?(curItm?.enDes||curItm?.des):curItm?.des} type="p" />}
+            {curItm?.imgList?.map((imgItm: any) => (
+              <LandFlex column gap={8} style={{ maxWidth: "400px" }}>
+                <LandTitle title={isEnglish ? (imgItm?.en_img_des||imgItm.img_des) : imgItm.img_des} type="p" />
+                <img src={imgItm.img_src} width="100%" />
               </LandFlex>
             ))}
           </div>
@@ -88,33 +116,33 @@ const CourseList: React.FC<Props> = ({ data,isEnglish }) => {
   );
 };
 
-const StyledCourseMenu = styled.div`
+export const StyledCourseMenu = styled.div`
   transform: translateX(-100%);
   width: 0;
   transition: all var(--transition-15) linear;
   &.open {
-    width: 160px;
+    width: 148px;
     transform: translateX(0);
     .toggle-arrow {
       right: 0;
-      svg {
-        transform: rotate(90deg);
-      }
+      border-radius: 12px;
     }
   }
   .toggle-arrow {
-    top: 50%;
-    right: -6px;
-    transform: translate(50%, -50%);
-    width: 24px;
+    bottom: 48px;
+    right: -8px;
+    transform: translate(50%, 0);
+    width: 20px;
     height: 48px;
     background-color: var(--color-bg-white);
-    border-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
     border: 1px solid var(--color-border-3);
     z-index: 1;
-    transition: transform var(--transition-15) linear;
-    svg {
-      transform: rotate(-90deg) translateY(4px);
+  }
+  @media screen and (max-width: 800px) {
+    .land-menu-link {
+      font-size: 12px;
     }
   }
 `;
