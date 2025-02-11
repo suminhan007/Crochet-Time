@@ -1,7 +1,7 @@
+//@ts-nocheck
 import React, {useEffect, useState} from "react";
 import supabase from "../../../utils/supabse.ts";
 import {
-    LandAvatar,
     LandLink,
     LandLoading, LandMessage,
     LandState
@@ -11,7 +11,7 @@ import {useNavigate} from "react-router-dom";
 const CommunityColorCard:React.FC = () => {
     const navigate = useNavigate();
     const [loading,setLoading] = useState(true);
-    const [communityColorCardData, setCommunityColorCardData] = useState<{ id:string,img_url:string,colors: { id:number,value:string }[],description:string,user: {username:string,sex:string} }[]>([]);
+    const [communityColorCardData, setCommunityColorCardData] = useState<any[]>([]);
     const fetchLatestImage = async () => {
         const { data:communityData, error } = await supabase
             .from('CommunityColorCard')

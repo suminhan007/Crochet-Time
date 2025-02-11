@@ -47,7 +47,7 @@ const WorktopDraft: React.FC<{}> = ({}) => {
   });
   const [activeBrush, setActiveBrush] = useState<string>("default");
 
-  const [activeColorTab, setActiveColorTab] = useState<string | number>(
+  const [activeColorTab, setActiveColorTab] = useState<string>(
     "gift-2mm"
   );
   const isWhite = (value: string) => {
