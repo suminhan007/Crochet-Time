@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import {Icon, LandButton, LandDrawer} from "@suminhan/land-design";
+import {Icon,  LandDrawer} from "@suminhan/land-design";
 import CommunityColorCard from "./CommunityColorCard";
 
 const menuData = [
