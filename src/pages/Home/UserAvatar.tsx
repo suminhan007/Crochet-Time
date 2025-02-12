@@ -75,7 +75,7 @@ const UserAvatar: React.FC<Props> = ({
         setNewAvatar(url);
         const blob = await fetch(url).then(res => res.blob());
         const fileName = `user-avatar-${Date.now()}.png`;
-        const {data:AvatarData,error} = await supabase.storage.from('ColorCardCollect/avatars') // 替换为你的存储桶名称
+        const {data:AvatarData,error} = await supabase.storage.from('CroKnitTime/userAvatars') // 替换为你的存储桶名称
             .upload(fileName, blob);
         if(error){}else{
             const {error} = await supabase.auth.updateUser({

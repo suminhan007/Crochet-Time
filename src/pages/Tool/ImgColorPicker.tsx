@@ -225,7 +225,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     const {data:{user}} = await supabase.auth.getUser();
     if(user){
       const { data, error } = await supabase
-          .from('colorFetchImageCollect') // 替换为你的素材库表名称
+          .from('colorCard') // 替换为你的素材库表名称
           .insert([{
             img_url: imagePath,
             user_id: user.id,
@@ -247,7 +247,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     const fileName = `color-card-${Date.now()}.png`;
     const { data, error } = await supabase
         .storage
-        .from('ColorCardCollect') // 替换为你的存储桶名称
+        .from('CroKnitTime/colorCards') // 替换为你的存储桶名称
         .upload(fileName, blob);
 
     if (error) {
@@ -271,7 +271,7 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
         const fileName = `color-card-origin-${Date.now()}.png`;
         const { data:OriginData, error } = await supabase
             .storage
-            .from('ColorCardCollect') // 替换为你的存储桶名称
+            .from('CroKnitTime/colorCards') // 替换为你的存储桶名称
             .upload(fileName, blob);
         if (error) {
           console.error('Error uploading image:', error);

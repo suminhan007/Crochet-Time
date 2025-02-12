@@ -69,7 +69,7 @@ const Register:React.FC<Props> = ({
             const fileName = `user-avatar-${Date.now()}.png`;
             const { data:OriginData, error } = await supabase
                 .storage
-                .from('ColorCardCollect/avatars') // 替换为你的存储桶名称
+                .from('CroKnitTime/userAvatars') // 替换为你的存储桶名称
                 .upload(fileName, blob);
             if (error) {
                 console.error('Error uploading image:', error);

@@ -39,7 +39,7 @@ const ColorCardList:React.FC<Props> = ({
     };
 
     const handleDeleteColorCard = async () => {
-        const response = await supabase.from('colorFetchImageCollect').delete().eq('id',selectedCard);
+        const response = await supabase.from('colorCard').delete().eq('id',selectedCard);
         if(response.status<300 && response.status>100){
            window.location.reload()
         }else{
@@ -48,8 +48,8 @@ const ColorCardList:React.FC<Props> = ({
         setShowDeleteDialog(false);
     }
     const handleDownloadColorCard = async (url:string) => {
-        const downloadUrl =url.split('?token=')[0].split('ColorCardCollect/')[1];
-        const response = await supabase.storage.from('ColorCardCollect').download(downloadUrl);
+        const downloadUrl =url.split('?token=')[0].split('CroKnitTime/colorCards/')[1];
+        const response = await supabase.storage.from('CroKnitTime/colorCards').download(downloadUrl);
         if(response.error){
             handleShowToast(true,'下载失败，请稍后再试')
         }else {

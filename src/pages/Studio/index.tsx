@@ -102,7 +102,7 @@ const Studio: React.FC<Props> = ({ }) => {
         fetchLatestProjects();
     }, []);
     return (
-        <div className="flex-1 flex column items-center gap-24 width-100 overflow-auto p-32">
+        <div className="flex-1 flex column items-center gap-24 width-100 height-100 overflow-auto p-32">
             <div
                 className="flex justify-between width-100"
                 style={{ maxWidth: "1200px" }}
@@ -164,14 +164,15 @@ const Studio: React.FC<Props> = ({ }) => {
                     </div>
                 </StyledNewButton>
             </div>
-            <div
-                className="grid gap-16 width-100"
-                style={{
-                    maxWidth: "1200px",
-                    gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))",
-                }}
-            >
-                {loading ? <LandLoading/> : data?.length > 0 ? <>
+
+            {loading ? <div className={'flex both-center width-100 height-100'}><LandLoading/></div> : data?.length > 0
+                    ? <div
+                        className="grid gap-16 width-100 height-100"
+                    style={{
+                        maxWidth: "1200px",
+                        gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))",
+                    }}
+                >
                     {data?.map((item, index) => (
                         <div
                             key={item.id ?? index}
@@ -186,22 +187,24 @@ const Studio: React.FC<Props> = ({ }) => {
                             <div className="fs-12 color-gray-4">{timeAgo(item.edit_time)}</div>
                         </div>
                     ))}
-                </>: <LandState type={'empty'} title={'暂无项目，点击新建项目开始创作吧'}/>}
-            </div>
+                </div> : <div className={'flex both-center width-100 height-100'}><LandState type={'empty'}
+                                                                               title={'暂无作品，点击新建开始创作吧'}/>
+                </div>}
         </div>
     );
 };
 
 const StyledNewButton = styled.div`
-  .drop-container {
-    opacity: 0;
-    pointer-events: none;
-  }
-  &:hover {
     .drop-container {
-      opacity: 1;
-      pointer-events: auto;
+        opacity: 0;
+        pointer-events: none;
     }
-  }
+
+    &:hover {
+        .drop-container {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
 `;
 export default Studio;

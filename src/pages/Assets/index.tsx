@@ -18,7 +18,7 @@ const Assets:React.FC<Props> = ({
         const {data:{user}} = await supabase.auth.getUser();
         const userId = user?.id;
         const { data:ImgData, error } = await supabase
-            .from('colorFetchImageCollect') // 替换为你的表名
+            .from('colorCard') // 替换为你的表名
             .select('id,img_url, colors, description, origin_img_url')
             .eq('user_id',userId)
             .order('created_at', { ascending: false })// 按创建时间倒序排列
@@ -28,11 +28,11 @@ const Assets:React.FC<Props> = ({
         } else if (ImgData && ImgData.length > 0) {
             const { data: UrlData, error:UrlError } = await supabase
                 .storage
-                .from('ColorCardCollect')
+                .from('CroKnitTime/colorCards')
                 .createSignedUrls(ImgData?.map(i => i.img_url), 60)
             const { data: OriginUrlData, error:OriginUrlError } = await supabase
                 .storage
-                .from('ColorCardCollect')
+                .from('CroKnitTime/colorCards')
                 .createSignedUrls(ImgData?.map(i => i.origin_img_url), 60)
             if(UrlError||OriginUrlError){
 
@@ -54,15 +54,15 @@ const Assets:React.FC<Props> = ({
     // 监听实时插入事件
     // useEffect(() => {
     //     const subscription = supabase
-    //         .channel('ColorCardCollect') // 自定义频道名称
+    //         .channel('CroKnitTime/colorCards') // 自定义频道名称
     //         .on(
     //             'postgres_changes',
-    //             { event: 'INSERT', schema: 'public', table: 'colorFetchImageCollect' },
+    //             { event: 'INSERT', schema: 'public', table: 'colorCard' },
     //             async (payload) => {
     //                 const newImageUrl = payload.new.img_url; // 获取新插入的图片 URL
     //                 const { error } = await supabase
     //                     .storage
-    //                     .from('ColorCardCollect')
+    //                     .from('CroKnitTime/colorCards')
     //                     .createSignedUrl(newImageUrl, 60)
     //                 if(error){
     //

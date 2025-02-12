@@ -140,7 +140,7 @@ function App() {
     if(user) {
       const { data: UrlData, error:UrlError } = await supabase
           .storage
-          .from('ColorCardCollect/avatars')
+          .from('CroKnitTime/userAvatars')
           .createSignedUrl(user.user_metadata?.avatar_url, 60)
       if(UrlError){}else {
         const resultData = Object.assign(user.user_metadata,{avatar_url:UrlData.signedUrl});
