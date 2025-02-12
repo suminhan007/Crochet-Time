@@ -36,8 +36,8 @@ function App() {
   useEffect(() => {
     language === 'en' ? setNavData(English_Nav_Data) : setNavData(Nav_Data);
   }, [language]);
-  const [active, setActive] = useState<string>("course");
-  const [dropActive, setDropActive] = useState<string>("crochet");
+  const [active, setActive] = useState<string>("community");
+  const [dropActive, setDropActive] = useState<string>("");
   useEffect(() => {
     if(!window.location.href.includes('type=')) return;
     const href = window.location.href.split('type=')[1]?.split('-');
@@ -138,8 +138,15 @@ function App() {
   const getUser = async () => {
     const {data: {user}} = await supabase.auth.getUser();
     if(user) {
-      setUser(user)
-    }
+      const { data: UrlData, error:UrlError } = await supabase
+          .storage
+          .from('ColorCardCollect/avatars')
+          .createSignedUrl(user.user_metadata?.avatar_url, 60)
+      if(UrlError){}else {
+        const resultData = Object.assign(user.user_metadata,{avatar_url:UrlData.signedUrl});
+        setUser(resultData)
+      }
+      }
   }
   useEffect(() => {
     getUser()
@@ -149,24 +156,13 @@ function App() {
     <>
       <LandHeader
         fixed
-        logo={<IconCTLogo />}
+        // logo={<IconCTLogo />}
         menuProps={{
           data: navData,
           active: active,
           onChange: (item) => {
             setActive(item.key);
             navigate(`type=${item.key}`);
-            // const targetDropKey = navData.filter((itm) => itm.key === item.key)[0]?.dropData[0]?.key;
-            // const targetItem = navData.filter((itm) => itm.key === item.key)[0];
-            // if(targetItem?.dropData) {
-            //   const targetDropKey = targetItem?.dropData[0]?.key;
-            //   setDropActive(targetDropKey);
-            //   navigate(`type=${item.key}-${targetDropKey}`);
-            // }
-            // else {
-            //   setDropActive(item.key);
-            //   navigate(`type=${item.key}`);
-            // }
           },
           onDropChange: (dropItem, parentItem) => {
             setActive(parentItem.key);
@@ -183,9 +179,17 @@ function App() {
           <div className='flex items-center gap-12'>
             <LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}
                         selected={language}/>
-            {user ? <UserAvatar username={user?.user_metadata.username} onLogoutSuccess={() => setUser(undefined)} onDeleteSuccess={() => setUser(undefined)}/> : <LoginButtons/>}
+            {user ? <UserAvatar
+                avatar={user?.avatar_url}
+                username={user?.username}
+                email={user?.email}
+                coins={user?.coins}
+                onLogoutSuccess={() => setUser(undefined)}
+                onUpdateUserSuccess={() =>getUser()}
+            /> : <LoginButtons/>}
           </div>
         }
+        mobileSize={1052}
         align="center"
         className="relative"
       />

@@ -9,7 +9,7 @@ type Props = {
 };
 export const IconCTLogo: React.FC<Props> = ({ style, className = "" }) => (
   <svg
-    width="52%"
+    width="156"
     // height="32.5"
     viewBox="0 0 2594 490"
     fill="none"

@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@suminhan/land-design': ^0.0.69
+  '@suminhan/land-design': 0.0.70
   '@supabase/supabase-js': ^2.48.1
   '@sveltejs/kit': ^2.17.1
   '@types/react': ^18.2.43
@@ -24,7 +24,7 @@ specifiers:
   vite: ^5.0.8
 
 dependencies:
-  '@suminhan/land-design': 0.0.69_j6j2mnilr56d7jsvrq7rd5hsey
+  '@suminhan/land-design': 0.0.70_j6j2mnilr56d7jsvrq7rd5hsey
   '@supabase/supabase-js': 2.48.1
   '@sveltejs/kit': 2.17.1_vite@5.4.11
   axios: 1.7.9
@@ -917,8 +917,8 @@ packages:
       - '@types/node'
     dev: false
 
-  /@suminhan/land-design/0.0.69_j6j2mnilr56d7jsvrq7rd5hsey:
-    resolution: {integrity: sha512-thcOj19QoH5vqimW9klmMt+xaJcbyUXXMtwX5D/8gcWroDU+kp5neQsVqJurjKNXYQgBKwWIDwBstpI8s9GtCQ==}
+  /@suminhan/land-design/0.0.70_j6j2mnilr56d7jsvrq7rd5hsey:
+    resolution: {integrity: sha512-5im1e3fmbziONgfSKk/yTYKbinO3JStWfHiMz9wEFMm4IrSYy768OjAROTmCxVvi5TutkYemNi5tStZY9X042g==}
     dependencies:
       '@vitejs/plugin-react-swc': 3.7.2_vite@5.4.11
       axios: 1.7.9

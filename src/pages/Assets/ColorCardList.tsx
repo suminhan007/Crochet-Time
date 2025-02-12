@@ -98,7 +98,7 @@ const ColorCardList:React.FC<Props> = ({
                             <div className={'flex column items-center justify-end'} style={{width:'84px'}}>
                                 <LandButton type={'text'}
                                             icon={<Icon name={'download'}/>} text={'下载'} onClick={() =>handleDownloadColorCard?.(i.img_url)}></LandButton>
-                                <LandButton type={'text'} icon={<Icon name={'delete'} size={16} strokeWidth={3} />} text={'发布'} onClick={() => {
+                                <LandButton type={'text'} icon={<Icon name={'next-step'} size={16} strokeWidth={3} />} text={'发布'} onClick={() => {
                                     setShowPublishDialog(true)
                                     setSelectedCard(i.id);
                                 }}></LandButton>
