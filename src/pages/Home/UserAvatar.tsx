@@ -52,16 +52,20 @@ const UserAvatar: React.FC<Props> = ({
     // 修改用户昵称
     const onUpdateUsername = async () => {
         if(newUsername == username || !newUsername) setShowUpdateUsername(false);
-        const {error} = await supabase.auth.updateUser({
-            data:{username: newUsername || username}
-        })
-        if(error){
-
-        }else{
-            await supabase.from('users').update({username: newUsername ?? username})
-            if(error){}else{
-                // window.location.reload();
-                onUpdateUserSuccess?.()
+        const {data:{user}} = await supabase.auth.getUser();
+        if(user){
+            const {error} = await supabase.auth.updateUser({
+                data:{username: newUsername || username}
+            })
+            if(error){
+            }else{
+                const {error: TableError} = await supabase.from('users').update({username: newUsername ?? username}).eq('id',user.id)
+                if(TableError){
+                    console.log('修改失败',TableError)
+                }else{
+                    // window.location.reload();
+                    onUpdateUserSuccess?.()
+                }
             }
         }
         setShowUpdateUsername(false);
@@ -80,8 +84,8 @@ const UserAvatar: React.FC<Props> = ({
             if(error){
 
             }else{
-                await supabase.from('users').update({avatar_url: AvatarData?.path})
-                if(error){}else{
+                const {error:TableError} = await supabase.from('users').update({avatar_url: AvatarData?.path})
+                if(TableError){}else{
                     // window.location.reload();
                     onUpdateUserSuccess?.()
                 }

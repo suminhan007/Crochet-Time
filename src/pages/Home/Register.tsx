@@ -33,6 +33,7 @@ const Register:React.FC<Props> = ({
                         sex:String(sex),
                         level: '1',
                         coins:0,
+                        is_official: email === 'suumhan@163.com',
                     },
                     emailRedirectTo:'http://localhost:5173/',
                 }
@@ -50,10 +51,10 @@ const Register:React.FC<Props> = ({
                     sex:String(sex),
                     level: '1',
                     coins:0,
+                    is_official: email === 'suumhan@163.com',
                 })
                 if(createUserError){
                 }else{
-                    console.log(data);
                     setAuthing(true);
                 }
             }
