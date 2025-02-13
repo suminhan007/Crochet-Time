@@ -16,43 +16,45 @@ const CommunityColorCard:React.FC = () => {
     const [communityColorCardData, setCommunityColorCardData] = useState<any[]>([]);
     const fetchLatestImage = async () => {
         const { data:communityData, error } = await supabase
-            .from('communityColorCard')
+            .from('colorCard')
             .select(`
-              user_id,
-              card_id,
-              users (
-                id,
-                username,
-                sex,
-                is_official
-              ),
-              colorCard (
                 id,
                 img_url,
                 colors,
                 description,
-                origin_img_url
+                origin_img_url,
+              user_id,
+              users (
+                id,
+                username,
+                sex,
+                is_official,
+                avatar_url
               )
-            `)
+            `).eq('public', true)
 
         if (error) {
             console.error('Error fetching image:', error);
         } else if (communityData && communityData.length > 0) {
             const { data: OriginUrlData, error } = await supabase
                 .storage
-                .from('CroKnitTime/colorCards')
-                .createSignedUrls(communityData?.map(i => i.colorCard.origin_img_url), 60)
+                .from('CroKnitTime')
+                .createSignedUrls(communityData?.map(i => `colorCards/${i.origin_img_url}`), 60)
             if(error){
 
             }else{
                 const { data: UrlData, error:UrlError } = await supabase
                     .storage
-                    .from('CroKnitTime/colorCards')
-                    .createSignedUrls(communityData?.map(i => i.colorCard.img_url), 60)
+                    .from('CroKnitTime')
+                    .createSignedUrls(communityData?.map(i => `colorCards/${i.img_url}`), 60)
                 if(UrlError){}else{
-                   const { data: AvatarData, error:AvatarError } = await supabase.storage.from('CroKnitTime/userAvatars').createSignedUrls(communityData.map(i => i.users.avatar_url), 60)
+                   const { data: AvatarData, error:AvatarError } = await supabase.storage.from('CroKnitTime').createSignedUrls(communityData.map(i => `userAvatars/${i.users.avatar_url}`), 60)
                     if(AvatarError){}else{
-                        const imgData = communityData?.map((i,idx) => Object.assign(i, { img_url: UrlData[idx].signedUrl,origin_img_url: OriginUrlData[idx].signedUrl, user: Object.assign(i.users, {avatar_url: AvatarData[idx].signedUrl}) }));
+                        const imgData = communityData?.map((i,idx) => Object.assign(i, {
+                            img_url: UrlData[idx].signedUrl,
+                            origin_img_url: OriginUrlData[idx].signedUrl,
+                            user: Object.assign(i.users, {avatar_url: AvatarData[idx].signedUrl})
+                        }));
                         setCommunityColorCardData(imgData); // 更新图片 URL
                     }
                 }
@@ -109,7 +111,7 @@ const CommunityColorCard:React.FC = () => {
                     </div>
                     <div className={'flex items-center justify-between'}>
                         <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
-                            <LandAvatar imgUrl={i?.user?.avatar_url}/>
+                            <LandAvatar imgUrl={i?.user?.avatar_url} size={40}/>
                             {i?.user?.username}
                             {i?.user?.is_official && <div style={{width:'12px',height:'12px'}} className={'flex both-center fs-12 bg-primary radius-8 color-white'}>v</div>}
                         </div>

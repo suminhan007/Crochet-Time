@@ -46,7 +46,6 @@ const Register:React.FC<Props> = ({
                     id: data.user?.id,
                     avatar_url: avatar,
                     email,
-                    password,
                     username,
                     sex:String(sex),
                     level: '1',

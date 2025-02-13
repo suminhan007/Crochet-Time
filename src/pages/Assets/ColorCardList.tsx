@@ -63,10 +63,11 @@ const ColorCardList:React.FC<Props> = ({
         }
     }
     const handlePublishColorCard = async () => {
-        const res = await supabase.from('CommunityColorCard').insert([{
-            card_id: selectedCard,
-        }])
-        if(res.status < 300 && res.status > 100){
+        const res = await supabase.from('colorCard').update({
+            public: true,
+        }).eq('id', selectedCard);
+        if(res.error){
+            console.log('发布失败', res.error)}else{
             handleShowToast(true,'发布成功，前往社区查看吧')
         }
         setShowPublishDialog(false);

@@ -28,14 +28,14 @@ const Assets:React.FC<Props> = ({
         } else if (ImgData && ImgData.length > 0) {
             const { data: UrlData, error:UrlError } = await supabase
                 .storage
-                .from('CroKnitTime/colorCards')
-                .createSignedUrls(ImgData?.map(i => i.img_url), 60)
+                .from('CroKnitTime')
+                .createSignedUrls(ImgData?.map(i => `colorCards/${i.img_url}`), 60)
             const { data: OriginUrlData, error:OriginUrlError } = await supabase
                 .storage
-                .from('CroKnitTime/colorCards')
-                .createSignedUrls(ImgData?.map(i => i.origin_img_url), 60)
+                .from('CroKnitTime')
+                .createSignedUrls(ImgData?.map(i => `colorCards/${i.origin_img_url}`), 60)
             if(UrlError||OriginUrlError){
-
+                console.log(UrlError, OriginUrlError)
             }else{
                 const imgData = ImgData?.map((i,idx) => Object.assign(i, { img_url: UrlData[idx].signedUrl,origin_img_url:OriginUrlData[idx].signedUrl }))
                 setImages(imgData); // 更新图片 URL
