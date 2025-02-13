@@ -111,7 +111,7 @@ const CommunityColorCard:React.FC = () => {
                     </div>
                     <div className={'flex items-center justify-between'}>
                         <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
-                            <LandAvatar imgUrl={i?.user?.avatar_url} size={40}/>
+                            <LandAvatar imgUrl={i?.user?.avatar_url} size={24}/>
                             {i?.user?.username}
                             {i?.user?.is_official && <div style={{width:'12px',height:'12px'}} className={'flex both-center fs-12 bg-primary radius-8 color-white'}>v</div>}
                         </div>
@@ -122,7 +122,7 @@ const CommunityColorCard:React.FC = () => {
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开色卡, <LandLink
                     onClick={() => navigate('/type=tools-colorPicker')}>前往制作</LandLink>或<LandLink
-                    onClick={() => navigate('/type=repository')}>发布我的色卡</LandLink></>}/>
+                    onClick={() => navigate('/type=repository?assetsType=color-card')}>发布我的色卡</LandLink></>}/>
             </div>}
             {toast && <LandMessage show={toast} text={toastText} />}
         </>

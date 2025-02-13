@@ -24,21 +24,22 @@ const WorktopPages: React.FC<Props> = ({}) => {
   const [projectName, setProjectName] = useState<string>();
 
   const handleSaveProject = async () => {
+      const {data:{user}} = await supabase.auth.getUser();
     const href = window.location.href;
       if(href.includes('project_id')){
         const projectId = href.split('project_id')[1];
           await supabase.from('CKTStudioTask').update({
               project_name: projectName,
               project_type: type,
-              edit_time: Date.now(),
+              edit_time: `${Date.now()}`,
           }).eq('id',projectId)
       }else{
           // 新项目
           const res = await supabase.from('CKTStudioTask').insert([{
               project_name: projectName,
               project_type: type,
-              edit_time: Date.now(),
-          }])
+              edit_time: `${Date.now()}`,
+          }]).eq('user_id', user?.id)
           if(res.status < 300 && res.status >100){
               console.log('保存成功')
           }else{

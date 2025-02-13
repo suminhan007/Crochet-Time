@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useMemo, useState} from "react";
 import {
     Icon,
     LandAvatar,
@@ -32,6 +32,7 @@ const UserAvatar: React.FC<Props> = ({
                                          onUpdateUserSuccess,
                         }) => {
     const navigate = useNavigate();
+    const isMobile = useMemo(() => document.body.clientWidth < 768, []);
     const [loading,setLoading] = useState<boolean>(false);
     const onLogout = async () => {
         const {error} = await  supabase.auth.signOut();
@@ -119,12 +120,13 @@ const UserAvatar: React.FC<Props> = ({
             </StyledUserAvatar>
             {/*个人中心*/}
             <LandDrawer
-                size={'small'}
+                size={isMobile?'large':'small'}
                 show={showUserDetail}
                 onClose={() => setShowUserDetail(false)}
                 footerComponent={null}
                 contentClassName={'width-100'}
                 wrapClassName={'ct-header-drawer'}
+                placement={isMobile ? 'bottom':'right'}
             >
                 <div className={'flex justify-between items-center width-100'}>
                     <div className={'flex items-center gap-8 fs-14 color-gray-2 cursor-pointer width-100'}>

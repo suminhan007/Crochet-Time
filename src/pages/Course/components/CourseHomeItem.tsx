@@ -97,7 +97,6 @@ const StyledHomeListItem = styled.div<{
     }
     .cover-title{
       font-size: 24px;
-      font-family: "Momozhuanji", sans-serif;
     }
   }
   .cover  .cover-left, 
@@ -116,7 +115,6 @@ const StyledHomeListItem = styled.div<{
     .inner-details{
       text-indent: 2em;
       line-height: 1.5em;
-      font-family: "Momozhuanji", sans-serif;
     }
     a{
       appearance: none;

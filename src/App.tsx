@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
@@ -37,7 +38,8 @@ function App() {
   const [dropActive, setDropActive] = useState<string>("");
   useEffect(() => {
     if(!window.location.href.includes('type=')) return;
-    const href = window.location.href.split('type=')[1]?.split('-');
+    const href = window.location.href.split('type=')[1]?.split('?')[0].split('-');
+    console.log(href);
     if (href?.length >= 2) {
       setDropActive(href[1]);
       setActive(href[0]);

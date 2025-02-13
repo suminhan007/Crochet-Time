@@ -121,6 +121,7 @@ const CommunityStateCard:React.FC = () => {
                     key={i.img_url}
                     imgUrl={i.img_url}
                     title={i.title}
+                    time={i.created_at}
                     username={i?.user?.username}
                     avatarUrl={i.users.avatar_url}
                     isOfficial={i?.user?.is_official}

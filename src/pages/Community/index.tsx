@@ -5,17 +5,20 @@ import StateUploadDrawerContent from "./CommunityStateCard/StateUploadDrawerCont
 import supabase from "../../utils/supabse.ts";
 import CommunityStateCard from "./CommunityStateCard";
 import CommunityPixelCard from "./CommunityPixelCard";
+import CommunityFillCard from "./CommunityFillCard";
 
 const menuData = [
     {key: 'ckt',title:'官方'},
     {key: 'state',title: '动态'},
     {key: 'colorCard',title:'色卡'},
+    {key: 'fillCard',title:'配色卡'},
     {key: 'pixelCard',title:'像素卡'}
 ]
 const enMenuData = [
     {key: 'ckt',title:'CKT'},
     {key: 'state',title: 'State'},
     {key: 'colorCard',title:'ColorCard'},
+    {key: 'fillCard',title:'ColorFillCard'},
     {key: 'pixelCard',title:'PixelCard'}
 ]
 type Props = {
@@ -107,13 +110,13 @@ const Community:React.FC<Props> = ({
                                                                      className={`flex items-center gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
                                                                      onClick={() => setCurTab(item.key)}>
                     {item.title}
-                    {item.key === 'ckt' && <div className={'px-8 py-4 radius-4 color-gray-3 fs-12 bg-gray'}>{isEnglish? 'official':'官方'}
-                        {user && user?.id === '82758977-37d6-4917-9220-fe25e3064e08' &&
+                    {item.key === 'ckt' && <div className={'flex items-center gap-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'official':'官方'}
+                        {user?.id === '82758977-37d6-4917-9220-fe25e3064e08' &&
                             <div onClick={() => setShowCreateOfficialStateDrawer(true)}><Icon name={'add'} size={16}
                                                                                       strokeWidth={4}/></div>}
                     </div>}
                     {item.key === 'state' &&
-                        <div onClick={() => setShowCreateStateDrawer(true)} style={{height:'16px'}}><Icon name={'add'} size={16} strokeWidth={4} /></div>
+                        <div onClick={() => setShowCreateStateDrawer(true)} className={'p-2 bg-dark color-white radius-4 flex both-center'}><Icon name={'add'} size={14} strokeWidth={4} /></div>
                     }
                 </div>)}
             </div>
@@ -121,6 +124,7 @@ const Community:React.FC<Props> = ({
                 <div className={'width-100 height-100 bg-white p-24 radius-12'}>
                     {curTab === 'state' && <CommunityStateCard/>}
                     {curTab === 'colorCard' && <CommunityColorCard/>}
+                    {curTab === 'fillCard' && <CommunityFillCard/>}
                     {curTab === 'pixelCard' && <CommunityPixelCard/>}
                 </div>
             </div>

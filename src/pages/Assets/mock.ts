@@ -1,5 +1,17 @@
 export const Assets_Menu_Data = [
-    {key:'color_card', title:'Color Card'},
-    {key:'fill_card', title:'Fill Card'},
-    {key:'pixel_card', title:'Pixel Card'},
+    {key:'project',
+        title:'Projects',
+        open:true,
+        dropData:[
+            {key:'draft', title:'Draft'},
+            {key:'design', title:'Design'},
+        ]},
+    {key:'tools',
+        title:'Tools',
+        open:true,
+        dropData:[
+            {key:'colorCard', title:'Color Card'},
+            {key:'fillCard', title:'ColorFill Card'},
+            {key:'pixelCard', title:'Pixel Card'},
+        ]},
 ]

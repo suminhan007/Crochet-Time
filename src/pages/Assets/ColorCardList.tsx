@@ -46,7 +46,6 @@ const ColorCardList:React.FC<Props> = ({
             }else{
                 const imgData = ImgData?.map((i,idx) => Object.assign(i, { img_url: UrlData[idx].signedUrl,origin_img_url:OriginUrlData[idx].signedUrl }))
                 setColorData(imgData); // 更新图片 URL
-                console.log(ImgData,OriginUrlData[0],imgData)
             }
         }
         setLoading(false);

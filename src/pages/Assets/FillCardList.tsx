@@ -38,7 +38,7 @@ const FillCardList:React.FC<Props> = ({
             if(UrlError){
                 console.log(UrlError)
             }else{
-                const imgData = ImgData?.map((i,idx) => Object.assign(i, { img_url: UrlData[idx].signedUrl,colors: i.colors?.filter(j => j != '#DDDDDD')}))
+                const imgData = ImgData?.map((i,idx) => Object.assign(i, { img_url: UrlData[idx].signedUrl,colors: i.colors?.filter((j:string) => j != '#DDDDDD')}))
                 setFillData(imgData); // 更新图片 URL
             }
         }

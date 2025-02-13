@@ -1,9 +1,10 @@
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 import {LandMenu} from "@suminhan/land-design";
 import {Assets_Menu_Data} from './mock.ts';
 import ColorCardList from "./ColorCardList.tsx";
 import PixelCardList from "./PixelCardList.tsx";
 import FillCardList from "./FillCardList.tsx";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
 
@@ -11,19 +12,35 @@ type Props = {
 const Assets:React.FC<Props> = ({
 
 }) => {
-    const [menu, setMenu] = useState<string>('color_card');
+    const navigate = useNavigate();
+    const [menu, setMenu] = useState<string>('colorCard');
+    useEffect(() => {
+        if(!window.location.href.includes('assetsType=')) return;
+        const href = window.location.href.split('assetsType=')[1];
+        if (href?.length >= 2) {
+            setMenu(href);
+        }
+    }, [window.location.href]);
 
  return (
      <div className={'flex width-100 height-100 bg-gray'}>
          <div className={'p-16'}>
              <LandMenu
                  data={Assets_Menu_Data}
-                 active={menu}
-                 onChange={item => setMenu(item.key)}
-                 direction={'column'}
+                 dropProps={{
+                     active:menu,
+                     theme: {
+                         lineColor:'transparent',
+                    }
+                 }}
+                onDropChange={(item) => {
+                    setMenu(item.key);
+                    navigate(`?assetsType=${item.key}`);
+                }}
                  theme={{
                      lineColor:'transparent',
                  }}
+                 direction={'column'}
                  border={false}
                 style={{height:'fit-content'}}
              />
