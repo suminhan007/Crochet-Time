@@ -16,6 +16,8 @@ import { downloadHtmlAsImg } from "../../utils";
 import { PageTitle } from "../../components/PageTitle";
 import { IconDec } from "../../components/Icon";
 import { StyledColorFillInput } from "./ColorFill";
+import supabase from "../../utils/supabse.ts";
+import html2canvas from "html2canvas";
 
 type Props = {isEnglish?: boolean};
 const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
@@ -112,6 +114,56 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
 
   const [usePattern, setUsePattern] = useState<boolean>(false);
   const [opacity, setOpacity] = useState<number>(1);
+
+    async function saveImageToDatabase(imagePath:any,index:number,origin:string) {
+        const {data:{user}} = await supabase.auth.getUser();
+        if(user){
+            const { data, error } = await supabase
+                .from('pixelCard') // 替换为你的素材库表名称
+                .insert([{
+                    img_url: imagePath,
+                    user_id: user.id,
+                    size: `${sizeX}x${sizeY}`,
+                }]);
+
+            if (error) {
+                console.error('Error saving image to database:', error);
+            } else {
+                console.log('Image saved to database:', data);
+                handleShowToast(true,'保存成功，前往仓库查看')
+            }
+        }
+    }
+    async function uploadImageToSupabase(imageData:any,index:number,origin:string) {
+        const blob = await fetch(imageData).then(res => res.blob());
+        const fileName = `pixel-card-${Date.now()}.png`;
+        const { data, error } = await supabase
+            .storage
+            .from('CroKnitTime/pixelCards') // 替换为你的存储桶名称
+            .upload(fileName, blob);
+
+        if (error) {
+            console.error('Error uploading image:', error);
+        } else {
+            saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
+        }
+    }
+
+    const savePixelCard = async  () => {
+        if(!pixelCanvasRef.current) return;
+        const {data:{user}} = await supabase.auth.getUser();
+        if(!user) {
+            handleShowToast(true, '请先登录')
+            return;
+        }
+        html2canvas(pixelCanvasRef.current,{
+            scale: 3,
+            useCORS: true,
+        }).then(canvas => {
+            const image = canvas.toDataURL('image/png');
+            uploadImageToSupabase(image);
+        });
+    }
   return (
     <StyledPixelLandContent className="flex-1 flex column items-start gap-32 py-24 px-16 width-100 height-100 scrollbar-none">
       {/* 缩放画布 */}
@@ -186,7 +238,7 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
                         : "transparent",
                     opacity: opacity,
                   }}
-                  onTouchStart={() => {
+                  onClick={() => {
                     handleDraw(`${indexX}-${indexY}`);
                   }}
                 >
@@ -369,6 +421,13 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
             downloadHtmlAsImg(pixelCanvasRef.current, "pixel-res", 3);
           }}
         />
+          <LandButton
+              text={isEnglish ? 'Save':"保存到仓库"}
+              type="background"
+              className="flex-1"
+              style={{ maxWidth: "200px" }}
+              onClick={savePixelCard}
+          />
       </LandFlex>
     </StyledPixelLandContent >
   );

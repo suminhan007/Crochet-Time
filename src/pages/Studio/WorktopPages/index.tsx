@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {CT_DESIGN_FILTER_SELECT_TYPE_DATA} from "../mock.ts";
 import supabase from "../../../utils/supabse.ts";
 
-type Props = {};
+type Props = {isEnglish?:boolean};
 const WorktopPages: React.FC<Props> = ({}) => {
   const navigate = useNavigate();
   const type = useMemo(

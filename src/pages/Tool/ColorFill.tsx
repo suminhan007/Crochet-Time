@@ -4,7 +4,7 @@ import {
   LandContent,
   LandFlex,
   LandLoading,
-  LandMenu,
+  LandMenu, LandMessage,
   LandTitle,
 } from "@suminhan/land-design";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -12,6 +12,8 @@ import styled from "styled-components";
 import { downloadHtmlAsImg } from "../../utils";
 import axios from "axios";
 import { ColorFill_Color_List_Data } from "../mock";
+import supabase from "../../utils/supabse.ts";
+import html2canvas from "html2canvas";
 
 type Props = {
   pathData?: { id: number; img: string; path: string[] }[];
@@ -91,55 +93,127 @@ const ColorFill: React.FC<Props> = ({ pathData = [],isEnglish }) => {
     { key: "style", title: "款式" },
     { key: "colors", title: "颜色" },
   ],[isEnglish])
+
+  //提示信息
+  const [toast, setToast] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>("");
+
+  const handleShowToast = (show: boolean, text: string) => {
+    setToastText(text);
+    setToast(show);
+    const timer = setTimeout(() => {
+      setToast(false);
+      clearTimeout(timer);
+    }, 1000);
+  };
+  async function saveImageToDatabase(imagePath:any) {
+    const {data:{user}} = await supabase.auth.getUser();
+    if(user){
+      const { data, error } = await supabase
+          .from('fillCard') // 替换为你的素材库表名称
+          .insert([{
+            img_url: imagePath,
+            user_id: user.id,
+            colors: colorList
+          }]);
+
+      if (error) {
+        console.error('Error saving image to database:', error);
+      } else {
+        console.log('Image saved to database:', data);
+        handleShowToast(true,'保存成功，前往仓库查看')
+      }
+    }
+  }
+  async function uploadImageToSupabase(imageData:any) {
+    const blob = await fetch(imageData).then(res => res.blob());
+    const fileName = `color-fill-card-${Date.now()}.png`;
+    const { data, error } = await supabase
+        .storage
+        .from('CroKnitTime/fillCards') // 替换为你的存储桶名称
+        .upload(fileName, blob);
+
+    if (error) {
+      console.error('Error uploading image:', error);
+    } else {
+      saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
+    }
+  }
+
+  const saveFillCard = async  () => {
+    if(!colorFillRef.current) return;
+    const {data:{user}} = await supabase.auth.getUser();
+    if(!user) {
+      handleShowToast(true, '请先登录')
+      return;
+    }
+    html2canvas(colorFillRef.current,{
+      scale: 3,
+      useCORS: true,
+    }).then(canvas => {
+      const image = canvas.toDataURL('image/png');
+      uploadImageToSupabase(image);
+    });
+  }
   return (
     <StyledLandContent className="flex-1 flex items-start gap-32 width-100">
       <div className="canvas-container flex column items-center gap-12">
         <div className="canvas-area relative flex gap-12 mx-auto">
           <div ref={colorFillRef} className="relative height-100 ratio-1">
             <svg
-              width="100%"
-              viewBox="0 0 220 220"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="radius-8 bg-gray"
-              onClick={() => setCurrentPathId(0)}
+                width="100%"
+                viewBox="0 0 220 220"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="radius-8 bg-gray"
+                onClick={() => setCurrentPathId(0)}
             >
               {currentSvg?.path?.map((item, index) => (
-                <path
-                  key={index}
-                  d={item}
-                  fill={colorList[index] || "var(--color-bg-3)"}
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  stroke={
-                    index + 1 === currentPathId
-                      ? "var(--color-text-3)"
-                      : colorList[index] !== "#DDDDDD"
-                        ? colorList[index]
-                        : "#999"
-                  }
-                  className="transition"
-                  onClick={(e: React.UIEvent) => {
-                    e.stopPropagation();
-                    setCurrentPathId(index + 1);
-                  }}
-                />
+                  <path
+                      key={index}
+                      d={item}
+                      fill={colorList[index] || "var(--color-bg-3)"}
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      stroke={
+                        index + 1 === currentPathId
+                            ? "var(--color-text-3)"
+                            : colorList[index] !== "#DDDDDD"
+                                ? colorList[index]
+                                : "#999"
+                      }
+                      className="transition"
+                      onClick={(e: React.UIEvent) => {
+                        e.stopPropagation();
+                        setCurrentPathId(index + 1);
+                      }}
+                  />
               ))}
             </svg>
           </div>
           <div
-            className="absolute"
-            style={{ bottom: "12px", right: "12px" }}
-            onClick={() => {
-              setCurrentPathId(0);
-              downloadHtmlAsImg(
-                colorFillRef.current,
-                `crochet-time-color-fill-res`,
-                3
-              );
-            }}
+              className="absolute"
+              style={{bottom: "12px", right: "12px"}}
+              onClick={() => {
+                setCurrentPathId(0);
+                downloadHtmlAsImg(
+                    colorFillRef.current,
+                    `crochet-time-color-fill-res`,
+                    3
+                );
+              }}
           >
-            <Icon name="download" stroke="var(--color-text-4)" size={20} />
+            <Icon name="download" stroke="var(--color-text-4)" size={20}/>
+          </div>
+          <div
+              className="absolute"
+              style={{bottom: "40px", right: "12px"}}
+              onClick={() => {
+                setCurrentPathId(0);
+                saveFillCard()
+              }}
+          >
+            <Icon name="file" stroke="var(--color-text-4)" size={20}/>
           </div>
         </div>
       </div>
@@ -147,15 +221,15 @@ const ColorFill: React.FC<Props> = ({ pathData = [],isEnglish }) => {
       <div className="options-panel">
         <div className="flex justify-center width-100">
           <LandMenu
-            border={false}
-            data={menuData}
-            active={activeTab}
-            onChange={(item) => setActiveTab(item.key)}
-            style={{ height: "64px" }}
+              border={false}
+              data={menuData}
+              active={activeTab}
+              onChange={(item) => setActiveTab(item.key)}
+              style={{height: "64px"}}
           />
         </div>
         <div className="relative flex-1 flex column height-1 width-100 overflow-auto">
-          {activeTab === "style" && (
+        {activeTab === "style" && (
             <div
               className="style-grid-container grid gap-8 width-100 scrollbar-none"
               style={{
@@ -254,6 +328,7 @@ const ColorFill: React.FC<Props> = ({ pathData = [],isEnglish }) => {
           }
         </div >
       </div >
+      {toast && <LandMessage show={toast} text={toastText} />}
     </StyledLandContent >
   );
 };

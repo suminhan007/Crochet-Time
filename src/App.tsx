@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
@@ -9,7 +8,6 @@ import {
   LandSelect
 } from "@suminhan/land-design";
 import { ColorFill_Path_List_Data, English_Nav_Data, Nav_Data } from "./pages/mock";
-import { IconCTLogo } from "./components/Icon";
 import Course from "./pages/Course";
 import CardList from "./pages/Course/CardList.tsx";
 import CourseList from "./pages/Course/CourseList.tsx";
@@ -22,7 +20,6 @@ import Register from "./pages/Home/Register.tsx";
 import Login from "./pages/Home/Login.tsx";
 import UserAvatar from "./pages/Home/./UserAvatar.tsx";
 import LoginButtons from "./pages/Home/LoginButtons.tsx";
-import {User} from "@supabase/supabase-js";
 import Assets from "./pages/Assets";
 import supabase from "./utils/supabse.ts";
 import Community from "./pages/Community";
@@ -134,7 +131,7 @@ function App() {
     { value: 'zh', label: '中文' },
   ]
 
-  const [user,setUser] = useState<User>();
+  const [user,setUser] = useState<any>();
   const getUser = async () => {
     const {data: {user}} = await supabase.auth.getUser();
     if(user) {
@@ -195,8 +192,8 @@ function App() {
       />
       <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
         <Routes>
-          <Route path="/" element={<Community isEnglish={language === 'en'} />} />
-          <Route path="/type=community" element={<Community isEnglish={language === 'en'} />} />
+          <Route path="/" element={<Community isEnglish={language === 'en'} user={user}/>} />
+          <Route path="/type=community" element={<Community isEnglish={language === 'en'} user={user}/>} />
 
           {/*教程*/}
           <Route path={'type=course'} element={<Course/>}/>

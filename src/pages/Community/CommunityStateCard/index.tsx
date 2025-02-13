@@ -2,11 +2,10 @@
 import React, {useEffect, useState} from "react";
 import supabase from "../../../utils/supabse.ts";
 import {
-    Icon, LandAvatar,
-    LandButton,
     LandLoading, LandMessage,
     LandState
 } from "@suminhan/land-design";
+import StateCard from "./StateCard.tsx";
 
 const CommunityStateCard:React.FC = () => {
     const [loading,setLoading] = useState(true);
@@ -62,7 +61,6 @@ const CommunityStateCard:React.FC = () => {
 
     const [toast, setToast] = useState<boolean>(false);
     const [toastText, setToastText] = useState<string>("");
-    //@ts-ignore
     const handleShowToast = (show: boolean, text: string) => {
         setToastText(text);
         setToast(show);
@@ -72,7 +70,7 @@ const CommunityStateCard:React.FC = () => {
         }, 1000);
     };
 
-    const handleDownloadColorCard = async (url:string) => {
+    const handleDownloadStateCard = async (url:string) => {
         const downloadUrl =url.split('?token=')[0].split('CroKnitTime/stateImages/')[1];
         const response = await supabase.storage.from('CroKnitTime/stateImages').download(downloadUrl);
         if(response.error){
@@ -87,24 +85,54 @@ const CommunityStateCard:React.FC = () => {
             URL.revokeObjectURL(link.href);
         }
     }
+
+    const handleLikeStateCard = async (id:string) => {
+        // const {data:{user}} = await supabase.auth.getUser();
+        // const likedRes = await supabase.from('likedStateCard').select('id').eq('user_id',user.id);
+        // if(likedRes.error)return;
+        // const ids = likedRes.data.map((i) => i.id);
+        // if(ids.length > 0 && ids.includes(id)){
+        //     // 赞过
+        // }
+        // const { data: currentData, error: fetchError } = await supabase
+        //     .from('graphicState')
+        //     .select('likes')
+        //     .eq('id', id)
+        //     .single();
+        //
+        // if (fetchError) {
+        //     console.error('Error fetching current counter value:', fetchError);
+        //     return;
+        // }
+        //
+        // const currentLikes = currentData.counter;
+        // const res = await supabase.from('graphicState').update({
+        //     likes: `${Number(currentLikes) + 1}`,
+        // }).eq('id',id);
+        // if(res.error) return;
+    }
+    const handleStarStateCard = async (id:string) => {}
     return (
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
             </div> : (communityStateCardData && communityStateCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
-                {communityStateCardData?.map(i =>  <div key={i.img_url} className={'flex column gap-8'}>
-                    <img src={i.img_url} alt={i.img_url} width={'100%'} className={'radius-8 overflow-hidden'} style={{aspectRatio:'4/3',objectFit:'cover'}}/>
-                    <div>{i.title}</div>
-                    <div className={'flex items-center justify-between'}>
-                        <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
-                            <LandAvatar imgUrl={i?.user?.avatar_url} size={40}/>
-                            {i?.user?.username}
-                            {i?.user?.is_official && <div style={{width:'12px',height:'12px'}} className={'flex both-center fs-12 bg-primary radius-8 color-white'}>v</div>}
-                        </div>
-                        <LandButton type={'text'}
-                                    icon={<Icon name={'download'}/>} size={'small'} onClick={() =>handleDownloadColorCard?.(i.img_url)}></LandButton>
-                    </div>
-                </div>)}
+                {communityStateCardData?.map(i =>  <StateCard
+                    key={i.img_url}
+                    imgUrl={i.img_url}
+                    title={i.title}
+                    username={i?.user?.username}
+                    avatarUrl={i.users.avatar_url}
+                    isOfficial={i?.user?.is_official}
+                    onCardClick={option => {
+                        switch (option) {
+                            case 'download': handleDownloadStateCard?.(i.img_url);break;
+                            case 'like': handleLikeStateCard?.(i.id);break;
+                            case 'star': handleStarStateCard?.(i.id);break;
+                            default: console.log(option);break;
+                        }
+                    }}
+                />)}
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无动态, 点击 [ + ] 发布吧</>}/>
             </div>}

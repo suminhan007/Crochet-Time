@@ -556,10 +556,26 @@
 .opacity-0 {
     opacity: 0;
 }
-.ellipsis {
+.text-line-2ellipsis {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+.text-line-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+}
+.text-line-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
 }
 
 //背景
