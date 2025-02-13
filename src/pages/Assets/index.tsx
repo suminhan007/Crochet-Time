@@ -47,9 +47,9 @@ const Assets:React.FC<Props> = ({
          </div>
          <div className={'flex-1 pr-16 py-16 height-100'}>
              <div className={'flex column width-100 height-100 p-24 bg-white radius-12'}>
-                 {menu === 'color_card' && <ColorCardList/>}
-                 {menu === 'fill_card' && <FillCardList />}
-                 {menu === 'pixel_card' && <PixelCardList />}
+                 {menu === 'colorCard' && <ColorCardList/>}
+                 {menu === 'fillCard' && <FillCardList />}
+                 {menu === 'pixelCard' && <PixelCardList />}
              </div>
          </div>
      </div>
