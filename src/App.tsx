@@ -28,6 +28,7 @@ import Studio from "./pages/Studio";
 import WorktopPages from "./pages/Studio/WorktopPages";
 import CourseWire from "./pages/Course/CourseWire.tsx";
 import CourseTool from "./pages/Course/CourseTool.tsx";
+import {IconCTLogo} from "./components/Icon.tsx";
 
 function App() {
   const navigate = useNavigate();
@@ -157,7 +158,7 @@ function App() {
     <>
       <LandHeader
         fixed
-        // logo={<IconCTLogo />}
+        logo={<IconCTLogo />}
         menuProps={{
           data: navData,
           active: active,
@@ -187,7 +188,7 @@ function App() {
                 coins={user?.coins}
                 onLogoutSuccess={() => setUser(undefined)}
                 onUpdateUserSuccess={() =>getUser()}
-            /> : <LoginButtons/>}
+            /> : <LoginButtons isEnglish={language === 'en'}/>}
           </div>
         }
         mobileSize={1052}
@@ -200,7 +201,7 @@ function App() {
           <Route path="/type=community" element={<Community isEnglish={language === 'en'} user={user}/>} />
 
           {/*教程*/}
-          <Route path={'type=course'} element={<Course/>}/>
+          <Route path={'type=course'} element={<Course isEnglish={language ==='en'}/>}/>
           <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
           <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
           <Route path="type=course-knit" element={<CardList data={knitCourseData} isEnglish={language === 'en'} />} />

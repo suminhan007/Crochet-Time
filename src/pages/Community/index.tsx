@@ -10,9 +10,9 @@ import CommunityInspirationCard from "./CommunityInspirationCard";
 import CommunityCKTCard from "./CommunityCKTCard";
 
 const menuData = [
-    {key: 'ckt',title:'官方'},
+    {key: 'ckt',title:'CKT'},
     {key: 'state',title: '动态'},
-    {key: 'inspiration',title:'灵感'},
+    // {key: 'inspiration',title:'灵感'},
     {key: 'publicAssets', title: '公开素材',dropData:[
             {key: 'colorCard',title:'色卡'},
             {key: 'fillCard',title:'配色卡'},
@@ -22,7 +22,7 @@ const menuData = [
 const enMenuData = [
     {key: 'ckt',title:'CKT'},
     {key: 'state',title: 'State'},
-    {key: 'inspiration',title:'Inspiration'},
+    // {key: 'inspiration',title:'Inspiration'},
     {key: 'publicAssets', title: 'public Assets',dropData:[
             {key: 'colorCard',title:'ColorCard'},
             {key: 'fillCard',title:'ColorFillCard'},
@@ -131,7 +131,10 @@ const Community:React.FC<Props> = ({
                     {item.dropData && <div className={'ml-16'}>{item.dropData?.map((itm:{key:string,title:string}) => <div
                         key={itm.key}
                         className={`py-8 ${curTab === itm.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
-                        onClick={() => setCurTab(itm.key)}
+                        onClick={(e) => {
+                            setCurTab(itm.key);
+                            e.stopPropagation()
+                        }}
                     >{itm.title}</div>)}</div>}
                 </div>)}
             </div>
