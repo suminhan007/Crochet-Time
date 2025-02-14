@@ -26,6 +26,8 @@ import supabase from "./utils/supabse.ts";
 import Community from "./pages/Community";
 import Studio from "./pages/Studio";
 import WorktopPages from "./pages/Studio/WorktopPages";
+import CourseWire from "./pages/Course/CourseWire.tsx";
+import CourseTool from "./pages/Course/CourseTool.tsx";
 
 function App() {
   const navigate = useNavigate();
@@ -203,8 +205,8 @@ function App() {
           <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
           <Route path="type=course-knit" element={<CardList data={knitCourseData} isEnglish={language === 'en'} />} />
 
-          <Route path='type=course-wire' element={<CardList data={xcListData} isEnglish={language === 'en'} />} />
-          <Route path='type=course-tool' element={<CardList data={qcListData} isEnglish={language === 'en'} />} />
+          <Route path='type=course-wire' element={<CourseWire isEnglish={language === 'en'} />} />
+          <Route path='type=course-tool' element={<CourseTool isEnglish={language === 'en'} />} />
 
           {/*工作台*/}
           <Route path='type=studio' element={<Studio isEnglish={language === 'en'} />} />

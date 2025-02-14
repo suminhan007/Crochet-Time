@@ -7,7 +7,12 @@ import {
 } from "@suminhan/land-design";
 import StateCard from "./StateCard.tsx";
 
-const CommunityStateCard:React.FC = () => {
+type Props = {
+    isEnglish?:boolean;
+}
+const CommunityStateCard:React.FC<Props> = ({
+                                                isEnglish
+                                            }) => {
     const [loading,setLoading] = useState(true);
     const [communityStateCardData, setCommunityStateCardData] = useState<any[]>([]);
     const fetchLatestImage = async () => {

@@ -6,20 +6,28 @@ import supabase from "../../utils/supabse.ts";
 import CommunityStateCard from "./CommunityStateCard";
 import CommunityPixelCard from "./CommunityPixelCard";
 import CommunityFillCard from "./CommunityFillCard";
+import CommunityInspirationCard from "./CommunityInspirationCard";
+import CommunityCKTCard from "./CommunityCKTCard";
 
 const menuData = [
     {key: 'ckt',title:'官方'},
     {key: 'state',title: '动态'},
-    {key: 'colorCard',title:'色卡'},
-    {key: 'fillCard',title:'配色卡'},
-    {key: 'pixelCard',title:'像素卡'}
+    {key: 'inspiration',title:'灵感'},
+    {key: 'publicAssets', title: '公开素材',dropData:[
+            {key: 'colorCard',title:'色卡'},
+            {key: 'fillCard',title:'配色卡'},
+            {key: 'pixelCard',title:'像素卡'}
+        ]},
 ]
 const enMenuData = [
     {key: 'ckt',title:'CKT'},
     {key: 'state',title: 'State'},
-    {key: 'colorCard',title:'ColorCard'},
-    {key: 'fillCard',title:'ColorFillCard'},
-    {key: 'pixelCard',title:'PixelCard'}
+    {key: 'inspiration',title:'Inspiration'},
+    {key: 'publicAssets', title: 'public Assets',dropData:[
+            {key: 'colorCard',title:'ColorCard'},
+            {key: 'fillCard',title:'ColorFillCard'},
+            {key: 'pixelCard',title:'PixelCard'}
+        ]}
 ]
 type Props = {
     isEnglish?:boolean;
@@ -107,22 +115,31 @@ const Community:React.FC<Props> = ({
         <div className={'flex width-100 height-100 bg-gray'}>
             <div className={'height-100 flex column py-16 px-24'} style={{width: 'fit-content'}}>
                 {newMenuData?.map((item: any, index: number) => <div key={item.key ?? index}
-                                                                     className={`flex items-center gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
-                                                                     onClick={() => setCurTab(item.key)}>
-                    {item.title}
-                    {item.key === 'ckt' && <div className={'flex items-center gap-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'official':'官方'}
-                        {user?.id === '82758977-37d6-4917-9220-fe25e3064e08' &&
-                            <div onClick={() => setShowCreateOfficialStateDrawer(true)}><Icon name={'add'} size={16}
-                                                                                      strokeWidth={4}/></div>}
-                    </div>}
-                    {item.key === 'state' &&
-                        <div onClick={() => setShowCreateStateDrawer(true)} className={'p-2 bg-dark color-white radius-4 flex both-center'}><Icon name={'add'} size={14} strokeWidth={4} /></div>
-                    }
+                                                                     className={`flex column gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
+                                                                     onClick={() => item.dropData ? setCurTab(item.dropData[0].key):setCurTab(item.key)}>
+                    <div className={'flex items-center gap-8'}>
+                        {item.title}
+                        {item.key === 'ckt' && <div className={'flex items-center gap-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'official':'官方'}
+                            {user?.id === '82758977-37d6-4917-9220-fe25e3064e08' &&
+                                <div onClick={() => setShowCreateOfficialStateDrawer(true)}><Icon name={'add'} size={16}
+                                                                                                  strokeWidth={4}/></div>}
+                        </div>}
+                        {item.key === 'state' &&
+                            <div onClick={() => setShowCreateStateDrawer(true)} className={'p-2 bg-dark color-white radius-4 flex both-center'}><Icon name={'add'} size={14} strokeWidth={4} /></div>
+                        }
+                    </div>
+                    {item.dropData && <div className={'ml-16'}>{item.dropData?.map((itm:{key:string,title:string}) => <div
+                        key={itm.key}
+                        className={`py-8 ${curTab === itm.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
+                        onClick={() => setCurTab(itm.key)}
+                    >{itm.title}</div>)}</div>}
                 </div>)}
             </div>
             <div className={'flex-1 height-100 p-16'}>
                 <div className={'width-100 height-100 bg-white p-24 radius-12'}>
-                    {curTab === 'state' && <CommunityStateCard/>}
+                    {curTab === 'ckt' && <CommunityCKTCard/>}
+                    {curTab === 'state' && <CommunityStateCard isEnglish={isEnglish}/>}
+                    {curTab === 'inspiration' && <CommunityInspirationCard/>}
                     {curTab === 'colorCard' && <CommunityColorCard/>}
                     {curTab === 'fillCard' && <CommunityFillCard/>}
                     {curTab === 'pixelCard' && <CommunityPixelCard/>}
