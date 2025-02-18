@@ -92,7 +92,7 @@ const CommunityPixelCard:React.FC = () => {
                 <LandLoading />
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <div key={i.id} className={'flex column gap-8'}>
-                    <img src={i.img_url} alt={i.img_url} width={'100%'} className={'radius-8 overflow-hidden'} style={{aspectRatio:'1',objectFit:'cover'}}/>
+                    <img src={i.img_url} alt={i.img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'} style={{aspectRatio:'1',objectFit:'cover'}}/>
                     <div className={'fs-12 color-gray-4'}>{i.size}</div>
                     <div className={'flex items-center justify-between'}>
                         <div className={'flex items-center gap-4 fs-12 color-gray-3'}>

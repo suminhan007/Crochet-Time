@@ -103,7 +103,7 @@ const CommunityColorCard:React.FC = () => {
                 <LandLoading />
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <div key={i.origin_img_url} className={'flex column gap-8'}>
-                    <img src={i.origin_img_url} alt={i.origin_img_url} width={'100%'} className={'radius-8 overflow-hidden'} style={{aspectRatio:'4/3',objectFit:'cover'}}/>
+                    <img src={i.origin_img_url} alt={i.origin_img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'} style={{aspectRatio:'4/3',objectFit:'cover'}}/>
                     <div className={'flex gap-4'}>
                         {
                             i?.colors?.map((color:{id:string,value:string}) => <div key={color.id} className={'flex-1'} style={{backgroundColor:color.value,height:'12px'}}></div>)

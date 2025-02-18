@@ -22,7 +22,7 @@ const menuData = [
 const enMenuData = [
     {key: 'ckt',title:'CKT'},
     {key: 'state',title: 'State'},
-    // {key: 'inspiration',title:'Inspiration'},
+    {key: 'inspiration',title:'Inspiration'},
     {key: 'publicAssets', title: 'public Assets',dropData:[
             {key: 'colorCard',title:'ColorCard'},
             {key: 'fillCard',title:'ColorFillCard'},
