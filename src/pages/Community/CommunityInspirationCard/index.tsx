@@ -6,8 +6,14 @@ import {
     LandLoading, LandMessage,
     LandState
 } from "@suminhan/land-design";
+import ImgPreview from "../../../components/ImgPreivew.tsx";
 
-const CommunityInspirationCard:React.FC = () => {
+type Props = {
+    firstIn?:boolean;
+}
+const CommunityInspirationCard:React.FC<Props> = ({
+                                               firstIn
+                                           }) => {
     const [loading,setLoading] = useState(true);
     const [communityColorCardData, setCommunityInspirationCardData] = useState<any[]>([]);
     const fetchLatestImage = async () => {
@@ -79,10 +85,11 @@ const CommunityInspirationCard:React.FC = () => {
         getUserLevel();
     }, []);
     const [showDialog, setShowDialog] = useState(true);
+    const [previewImg, setPreviewImg] = useState<string>('');
     return (
         <div className={'relative width-100 height-100 flex-1 flex both-center'}>
             {/*会员查看*/}
-            {communityColorCardData?.length>0 && <LandDialog show={showDialog} onClose={() => setShowDialog(false)} onSubmit={() => setShowDialog(false)} submitLabel={'知道了'}>
+            {communityColorCardData?.length>0 && firstIn&& <LandDialog show={showDialog} onClose={() => setShowDialog(false)} onSubmit={() => setShowDialog(false)} submitLabel={'知道了'}>
                 <LandAlert type={'default'} title={'温馨提示：灵感内容将于2025年5月20日设置为【仅会员可见】'} direction={'column'}/>
             </LandDialog>}
             {(!isVip && false) ? <>
@@ -90,14 +97,15 @@ const CommunityInspirationCard:React.FC = () => {
             </> : <>
                 {loading ? <>
                     <LandLoading />
-                </> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'flex column gap-24 height-100 width-100'}>
+                </> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'flex column gap-24 height-100 width-100 cursor-zoom-in'}>
                         <LandAlert type={'warn'} title={'图片均由AI生成，仅供参考！'}/>
                     <div className={'grid gap-24 height-100 overflow-auto'}
                          style={{gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))'}}>
-                        {communityColorCardData?.map(i => <div key={i.id} className={'flex column gap-8'}>
+                        {communityColorCardData?.map(i => <div key={i.id} className={'flex column gap-8'} onClick={() => setPreviewImg(i.img_url)}>
                             <img src={i.img_url} alt={i.img_url} width={'100%'}
                                  className={'radius-8 overflow-hidden events-none'}
-                                 style={{aspectRatio: '1', objectFit: 'cover'}}/>
+                                 style={{aspectRatio: '1', objectFit: 'cover'}}
+                            />
                         </div>)}
                     </div>
                 </div> : <>
@@ -105,6 +113,7 @@ const CommunityInspirationCard:React.FC = () => {
                 </>}
             </>}
             {toast && <LandMessage show={toast} text={toastText}/>}
+            <ImgPreview img_url={previewImg} show={Boolean(previewImg)} onClose={() => setPreviewImg('')}/>
         </div>
     )
 }

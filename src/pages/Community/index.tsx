@@ -12,7 +12,7 @@ import CommunityCKTCard from "./CommunityCKTCard";
 const menuData = [
     {key: 'ckt',title:'CKT'},
     {key: 'state',title: '动态'},
-    // {key: 'inspiration',title:'灵感'},
+    {key: 'inspiration',title:'灵感'},
     {key: 'publicAssets', title: '公开素材',dropData:[
             {key: 'colorCard',title:'色卡'},
             {key: 'fillCard',title:'配色卡'},
@@ -111,12 +111,16 @@ const Community:React.FC<Props> = ({
         }
     }
 
+    const [firstIn,setFirstIn] = useState(true);
     return (<>
         <div className={'flex width-100 height-100 bg-gray'}>
             <div className={'height-100 flex column py-16 px-24'} style={{width: 'fit-content'}}>
                 {newMenuData?.map((item: any, index: number) => <div key={item.key ?? index}
                                                                      className={`flex column gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
-                                                                     onClick={() => item.dropData ? setCurTab(item.dropData[0].key):setCurTab(item.key)}>
+                                                                     onClick={() => {
+                                                                         item.dropData ? setCurTab(item.dropData[0].key) : setCurTab(item.key);
+                                                                         if(item.key === 'inspiration')setFirstIn(false)
+                                                                     }}>
                     <div className={'flex items-center gap-8'}>
                         {item.title}
                         {item.key === 'ckt' && <div className={'flex items-center gap-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'official':'官方'}
@@ -142,7 +146,7 @@ const Community:React.FC<Props> = ({
                 <div className={'width-100 height-100 bg-white p-24 radius-12'}>
                     {curTab === 'ckt' && <CommunityCKTCard/>}
                     {curTab === 'state' && <CommunityStateCard isEnglish={isEnglish}/>}
-                    {curTab === 'inspiration' && <CommunityInspirationCard/>}
+                    {curTab === 'inspiration' && <CommunityInspirationCard firstIn={firstIn}/>}
                     {curTab === 'colorCard' && <CommunityColorCard/>}
                     {curTab === 'fillCard' && <CommunityFillCard/>}
                     {curTab === 'pixelCard' && <CommunityPixelCard/>}
