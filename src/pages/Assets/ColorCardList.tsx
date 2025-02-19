@@ -19,14 +19,14 @@ const ColorCardList:React.FC<Props> = ({
 }) => {
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [colorData, setColorData] = useState<{ id:string,img_url:string,origin_img_url:string,colors: { id:number,value:string }[],description:string }[]>([]);
+    const [colorData, setColorData] = useState<{ id:string,img_url:string,origin_img_url:string,colors: { id:number,value:string }[],description:string,public?:boolean }[]>([]);
     // 获取最新图片
     const fetchLatestImage = async () => {
         const {data:{user}} = await supabase.auth.getUser();
         const userId = user?.id;
         const { data:ImgData, error } = await supabase
             .from('colorCard') // 替换为你的表名
-            .select('id,img_url, colors, description, origin_img_url')
+            .select('id,img_url, colors, description, origin_img_url,public')
             .eq('user_id',userId)
             .order('created_at', { ascending: false })// 按创建时间倒序排列
 
@@ -98,15 +98,19 @@ const ColorCardList:React.FC<Props> = ({
             URL.revokeObjectURL(link.href);
         }
     }
+    const [publishLoading, setPublishLoading] = useState(false);
     const handlePublishColorCard = async () => {
+        setPublishLoading(true);
         const res = await supabase.from('colorCard').update({
             public: true,
         }).eq('id', selectedCard);
         if(res.error){
-            console.log('发布失败', res.error)}else{
+            handleShowToast(true,'发布失败，请稍后重试')
+        }else{
             handleShowToast(true,'发布成功，前往社区查看吧')
         }
         setShowPublishDialog(false);
+        setPublishLoading(false);
     }
     return (
         <>
@@ -132,14 +136,16 @@ const ColorCardList:React.FC<Props> = ({
                         placement={'center'}
                         dropClassName={'shadow-light'}
                         dropContent={
-                            <div className={'flex column items-center justify-end'} style={{width:'84px'}}>
+                            <div className={'flex column items-center justify-end'} style={{width:'100px'}}>
                                 <LandButton type={'text'}
+                                            width={'100%'}
+                                            justify={'start'}
                                             icon={<Icon name={'download'}/>} text={'下载'} onClick={() =>handleDownloadColorCard?.(i.img_url)}></LandButton>
-                                <LandButton type={'text'} icon={<Icon name={'next-step'} size={16} strokeWidth={3} />} text={'发布'} onClick={() => {
+                                <LandButton type={'text'} disabled={i.public} width={'100%'} justify={'start'} icon={<Icon name={'next-step'} size={16} strokeWidth={3} />} text={i.public?'已发布':'发布'} onClick={() => {
                                     setShowPublishDialog(true)
                                     setSelectedCard(i.id);
                                 }}></LandButton>
-                                <LandButton type={'text'} icon={<Icon name={'delete'} size={16} strokeWidth={3} />} text={'删除'} onClick={() => {
+                                <LandButton type={'text'} width={'100%'} justify={'start'} icon={<Icon name={'delete'} size={16} strokeWidth={3} />} text={'删除'} onClick={() => {
                                     setShowDeleteDialog(true);
                                     setSelectedCard(i.id);
                                 }}></LandButton>
@@ -158,8 +164,9 @@ const ColorCardList:React.FC<Props> = ({
                 onClose={() => setShowPublishDialog(false)}
                 onCancel={() => setShowPublishDialog(false)}
                 onSubmit={() => handlePublishColorCard()}
+                submitLabel={publishLoading?'发布中...':'发布'}
             >
-                <LandAlert title={'色卡发布到社区后将成为公开色卡，允许所有人查看、下载。'}/>
+                <LandAlert title={'色卡发布到社区后将成为公开色卡，允许所有人查看、下载，发布后不可撤回。'}/>
             </LandDialog>
             {/*删除确认弹窗*/}
             <LandDialog
@@ -169,7 +176,7 @@ const ColorCardList:React.FC<Props> = ({
                 onCancel={() => setShowDeleteDialog(false)}
                 onSubmit={() => handleDeleteColorCard()}
             >
-                <LandAlert type={'error'} title={'删除后不可恢复，请谨慎操作！'}/>
+                <LandAlert type={'error'} title={'删除后不可恢复，已发布色卡也会随之删除，请谨慎操作！'}/>
             </LandDialog>
             {toast && <LandMessage show={toast} text={toastText} />}
         </>

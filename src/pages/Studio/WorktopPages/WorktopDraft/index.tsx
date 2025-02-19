@@ -34,7 +34,10 @@ const Brush_Type_Data = [
   },
 ];
 
-const WorktopDraft: React.FC<{}> = ({}) => {
+type Props = {
+  onDrawEnd: (data: {layer:string,data:Path[]}[]) => void;
+}
+const WorktopDraft: React.FC<Props> = ({onDrawEnd}) => {
   //@ts-ignore
   const [colorData, setColorData] = useState<
     { id: string; title: string; colors: { value: string; name: string }[] }[]
@@ -50,6 +53,8 @@ const WorktopDraft: React.FC<{}> = ({}) => {
   const [activeColorTab, setActiveColorTab] = useState<string>(
     "gift-2mm"
   );
+
+  const [draftData, setDraftData] = useState<{ layer:string,data:Path[] }[]>([]);
   const isWhite = (value: string) => {
     if (
       value === "white" ||
@@ -103,6 +108,13 @@ const WorktopDraft: React.FC<{}> = ({}) => {
   const layerAddDisabled = useMemo(() => layers?.length >= 20, [layers]);
 
   const handleDrawEnd = (idx: number, data?: Path[]) => {
+    if(!data) return;
+    if(draftData?.filter(i =>i.layer === activeLayer)?.length===0){
+      setDraftData([...draftData,{layer:activeLayer,data:data}]);
+    }else{
+      const newData = draftData.map(i => i.layer===activeLayer ? Object.assign(i,{data:data}) : i);
+      setDraftData(newData);
+    }
     const boards = document.querySelectorAll(".draft-canvas-board");
     const previewBoards = document.querySelectorAll(
       ".draft-canvas-board-preview"
@@ -132,6 +144,7 @@ const WorktopDraft: React.FC<{}> = ({}) => {
       index === idx ? Object.assign(i, { data: data }) : i
     );
     setLayers(newLayerData);
+    onDrawEnd?.(draftData)
   };
   return (
     <div className="relative flex width-100 height-100 bg-gray">

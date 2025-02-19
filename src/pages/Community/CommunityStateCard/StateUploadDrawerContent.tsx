@@ -36,7 +36,7 @@ const StateUploadDrawerContent:React.FC<Props> = ({
     }, []);
     return <LandDrawer
         mask
-        title={'发布动态'}
+        title={isEnglish?'Publishing States':'发布动态'}
         size={'large'}
         cancelLabel={isEnglish ? 'Cancel' : '取消'}
         submitLabel={isEnglish ? 'Save & Publish' : '保存并发布'}
@@ -51,9 +51,9 @@ const StateUploadDrawerContent:React.FC<Props> = ({
                     {imgUrl && <img src={imgUrl} alt={imgUrl} width={'100%'} height={'100%'} style={{objectFit: 'contain'}}/>}
                 </LandUploader>
                 <div className={'flex-1 flex column gap-8'}>
-                    <LandInput placeholder={'输入标题（30字内）'} type={'transparent'} onChange={setTitle}/>
+                    <LandInput placeholder={isEnglish ? 'Enter the title (30 words or less)':'输入标题（30字内）'} type={'transparent'} onChange={setTitle}/>
                     <div className={'flex-1 relative'} style={{paddingBottom:'44px'}}>
-                        <textarea placeholder={'输入正文'} onChange={e => setDesc?.(e.target.value)}/>
+                        <textarea placeholder={isEnglish?'Enter the content':'输入正文'} onChange={e => setDesc?.(e.target.value)}/>
                         <div className={'absolute textarea-value-num flex items-center gap-4 fs-12 color-gray-4'}>
                             <div onClick={() => setDesc('')} style={{height:'16px'}}><Icon name={'error-fill'} size={16}/></div>
                             {desc?.length} / 200
@@ -63,7 +63,7 @@ const StateUploadDrawerContent:React.FC<Props> = ({
             </div>
             <LandDivider direction={'column'}/>
             <div className={'flex-1 flex column height-100 p-24'}>
-                <div className={'fs-14 color-gray-4'}>效果预览：</div>
+                <div className={'fs-14 color-gray-4'}>{isEnglish?'Effect Preview:':'效果预览：'}</div>
                 <div className={'flex-1 flex both-center'} style={{maxWidth: '320px'}}>
                     <StateCard
                         imgUrl={imgUrl}
@@ -71,7 +71,7 @@ const StateUploadDrawerContent:React.FC<Props> = ({
                         username={user?.user_metadata?.username}
                         avatarUrl={user?.user_metadata?.avatar_url}
                         isOfficial={user?.email === 'suumhan@163.com'}
-                    />
+                        stateId={""}                    />
                 </div>
             </div>
         </StyledPublishStateDrawerContent>
@@ -80,10 +80,17 @@ const StateUploadDrawerContent:React.FC<Props> = ({
 
 const StyledPublishStateDrawerContent = styled.div`
     textarea{
+        width: 100%;
         appearance: none;
         border: none;
+        outline: none;
         height: 100%;
         resize: none;
+        &:focus,
+        &:focus-within{
+            border:none;
+            outline: none;
+        }
     }
     .textarea-value-num{
         bottom: 12px;

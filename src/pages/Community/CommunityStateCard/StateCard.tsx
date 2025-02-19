@@ -4,6 +4,7 @@ import timeAgoTZ from "../../../utils/timeAgoTZ.ts";
 import supabase from "../../../utils/supabse.ts";
 
 type Props = {
+    isEnglish?: boolean;
     stateId: string;
     imgUrl?: string;
     title?: string;
@@ -16,6 +17,7 @@ type Props = {
     onCardClick?: (option:string) => void;
 }
 const StateCard:React.FC<Props> = ({
+                                       isEnglish,
                                        stateId,
     imgUrl,
     title,
@@ -67,7 +69,7 @@ const StateCard:React.FC<Props> = ({
                      style={{maxHeight: '800px', minHeight: '100px', objectFit: 'cover'}}/>
             </div>
             <div className={'fs-14 fw-500 color-gray-2 text-line-2'}>{title}</div>
-            <div className={'flex items-center justify-between'}>
+            <div className={'flex items-end justify-between'}>
                 <div className={'flex items-center gap-4 fs-14 color-gray-3'}>
                     <LandAvatar imgUrl={avatarUrl} size={24}/>
                     <div className={'flex column gap-2'}>
@@ -76,7 +78,7 @@ const StateCard:React.FC<Props> = ({
                             {isOfficial && <div style={{width: '12px', height: '12px'}}
                                                 className={'flex both-center fs-12 bg-primary fs-12 radius-8 color-white'}>v</div>}
                         </div>
-                        {time && <div className={'fs-12 color-gray-4'}>{timeAgoTZ(time)}</div>}
+                        {time && <div className={'fs-12 color-gray-4'}>{timeAgoTZ(time,isEnglish)}</div>}
                     </div>
                 </div>
                 <div className={'flex items-center gap-8 fs-12 color-gray-3'}>

@@ -12,6 +12,18 @@ export const CT_DESIGN_FILTER_SELECT_TYPE_DATA = [
     { value: CTWorksType?.Vlog, label: "Vlog" }
 ]
 
+export const CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN = [
+    { value: "all", label: "All" },
+    { value: CTWorksType?.Draft, label: "Draft" },
+    { value: CTWorksType?.Design, label: "Design" },
+    { value: CTWorksType?.Pattern, label: "Pattern" },
+    { value: CTWorksType?.Product, label: "Product" },
+    { value: CTWorksType?.Material, label: "Package" },
+    { value: CTWorksType?.Wool, label: "Wire" },
+    { value: CTWorksType?.Course, label: "Course" },
+    { value: CTWorksType?.Vlog, label: "Vlog" }
+]
+
 export const CT_DESIGN_WORKS_DATA = [
     { id: "1", name: "XXXxxx", type: CTWorksType?.Draft, date: "1天前" },
     { id: "2", name: "XXXxxx", type: CTWorksType?.Design, date: "刚刚" },

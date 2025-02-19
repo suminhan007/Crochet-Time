@@ -5,9 +5,11 @@ import supabase from "../../utils/supabse.ts";
 import {LandLink, LandLoading, LandState} from "@suminhan/land-design";
 
 type Props = {
-
+    isEnglish?:boolean;
 }
-const DraftList: React.FC<Props> = () => {
+const DraftList: React.FC<Props> = ({
+                                        isEnglish
+                                    }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [draftData,setDraftData] = useState<{id:string,type:string,name:string,edit_time:string}[]>([]);
@@ -46,7 +48,7 @@ const DraftList: React.FC<Props> = () => {
             <div className="flex items-center gap-8 fs-14 color-gray-1 fw-500">
                 {item.name ?? '未命名'}
             </div>
-            <div className="fs-12 color-gray-4">{timeAgo(item.edit_time)}</div>
+            <div className="fs-12 color-gray-4">{timeAgo(item.edit_time,isEnglish)}</div>
         </div>
     ))}</> : <div className={'width-100 flex-1 flex items-center justify-center'}>
         <LandState type={'empty'} title={<>暂无草稿, <LandLink

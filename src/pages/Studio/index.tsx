@@ -3,14 +3,14 @@ import {useEffect, useState} from "react";
 import { CTWorksType } from "./type.ts";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import {CT_DESIGN_FILTER_SELECT_TYPE_DATA, CT_DESIGN_WORKS_DATA} from "./mock.ts";
+import {CT_DESIGN_FILTER_SELECT_TYPE_DATA, CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN, CT_DESIGN_WORKS_DATA} from "./mock.ts";
 import supabase from "../../utils/supabse.ts";
 import timeAgo from "../../utils/timeAgo.ts";
 
 type Props = {
     isEnglish?: boolean;
 }
-const Studio: React.FC<Props> = ({ }) => {
+const Studio: React.FC<Props> = ({ isEnglish}) => {
     const navigate = useNavigate();
     const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -109,10 +109,10 @@ const Studio: React.FC<Props> = ({ }) => {
             >
                 <div className="flex gap-12">
                     <LandSelect
-                        placeholder="作品类型"
+                        placeholder={isEnglish?'Type of work':"作品类型"}
                         width={120}
                         selected={selectType}
-                        data={CT_DESIGN_FILTER_SELECT_TYPE_DATA}
+                        data={isEnglish?CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN:CT_DESIGN_FILTER_SELECT_TYPE_DATA}
                         onChange={(item) => {
                             setSelectType(item.value);
                             if (item.value === "all") {
@@ -126,12 +126,12 @@ const Studio: React.FC<Props> = ({ }) => {
                         }}
                     />
                     <LandSelect
-                        placeholder="排序方式"
+                        placeholder={isEnglish?'Sort by':"排序方式"}
                         width={120}
                         selected={selectSort}
                         data={[
-                            { value: "create", label: "创建时间" },
-                            { value: "modify", label: "修改时间" },
+                            { value: "create", label: isEnglish?'Creation time':"创建时间" },
+                            { value: "modify", label: isEnglish?'Edit time':"修改时间" },
                         ]}
                         onChange={(item) => setSelectSort(item.value)}
                     />
@@ -141,19 +141,19 @@ const Studio: React.FC<Props> = ({ }) => {
                         type="background"
                         status="primary"
                         icon={<Icon name="add" strokeWidth={4} />}
-                        text="新建作品"
+                        text={isEnglish?'Create New Works':"新建作品"}
                     />
                     <div
                         className="drop-container absolute pt-8 width-100 transition"
                         style={{ top: "100%", zIndex: 1 }}
                     >
                         <div className="width-100 border bg-white radius-8 py-12">
-                            {CT_DESIGN_FILTER_SELECT_TYPE_DATA?.filter(
+                            {(isEnglish?CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN:CT_DESIGN_FILTER_SELECT_TYPE_DATA)?.filter(
                                 (_i, idx) => idx > 0
                             )?.map((item, index) => (
                                 <div
                                     key={item.value ?? index}
-                                    className="flex items-center gap-4 px-12 py-8 fs-14 cursor-pointer hover:bg-gray transition"
+                                    className="flex items-center gap-8 px-12 py-8 fs-14 cursor-pointer hover:bg-gray transition"
                                     onClick={() => navigate(`worktop?type=${item.value}`)}
                                 >
                                     {getTypeIcon(item.value)}
@@ -182,13 +182,13 @@ const Studio: React.FC<Props> = ({ }) => {
                             <div className="width-100 ratio-1 bg-gray radius-12"></div>
                             <div className="flex items-center gap-8 fs-14 color-gray-1 fw-500">
                                 {getTypeIcon(item.type)}
-                                {item.name ?? '未命名'}
+                                {item.name ?? isEnglish?'untitled':'未命名'}
                             </div>
-                            <div className="fs-12 color-gray-4">{timeAgo(item.edit_time)}</div>
+                            <div className="fs-12 color-gray-4">{timeAgo(item.edit_time,isEnglish)}</div>
                         </div>
                     ))}
                 </div> : <div className={'flex both-center width-100 height-100'}><LandState type={'empty'}
-                                                                               title={'暂无作品，点击新建开始创作吧'}/>
+                                                                               title={isEnglish?'No work yet, click New to start creating!':'暂无作品，点击新建开始创作吧'}/>
                 </div>}
         </div>
     );

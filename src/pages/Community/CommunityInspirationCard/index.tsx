@@ -99,7 +99,7 @@ const CommunityInspirationCard:React.FC<Props> = ({
                     <LandLoading />
                 </> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'flex column gap-24 height-100 width-100 cursor-zoom-in'}>
                         <LandAlert type={'warn'} title={'图片均由AI生成，仅供参考！'}/>
-                    <div className={'grid gap-24 height-100 overflow-auto'}
+                    <div className={'grid gap-24 overflow-auto'}
                          style={{gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))'}}>
                         {communityColorCardData?.map(i => <div key={i.id} className={'flex column gap-8'} onClick={() => setPreviewImg(i.img_url)}>
                             <img src={i.img_url} alt={i.img_url} width={'100%'}

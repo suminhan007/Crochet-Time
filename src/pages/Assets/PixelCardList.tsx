@@ -88,15 +88,18 @@ const ColorCardList:React.FC<Props> = ({
             URL.revokeObjectURL(link.href);
         }
     }
+    const [publishLoading,setPublishLoading] = useState(false);
     const handlePublishColorCard = async () => {
+        setPublishLoading(true);
         const res = await supabase.from('pixelCard').update({
             public: true,
         }).eq('id', selectedCard);
         if(res.error){
-            console.log('发布失败', res.error)}else{
+            handleShowToast(true,'发布失败，请稍后重试')}else{
             handleShowToast(true,'发布成功，前往社区查看吧')
         }
         setShowPublishDialog(false);
+        setPublishLoading(false);
     }
     return (
         <>
@@ -152,6 +155,7 @@ const ColorCardList:React.FC<Props> = ({
                 onClose={() => setShowDeleteDialog(false)}
                 onCancel={() => setShowDeleteDialog(false)}
                 onSubmit={() => handleDeleteColorCard()}
+                submitLabel={publishLoading?'发布中...':'发布'}
             >
                 <LandAlert type={'error'} title={'删除后不可恢复，请谨慎操作！'}/>
             </LandDialog>

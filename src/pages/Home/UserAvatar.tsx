@@ -197,8 +197,8 @@ const UserAvatar: React.FC<Props> = ({
                           style={{gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))'}}>
                         {userMenuStarData?.map((starItem, starIndex) => <div key={starItem?.id ?? starIndex}
                                                                              className={'flex column gap-8'}>
-                            <div className={'width-100 radius-8 overflow-hidden'} style={{aspectRatio: 1}}><img
-                                src={starItem?.img_url} width={'100%'}/></div>
+                            <div className={'width-100 radius-8 overflow-hidden'} style={{aspectRatio: 1}}>
+                                <img src={starItem?.img_url} width={'100%'}/></div>
                             <div className={'fs-12 color-gray-3'}>{starItem?.title}</div>
                         </div>)}
                     </div>}
