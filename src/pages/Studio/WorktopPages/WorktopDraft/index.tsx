@@ -35,9 +35,17 @@ const Brush_Type_Data = [
 ];
 
 type Props = {
-  onDrawEnd: (data: {layer:string,data:Path[]}[]) => void;
+  data?:{layer:string,data:Path[]}[];
+  onDrawEnd?: (data: {layer:string,data:Path[]}[]) => void;
 }
-const WorktopDraft: React.FC<Props> = ({onDrawEnd}) => {
+const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
+  //历史项目：填入数据
+  useEffect(() => {
+    if(!data)return;
+    const layers = data?.map((_i,idx) => ({id:`${idx+1}`,name:`${idx+1}`}));
+    setLayers(layers);
+    setDraftData(data)
+  }, [data]);
   //@ts-ignore
   const [colorData, setColorData] = useState<
     { id: string; title: string; colors: { value: string; name: string }[] }[]

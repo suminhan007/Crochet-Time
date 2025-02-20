@@ -1,5 +1,5 @@
-import {Icon, LandButton, LandDivider, LandInput} from "@suminhan/land-design";
-import { useMemo, useState } from "react";
+import {Icon, LandButton, LandDivider, LandInput, LandMessage} from "@suminhan/land-design";
+import React, {useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import WorktopDraft from "./WorktopDraft";
 import WorktopWool from "./WorktopWool";
@@ -20,9 +20,24 @@ const WorktopPages: React.FC<Props> = ({}) => {
         ?.label,
     [type]
   );
+  const projectId = useMemo(() => window.location.hash?.includes('project_id') ? window.location.hash.split('?project_id=')[1]:undefined,[window.location])
+  const showSaveButton = useMemo(() => type === 'wire',[type])
 
   const [projectName, setProjectName] = useState<string>();
 
+    //提示信息
+    const [toast, setToast] = useState<boolean>(false);
+    const [toastText, setToastText] = useState<string>("");
+
+    const handleShowToast = (show: boolean, text: string) => {
+        setToastText(text);
+        setToast(show);
+        const timer = setTimeout(() => {
+            setToast(false);
+            clearTimeout(timer);
+        }, 1000);
+    };
+    const [projectData,setProjectData] = useState<any[]>([]);
   const handleSaveProject = async () => {
       const {data:{user}} = await supabase.auth.getUser();
     const href = window.location.href;
@@ -32,6 +47,7 @@ const WorktopPages: React.FC<Props> = ({}) => {
               project_name: projectName,
               project_type: type,
               edit_time: `${Date.now()}`,
+              data: projectData
           }).eq('id',projectId)
       }else{
           // 新项目
@@ -39,14 +55,29 @@ const WorktopPages: React.FC<Props> = ({}) => {
               project_name: projectName,
               project_type: type,
               edit_time: `${Date.now()}`,
+              data: projectData
           }]).eq('user_id', user?.id)
           if(res.status < 300 && res.status >100){
-              console.log('保存成功')
+              handleShowToast(true,'保存成功')
           }else{
-              console.log('失败',res)
+              handleShowToast(true,'保存失败')
           }
       }
   }
+  // 自动拉取已保存数据
+    const [lastestData,setLastestData] = useState<{id:string,project_name:string,project_type:string,edit_time:string,data:any[]}>();
+    const getProjectDetailData = async () => {
+      if(!projectId) return;
+      const {data,error} = await supabase.from('CKTStudioTask').select().eq('id',projectId).single();
+      if(error) {
+          throw error;
+      }else{
+          setLastestData(data);
+      }
+    }
+    useEffect(() => {
+        getProjectDetailData();
+    }, []);
   return (
     <StyledWorktop className="fixed left-0 top-0 flex column">
       <div
@@ -65,16 +96,25 @@ const WorktopPages: React.FC<Props> = ({}) => {
           {title}：
           <LandInput
             type="transparent"
+            placeholder={lastestData?.project_name||'Untitled'}
             value={projectName}
-            onChange={(val) => setProjectName(val)}
+            onChange={(val) => {
+                setProjectName(val);
+                handleSaveProject();
+            }}
           />
         </div>
-          <LandButton type={'background'} status={'primary'} text={'保存作品'} icon={<Icon name={'save'}/>} className="ml-auto" onClick={handleSaveProject}/>
+          {showSaveButton && <LandButton type={'background'} status={'primary'} text={'保存作品'} icon={<Icon name={'save'}/>}
+                       className="ml-auto" onClick={handleSaveProject}/>}
       </div>
       <div className="flex-1 height-1">
-        {type === "draft" && <WorktopDraft />}
+        {type === "draft" && <WorktopDraft data={lastestData?.data} onDrawEnd={data=> {
+            setProjectData(data);
+            handleSaveProject?.()
+        }} />}
         {type === "wool" && <WorktopWool />}
       </div>
+        {toast && <LandMessage show={toast} text={toastText} />}
     </StyledWorktop>
   );
 };
