@@ -16,6 +16,7 @@ type Props = {
   ratio?: number;
   canvasClassName?: string;
   drawEnd?: (data: Path[]) => void;
+  initData?: Path[];
 }
 
 const CanvasBoard: React.FC<Props> = ({
@@ -23,13 +24,33 @@ const CanvasBoard: React.FC<Props> = ({
   lineWidth = 2,
   ratio = 1,
   canvasClassName = '',
-  drawEnd
+  drawEnd,
+                                        initData=[]
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [paths, setPaths] = useState<Path[]>([]);
+  const [paths, setPaths] = useState<Path[]>(initData);
   const [currentPath, setCurrentPath] = useState<Point[]>([]);
-
+  // const initDraw = (data:Path[]) => {
+  //   data?.map((i) => {
+  //     setIsDrawing(true)
+  //     setCurrentPath([{x: i.path[0].x,y:i.path[0].y}]);
+  //     i.path?.map(j => {
+  //       draw(j.x, j.y);
+  //     })
+  //     setPaths((prevPaths) => [
+  //       ...prevPaths,
+  //       { path: currentPath, color: strokeColor, width: lineWidth },
+  //     ]);
+  //     setCurrentPath([]);
+  //   })
+  // }
+  // useEffect(() => {
+  //   if(initData?.length<=0)return;
+  //   const newData = initData?.filter(i => i.path?.length > 0);
+  //  if(newData.length<=0)return;
+  //  initDraw(newData)
+  // }, [initData]);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
@@ -41,16 +62,14 @@ const CanvasBoard: React.FC<Props> = ({
     }
   }, []);
 
-  const startDrawing = (event: MouseEvent<HTMLCanvasElement>) => {
-    const { offsetX, offsetY } = event.nativeEvent;
+  const startDrawing = (x:number,y:number) => {
     setIsDrawing(true);
-    setCurrentPath([{ x: offsetX, y: offsetY }]);
+    setCurrentPath([{ x: x, y: y }]);
   };
 
-  const draw = (event: MouseEvent<HTMLCanvasElement>) => {
+  const draw = (x:number,y:number) => {
     if (!isDrawing) return;
-    const { offsetX, offsetY } = event.nativeEvent;
-    setCurrentPath((prevPath) => [...prevPath, { x: offsetX, y: offsetY }]);
+    setCurrentPath((prevPath) => [...prevPath, { x: x, y: y }]);
     const canvas = canvasRef.current;
     if (canvas) {
       const context = canvas.getContext("2d");
@@ -62,7 +81,7 @@ const CanvasBoard: React.FC<Props> = ({
           currentPath[currentPath.length - 1].x,
           currentPath[currentPath.length - 1].y
         );
-        context.lineTo(offsetX, offsetY);
+        context.lineTo(x, y);
         context.stroke();
       }
     }
@@ -75,7 +94,7 @@ const CanvasBoard: React.FC<Props> = ({
       { path: currentPath, color: strokeColor, width: lineWidth },
     ]);
     setCurrentPath([]);
-    drawEnd?.(paths);
+    drawEnd?.(paths?.filter(i => i.path?.length > 0));
   };
 
   // 缩放逻辑
@@ -126,8 +145,8 @@ const CanvasBoard: React.FC<Props> = ({
         ref={canvasRef}
         width={width}
         height={width * ratio}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
+        onMouseDown={(event: MouseEvent<HTMLCanvasElement>) =>startDrawing?.(event.nativeEvent.offsetX,event.nativeEvent.offsetY)}
+        onMouseMove={(event: MouseEvent<HTMLCanvasElement>) => draw?.(event.nativeEvent.offsetX,event.nativeEvent.offsetY)}
         onMouseUp={endDrawing}
         onMouseLeave={endDrawing}
         onWheel={handleWheel}

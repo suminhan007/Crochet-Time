@@ -1,5 +1,5 @@
-import {Icon, LandButton, LandLoading, LandSelect, LandState} from "@suminhan/land-design";
-import {useEffect, useState} from "react";
+import {Icon, LandButton, LandLoading, LandMessage, LandSelect, LandState} from "@suminhan/land-design";
+import React, {useEffect,  useState} from "react";
 import { CTWorksType } from "./type.ts";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -73,10 +73,20 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                 break;
         }
     };
-
     const [selectType, setSelectType] = useState<string | number>("all");
     const [selectSort, setSelectSort] = useState<string | number>("modify");
 
+    const [toast, setToast] = useState<boolean>(false);
+    const [toastText, setToastText] = useState<string>("");
+
+    const handleShowToast = (show: boolean, text: string) => {
+        setToastText(text);
+        setToast(show);
+        const timer = setTimeout(() => {
+            setToast(false);
+            clearTimeout(timer);
+        }, 1000);
+    };
     // 获取最新图片
     const fetchLatestProjects = async () => {
         const {data:{user}} = await supabase.auth.getUser();
@@ -101,6 +111,29 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
         setLoading(true);
         fetchLatestProjects();
     }, []);
+
+    const createProject = async (type:string) => {
+        let initData:any;
+        switch (type) {
+            case CTWorksType.Draft: initData = [ {layer_id:'1',layer_name:'1',path_data:[]}]
+        }
+        const {data:{user}} = await supabase.auth.getUser();
+        if(user){
+            const id =  `${Date.now()}`;
+            const res = await supabase.from('CKTStudioTask').insert([{
+                id: `${id}`,
+                project_name: 'Untitled',
+                project_type: type,
+                edit_time: `${id}`,
+                data: initData
+            }]).eq('user_id', user?.id)
+            if(res.error){}else{
+                navigate(`worktop?type=${type}?project_id=${id}`);
+            }
+        }else{
+            handleShowToast(true,'请先登录')
+        }
+    }
     return (
         <div className="flex-1 flex column items-center gap-24 width-100 height-100 overflow-auto p-32">
             <div
@@ -154,7 +187,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                                 <div
                                     key={item.value ?? index}
                                     className="flex items-center gap-8 px-12 py-8 fs-14 cursor-pointer hover:bg-gray transition"
-                                    onClick={() => navigate(`worktop?type=${item.value}`)}
+                                    onClick={() => createProject?.(item.value)}
                                 >
                                     {getTypeIcon(item.value)}
                                     {item.label}
@@ -182,7 +215,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                             <div className="width-100 ratio-1 bg-gray radius-12"></div>
                             <div className="flex items-center gap-8 fs-14 color-gray-1 fw-500">
                                 {getTypeIcon(item.type)}
-                                {item.name ?? isEnglish?'untitled':'未命名'}
+                                {item.name || isEnglish?'untitled':'未命名'}
                             </div>
                             <div className="fs-12 color-gray-4">{timeAgo(item.edit_time,isEnglish)}</div>
                         </div>
@@ -190,6 +223,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                 </div> : <div className={'flex both-center width-100 height-100'}><LandState type={'empty'}
                                                                                title={isEnglish?'No work yet, click New to start creating!':'暂无作品，点击新建开始创作吧'}/>
                 </div>}
+            {toast && <LandMessage show={toast} text={toastText} />}
         </div>
     );
 };

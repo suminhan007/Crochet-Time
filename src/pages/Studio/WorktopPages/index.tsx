@@ -1,4 +1,4 @@
-import {Icon, LandButton, LandDivider, LandInput, LandMessage} from "@suminhan/land-design";
+import {Icon, LandButton, LandDivider, LandInput} from "@suminhan/land-design";
 import React, {useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import WorktopDraft from "./WorktopDraft";
@@ -9,6 +9,20 @@ import supabase from "../../../utils/supabse.ts";
 
 type Props = {isEnglish?:boolean};
 const WorktopPages: React.FC<Props> = ({}) => {
+    // 自动拉取已保存数据
+    const [lastestData,setLastestData] = useState<{id:string,project_name:string,project_type:string,edit_time:string,data:any[]}>();
+    const getProjectDetailData = async () => {
+        if(!projectId) return;
+        const {data,error} = await supabase.from('CKTStudioTask').select().eq('id',projectId).single();
+        if(error) {
+            throw error;
+        }else{
+            setLastestData(data);
+        }
+    }
+    useEffect(() => {
+        getProjectDetailData();
+    }, []);
   const navigate = useNavigate();
   const type = useMemo(
     () => window.location.hash.includes('project_id') ? window.location.hash?.split("studio/worktop?type=")[1].split('?project_id')[0] :window.location.hash?.split("studio/worktop?type=")[1],
@@ -21,63 +35,32 @@ const WorktopPages: React.FC<Props> = ({}) => {
     [type]
   );
   const projectId = useMemo(() => window.location.hash?.includes('project_id') ? window.location.hash.split('?project_id=')[1]:undefined,[window.location])
-  const showSaveButton = useMemo(() => type === 'wire',[type])
+  const showSaveButton = useMemo(() => type === 'draft'||type === 'wire',[type])
 
-  const [projectName, setProjectName] = useState<string>();
-
-    //提示信息
-    const [toast, setToast] = useState<boolean>(false);
-    const [toastText, setToastText] = useState<string>("");
-
-    const handleShowToast = (show: boolean, text: string) => {
-        setToastText(text);
-        setToast(show);
-        const timer = setTimeout(() => {
-            setToast(false);
-            clearTimeout(timer);
-        }, 1000);
-    };
-    const [projectData,setProjectData] = useState<any[]>([]);
-  const handleSaveProject = async () => {
-      const {data:{user}} = await supabase.auth.getUser();
-    const href = window.location.href;
-      if(href.includes('project_id')){
-        const projectId = href.split('project_id')[1];
-          await supabase.from('CKTStudioTask').update({
-              project_name: projectName,
-              project_type: type,
-              edit_time: `${Date.now()}`,
-              data: projectData
-          }).eq('id',projectId)
-      }else{
-          // 新项目
-          const res = await supabase.from('CKTStudioTask').insert([{
-              project_name: projectName,
-              project_type: type,
-              edit_time: `${Date.now()}`,
-              data: projectData
-          }]).eq('user_id', user?.id)
-          if(res.status < 300 && res.status >100){
-              handleShowToast(true,'保存成功')
-          }else{
-              handleShowToast(true,'保存失败')
-          }
-      }
-  }
-  // 自动拉取已保存数据
-    const [lastestData,setLastestData] = useState<{id:string,project_name:string,project_type:string,edit_time:string,data:any[]}>();
-    const getProjectDetailData = async () => {
-      if(!projectId) return;
-      const {data,error} = await supabase.from('CKTStudioTask').select().eq('id',projectId).single();
-      if(error) {
-          throw error;
-      }else{
-          setLastestData(data);
-      }
-    }
+    // 修改文件名
+  const [projectName, setProjectName] = useState<string>('');
+    const [showNameInput, setShowNameInput] = useState<boolean>(false);
     useEffect(() => {
-        getProjectDetailData();
-    }, []);
+        if(lastestData?.project_name)
+        setProjectName(lastestData?.project_name)
+    }, [lastestData?.project_name]);
+    // 保存配置数据: 具体数据在对应组件中操作
+  const handleSaveProjectOption = async () => {
+    const href = window.location.href;
+          if(href.includes('project_id')){
+              const projectId = href.split('project_id=')[1];
+              const res = await supabase.from('CKTStudioTask').update({
+                  project_name: projectName,
+                  project_type: type,
+                  edit_time: `${Date.now()}`,
+              }).eq('id',projectId)
+              if(res.error){}else{
+                  setShowNameInput(false);
+                  getProjectDetailData();
+              }
+          }
+  }
+
   return (
     <StyledWorktop className="fixed left-0 top-0 flex column">
       <div
@@ -85,7 +68,7 @@ const WorktopPages: React.FC<Props> = ({}) => {
         style={{ height: "64px" }}
       >
         <div
-          className="flex items-center cursosr-pointer fs-14 cursor-pointer"
+          className="flex items-center cursosr-pointer fs-12 cursor-pointer"
           onClick={() => navigate('/type=studio')}
         >
           <Icon name="arrow" className="rotate-90" />
@@ -94,27 +77,32 @@ const WorktopPages: React.FC<Props> = ({}) => {
         <LandDivider direction="column" lang="40%" margin={24} />
         <div className="flex items-center fs-16 fw-600">
           {title}：
-          <LandInput
-            type="transparent"
-            placeholder={lastestData?.project_name||'Untitled'}
-            value={projectName}
-            onChange={(val) => {
-                setProjectName(val);
-                handleSaveProject();
-            }}
-          />
+            <div className={'relative fs-14 fw-600 flex items-center'} onClick={() => setShowNameInput(true)} style={{height:'36px'}}>
+                {lastestData?.project_name}
+               <div className={`absolute left-0 top-0 flex items-center gap-8 ${showNameInput ? '':'opacity-0 events-none'} transition`}>
+                   <LandInput
+                       width={120}
+                       type="background"
+                       placeholder={lastestData?.project_name||'Untitled'}
+                       value={projectName}
+                       onChange={(val) => {
+                           setProjectName(val);
+                       }}
+                   />
+                   <LandButton type={'text'} size={'small'} icon={<Icon name={'error'} strokeWidth={0}/>} onClick={(e) => {
+                       e.stopPropagation();setShowNameInput(false); lastestData?.project_name ? setProjectName(lastestData?.project_name):setProjectName('')
+                   }} />
+                   <LandButton type={'text'} size={'small'} icon={<Icon name={'check'} strokeWidth={0}/>} onClick={e=>{e.stopPropagation();handleSaveProjectOption?.()}} className={`${(projectName !== lastestData?.project_name) ? '':'opacity-0 events-none'} transition`}/>
+               </div>
+            </div>
         </div>
           {showSaveButton && <LandButton type={'background'} status={'primary'} text={'保存作品'} icon={<Icon name={'save'}/>}
-                       className="ml-auto" onClick={handleSaveProject}/>}
+                       className="ml-auto" onClick={handleSaveProjectOption}/>}
       </div>
       <div className="flex-1 height-1">
-        {type === "draft" && <WorktopDraft data={lastestData?.data} onDrawEnd={data=> {
-            setProjectData(data);
-            handleSaveProject?.()
-        }} />}
+        {type === "draft" && <WorktopDraft />}
         {type === "wool" && <WorktopWool />}
       </div>
-        {toast && <LandMessage show={toast} text={toastText} />}
     </StyledWorktop>
   );
 };

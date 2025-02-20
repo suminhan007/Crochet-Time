@@ -10,11 +10,13 @@ import {
   LandNumberInput,
 } from "@suminhan/land-design";
 import { hexToRgba } from "../../../../../../craft-design-studio/src/hooks/hexToRgba.ts";
+import supabase from "../../../../utils/supabse.ts";
+import isWhite from "../../../../utils/isWhite.ts";
 
 type LayerType = {
-  id: string;
-  name: string;
-  data?: Path[];
+  layer_id: string;
+  layer_name: string;
+  path_data?: Path[];
 };
 
 const Brush_Type_Data = [
@@ -35,17 +37,8 @@ const Brush_Type_Data = [
 ];
 
 type Props = {
-  data?:{layer:string,data:Path[]}[];
-  onDrawEnd?: (data: {layer:string,data:Path[]}[]) => void;
 }
-const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
-  //历史项目：填入数据
-  useEffect(() => {
-    if(!data)return;
-    const layers = data?.map((_i,idx) => ({id:`${idx+1}`,name:`${idx+1}`}));
-    setLayers(layers);
-    setDraftData(data)
-  }, [data]);
+const WorktopDraft: React.FC<Props> = ({}) => {
   //@ts-ignore
   const [colorData, setColorData] = useState<
     { id: string; title: string; colors: { value: string; name: string }[] }[]
@@ -61,21 +54,6 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
   const [activeColorTab, setActiveColorTab] = useState<string>(
     "gift-2mm"
   );
-
-  const [draftData, setDraftData] = useState<{ layer:string,data:Path[] }[]>([]);
-  const isWhite = (value: string) => {
-    if (
-      value === "white" ||
-      value === "#fff" ||
-      value === "#FFF" ||
-      value === "#ffffff" ||
-      value === "#FFFFFF"
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   // 换画笔
   useEffect(() => {
@@ -110,19 +88,23 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
   );
 
   // 图层
-  const [layers, setLayers] = useState<LayerType[]>([{ id: "1", name: "1" }]);
+  const [layers, setLayers] = useState<LayerType[]>([{ layer_id: "1", layer_name: "1",path_data:[] }]);
   const [activeLayer, setActiveLayer] = useState<string>("1");
   // 最大图层
   const layerAddDisabled = useMemo(() => layers?.length >= 20, [layers]);
 
-  const handleDrawEnd = (idx: number, data?: Path[]) => {
-    if(!data) return;
-    if(draftData?.filter(i =>i.layer === activeLayer)?.length===0){
-      setDraftData([...draftData,{layer:activeLayer,data:data}]);
-    }else{
-      const newData = draftData.map(i => i.layer===activeLayer ? Object.assign(i,{data:data}) : i);
-      setDraftData(newData);
+  const updateDraftData = async (data:LayerType[]) => {
+    const href = window.location.href;
+    if(href.includes('project_id')){
+      const projectId = href.split('project_id=')[1];
+      await supabase.from('CKTStudioTask').update({
+        edit_time: `${Date.now()}`,
+        data: data
+      }).eq('id',projectId)
     }
+  }
+  const handleDrawEnd = (idx: number, data?: Path[]) => {
+    if(!data || data?.length<=0) return;
     const boards = document.querySelectorAll(".draft-canvas-board");
     const previewBoards = document.querySelectorAll(
       ".draft-canvas-board-preview"
@@ -149,11 +131,25 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
       }
     }
     const newLayerData = layers?.map((i, index) =>
-      index === idx ? Object.assign(i, { data: data }) : i
+      index === idx ? Object.assign(i, { path_data: data }) : i
     );
     setLayers(newLayerData);
-    onDrawEnd?.(draftData)
+    updateDraftData?.(newLayerData)
   };
+
+  const getInitData = async () => {
+    const href = window.location.href;
+    if(href.includes('project_id')){
+      const projectId = href.split('project_id=')[1];
+      const {data,error} = await supabase.from('CKTStudioTask').select().eq('id', projectId).single()
+      if(error){}else{
+        setLayers(data.data)
+      }
+    }
+  }
+  useEffect(() => {
+    getInitData();
+  }, []);
   return (
     <div className="relative flex width-100 height-100 bg-gray">
       {/* 左边图层区域 */}
@@ -163,13 +159,13 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
       >
         {layers?.map((layersItem, layersIndex) => (
           <div
-            key={layersItem.id ?? layersIndex}
+            key={layersItem.layer_id ?? layersIndex}
             className="flex column items-center gap-4 width-100 fs-12 color-gray-3"
-            onClick={() => setActiveLayer(layersItem.id)}
+            onClick={() => setActiveLayer(layersItem.layer_id)}
           >
             <div
               className={`width-100 bg-white radius-12 ${
-                activeLayer === layersItem.id ? "border-primary" : ""
+                activeLayer === layersItem.layer_id ? "border-primary" : ""
               } transition`}
               style={{ aspectRatio: 1 }}
             >
@@ -179,7 +175,7 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
                 height={96}
               ></canvas>
             </div>
-            {layersItem.name}
+            {layersItem.layer_name}
           </div>
         ))}
         <div
@@ -189,14 +185,18 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
           onClick={
             layerAddDisabled
               ? undefined
-              : () =>
-                  setLayers([
-                    ...layers,
-                    {
-                      id: `${layers?.length + 1}`,
-                      name: `${layers?.length + 1}`,
-                    },
-                  ])
+              : () =>{
+              const newLayers = [
+                ...layers,
+                {
+                  layer_id: `${layers?.length + 1}`,
+                  layer_name: `${layers?.length + 1}`,
+                  path_data: []
+                },
+              ]
+                  setLayers(newLayers);
+                  updateDraftData(newLayers);
+            }
           }
         >
           <Icon name="add" />
@@ -209,7 +209,7 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
           <div
             key={idx}
             className={`${
-              activeLayer === i.id
+              activeLayer === i.layer_id
                 ? ""
                 : "absolute top-0 left-0 opacity-0 events-none"
             }`}
@@ -219,6 +219,7 @@ const WorktopDraft: React.FC<Props> = ({data,onDrawEnd}) => {
               lineWidth={brushWidth}
               drawEnd={(data) => handleDrawEnd(idx, data)}
               canvasClassName="draft-canvas-board"
+              initData={layers?.filter(itm => itm.layer_id === activeLayer)[0]?.path_data}
             />
           </div>
         ))}
