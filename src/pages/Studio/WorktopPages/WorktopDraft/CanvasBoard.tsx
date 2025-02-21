@@ -31,26 +31,43 @@ const CanvasBoard: React.FC<Props> = ({
   const [isDrawing, setIsDrawing] = useState(false);
   const [paths, setPaths] = useState<Path[]>(initData);
   const [currentPath, setCurrentPath] = useState<Point[]>([]);
-  // const initDraw = (data:Path[]) => {
-  //   data?.map((i) => {
-  //     setIsDrawing(true)
-  //     setCurrentPath([{x: i.path[0].x,y:i.path[0].y}]);
-  //     i.path?.map(j => {
-  //       draw(j.x, j.y);
-  //     })
-  //     setPaths((prevPaths) => [
-  //       ...prevPaths,
-  //       { path: currentPath, color: strokeColor, width: lineWidth },
-  //     ]);
-  //     setCurrentPath([]);
-  //   })
-  // }
-  // useEffect(() => {
-  //   if(initData?.length<=0)return;
-  //   const newData = initData?.filter(i => i.path?.length > 0);
-  //  if(newData.length<=0)return;
-  //  initDraw(newData)
-  // }, [initData]);
+  const initDraw = (data:Path[]) => {
+    data?.map((i) => {
+      setCurrentPath([...currentPath,{x: i.path[0].x,y:i.path[0].y}]);
+      i.path?.map((j,jdx) => {
+        const x = j.x;
+        const y = j.y;
+        setCurrentPath([...currentPath, { x: x, y: y }]);
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const context = canvas.getContext("2d");
+          if (context) {
+            context.strokeStyle = strokeColor;
+            context.lineWidth = lineWidth;
+            context.beginPath();
+            context.moveTo(
+                currentPath[jdx - 1]?.x,
+                currentPath[jdx - 1]?.y
+            );
+            context.lineTo(x, y);
+            context.stroke();
+          }
+        }
+      })
+      setPaths((prevPaths) => [
+        ...prevPaths,
+        { path: currentPath, color: strokeColor, width: lineWidth },
+      ]);
+      setCurrentPath([]);
+    })
+  }
+  useEffect(() => {
+    if(initData?.length<=0)return;
+    const newData = initData?.filter(i => i.path?.length > 0);
+   if(newData.length<=0)return;
+   initDraw(newData)
+  }, [initData]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {

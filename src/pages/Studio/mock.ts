@@ -2,7 +2,7 @@ import {CTWorksType} from "./type.ts";
 
 export const CT_DESIGN_FILTER_SELECT_TYPE_DATA = [
     { value: "all", label: "全部" },
-    { value: CTWorksType?.Draft, label: "草稿" },
+    // { value: CTWorksType?.Draft, label: "草稿" },
     { value: CTWorksType?.Design, label: "设计稿" },
     { value: CTWorksType?.Pattern, label: "图解" },
     { value: CTWorksType?.Product, label: "成品" },
@@ -14,7 +14,7 @@ export const CT_DESIGN_FILTER_SELECT_TYPE_DATA = [
 
 export const CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN = [
     { value: "all", label: "All" },
-    { value: CTWorksType?.Draft, label: "Draft" },
+    // { value: CTWorksType?.Draft, label: "Draft" },
     { value: CTWorksType?.Design, label: "Design" },
     { value: CTWorksType?.Pattern, label: "Pattern" },
     { value: CTWorksType?.Product, label: "Product" },

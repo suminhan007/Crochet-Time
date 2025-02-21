@@ -4,11 +4,11 @@ import styled from "styled-components";
 import WorktopDraft from "./WorktopDraft";
 import WorktopWool from "./WorktopWool";
 import { useNavigate } from "react-router-dom";
-import {CT_DESIGN_FILTER_SELECT_TYPE_DATA} from "../mock.ts";
+import {CT_DESIGN_FILTER_SELECT_TYPE_DATA, CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN} from "../mock.ts";
 import supabase from "../../../utils/supabse.ts";
 
 type Props = {isEnglish?:boolean};
-const WorktopPages: React.FC<Props> = ({}) => {
+const WorktopPages: React.FC<Props> = ({isEnglish}) => {
     // 自动拉取已保存数据
     const [lastestData,setLastestData] = useState<{id:string,project_name:string,project_type:string,edit_time:string,data:any[]}>();
     const getProjectDetailData = async () => {
@@ -30,12 +30,12 @@ const WorktopPages: React.FC<Props> = ({}) => {
   );
   const title = useMemo(
     () =>
-        CT_DESIGN_FILTER_SELECT_TYPE_DATA.filter((i) => i.value === type)[0]
+        (isEnglish ? CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN:CT_DESIGN_FILTER_SELECT_TYPE_DATA).filter((i) => i.value === type)[0]
         ?.label,
     [type]
   );
   const projectId = useMemo(() => window.location.hash?.includes('project_id') ? window.location.hash.split('?project_id=')[1]:undefined,[window.location])
-  const showSaveButton = useMemo(() => type === 'draft'||type === 'wire',[type])
+  const showSaveButton = useMemo(() => type === 'draft'||type === 'wool',[type])
 
     // 修改文件名
   const [projectName, setProjectName] = useState<string>('');
@@ -101,7 +101,7 @@ const WorktopPages: React.FC<Props> = ({}) => {
       </div>
       <div className="flex-1 height-1">
         {type === "draft" && <WorktopDraft />}
-        {type === "wool" && <WorktopWool />}
+        {type === "wool" && <WorktopWool isEnglish={isEnglish}/>}
       </div>
     </StyledWorktop>
   );
