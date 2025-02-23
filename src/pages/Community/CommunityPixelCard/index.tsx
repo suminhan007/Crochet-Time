@@ -9,6 +9,7 @@ import {
     LandState
 } from "@suminhan/land-design";
 import {useNavigate} from "react-router-dom";
+import PixelCard from "./PixelCard.tsx";
 
 const CommunityPixelCard:React.FC = () => {
     const navigate = useNavigate();
@@ -91,19 +92,7 @@ const CommunityPixelCard:React.FC = () => {
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
-                {communityColorCardData?.map(i =>  <div key={i.id} className={'flex column gap-8'}>
-                    <img src={i.img_url} alt={i.img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'} style={{aspectRatio:'1',objectFit:'cover'}}/>
-                    <div className={'fs-12 color-gray-4'}>{i.size}</div>
-                    <div className={'flex items-center justify-between'}>
-                        <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
-                            <LandAvatar imgUrl={i?.user?.avatar_url} size={24}/>
-                            {i?.user?.username}
-                            {i?.user?.is_official && <div style={{width:'12px',height:'12px'}} className={'flex both-center fs-12 bg-primary radius-8 color-white'}>v</div>}
-                        </div>
-                        <LandButton type={'text'}
-                                    icon={<Icon name={'download'}/>} size={'small'} onClick={() =>handleDownloadColorCard?.(i.img_url)}></LandButton>
-                    </div>
-                </div>)}
+                {communityColorCardData?.map(i =>  <PixelCard key={i.id} item={i}/>)}
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开像素卡, <LandLink
                     onClick={() => navigate('/type=tools-pixelDrawer')}>前往制作</LandLink>或<LandLink

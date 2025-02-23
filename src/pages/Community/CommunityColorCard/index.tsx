@@ -88,6 +88,7 @@ const CommunityColorCard:React.FC = () => {
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <ColorCard
                     key={i.origin_img_url}
+                    id={i.id}
                     origin_img_url={i.origin_img_url}
                     img_url={i.img_url}
                     username={i?.users?.username}

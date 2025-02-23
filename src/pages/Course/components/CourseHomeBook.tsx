@@ -9,7 +9,7 @@ const CourseHomeBook:React.FC<Props> = ({
                                         }) => {
     const [open,setOpen] = useState<boolean>(false);
     return <StyledHomeListItem
-        className={`relative flex justify-end ${open ? 'open':''}`}
+        className={`relative flex justify-end ${open ? 'open':''} cursor-pointer`}
         onClick={()=>setOpen(true)}
         onMouseLeave={()=>setOpen(false)}
     >

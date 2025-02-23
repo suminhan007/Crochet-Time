@@ -1,7 +1,7 @@
-import {Icon, LandAvatar, LandButton} from "@suminhan/land-design";
-import React, {useEffect,  useState} from "react";
+import { LandAvatar} from "@suminhan/land-design";
+import React from "react";
 import timeAgoTZ from "../../../utils/timeAgoTZ.ts";
-import supabase from "../../../utils/supabse.ts";
+import StateLikeStarButtons from "./StateLikeStarButtons.tsx";
 
 type Props = {
     isEnglish?: boolean;
@@ -29,41 +29,7 @@ const StateCard:React.FC<Props> = ({
     star='0',
     onCardClick
                                    }) => {
-    const [liked,setLiked]=useState<boolean>(false);
-    const [stared,setstard]=useState<boolean>(false);
-    const getLikeStatus = async (stateId:string) => {
-        const {data:{user}} = await supabase.auth.getUser();
-        if(user){
-            const likedRes = await supabase.from('likedStateCard').select().eq('user_id',user?.id);
-            if(likedRes.error) {
-                return;
-            }else{
-                const ids = likedRes.data.map((i) => i.state_id);
-                setLiked(ids.length > 0 && ids.includes(stateId))
-            }
-        }else{
-            return;
-        }
-    }
-    const getStarStatus = async (stateId:string) => {
-        const {data:{user}} = await supabase.auth.getUser();
-        if(user){
-            const likedRes = await supabase.from('staredStateCard').select().eq('user_id',user?.id);
-            if(likedRes.error) {
-                return;
-            }else{
-                const ids = likedRes.data.map((i) => i.state_id);
-                setstard(ids.length > 0 && ids.includes(stateId))
-            }
-        }else{
-            return;
-        }
-    }
-    useEffect(()=> {
-        getLikeStatus(stateId);
-        getStarStatus(stateId);
-    },[])
-    return (<div className={'flex column gap-8'}>
+    return (<div className={'flex column gap-8 cursor-pointer'} onClick={() => onCardClick?.('detail')}>
             <div className={'relative bg-gray radius-8'}>
                 <img src={imgUrl} alt={imgUrl} width={'100%'} className={'radius-8 overflow-hidden'}
                      style={{maxHeight: '800px', minHeight: '100px', objectFit: 'cover'}}/>
@@ -81,24 +47,13 @@ const StateCard:React.FC<Props> = ({
                         {time && <div className={'fs-12 color-gray-4'}>{timeAgoTZ(time,isEnglish)}</div>}
                     </div>
                 </div>
-                <div className={'flex items-center gap-8 fs-12 color-gray-3'}>
-                    <div className={'flex items-center gap-4'}>
-                        <LandButton
-                            type={'text'}
-                            icon={<Icon name={'like'} size={16} strokeWidth={liked ? 0:3} fill={liked ? 'var(--color-red-4)':''}/>}
-                            size={'small'}
-                            onClick={() => onCardClick?.('like')}></LandButton>
-                        {Number(like)>0 ? like : 0}
-                    </div>
-                    <div className={'flex items-center gap-4'}>
-                        <LandButton
-                            type={'text'}
-                            icon={<Icon name={'star'} size={16} strokeWidth={stared ? 0:3} fill={stared ? 'var(--color-orange-4)':''}/>}
-                            size={'small'}
-                            onClick={() => onCardClick?.('star')}></LandButton>
-                        {Number(star)>0 ? star : 0}
-                    </div>
-                </div>
+                <StateLikeStarButtons
+                    stateId={stateId}
+                    likesCount={like}
+                    starsCount={star}
+                    onLikeClick={()=> onCardClick?.('like')}
+                    onStarClick={() => onCardClick?.('star')}
+                />
             </div>
         </div>
 

@@ -6,6 +6,7 @@ import {
     LandState
 } from "@suminhan/land-design";
 import StateCard from "./StateCard.tsx";
+import StateCardDetailDialog from "./StateCardDetailDialog.tsx";
 
 type Props = {
     isEnglish?:boolean;
@@ -90,65 +91,13 @@ const CommunityStateCard:React.FC<Props> = ({
         }
     }
 
-    // const handleLikeStateCard = async (id:string) => {
-    //     const {data:{user}} = await supabase.auth.getUser();
-    //     if(user){
-    //         // 获取当前点赞数
-    //         const currentRes = await supabase
-    //             .from('graphicState')
-    //             .select('likes')
-    //             .eq('id', id)
-    //             .single();
-    //
-    //         if (currentRes.error) {
-    //             console.error('Error fetching current counter value:', currentRes.error);
-    //             return;
-    //         }
-    //         const currentLikes = currentRes.data.likes;
-    //
-    //         const likedRes = await supabase.from('likedStateCard').select().eq('user_id',user?.id);
-    //         if(likedRes.error || !likedRes.data) {
-    //             return;
-    //         }else{
-    //             const ids = likedRes.data.map((i) => i.state_id);
-    //             if(ids.length > 0 && ids.includes(id)){
-    //                 // 赞过
-    //                 const likeRes = await supabase.from('likedStateCard').delete().eq('state_id', id).eq('user_id',user?.id);
-    //                 if(likeRes.error) {
-    //                     return;
-    //                 }else{
-    //                     const res = await supabase.from('graphicState').update({
-    //                         likes: `${Number(currentLikes) - 1}`,
-    //                     }).eq('id',id);
-    //                     if(res.error) return;
-    //                 }
-    //             }else{
-    //                 // 加入点赞库
-    //                 const likeRes = await supabase.from('likedStateCard').insert({
-    //                     state_id: id,
-    //                     user_id: user?.id,
-    //                 })
-    //                 if(likeRes.error) {
-    //                     return;
-    //                 }else{
-    //                     const res = await supabase.from('graphicState').update({
-    //                         likes: `${Number(currentLikes) + 1}`,
-    //                     }).eq('id',id);
-    //                     if(res.error) return;
-    //                 }
-    //             }
-    //         }
-    //     }else{
-    //         handleShowToast(true,'请先登录')
-    //     }
-    // }
-    const handleStarStateCard = async (id:string) => {
+    const handleLikeStateCard = async (id:string) => {
         const {data:{user}} = await supabase.auth.getUser();
         if(user){
             // 获取当前点赞数
             const currentRes = await supabase
                 .from('graphicState')
-                .select('stars')
+                .select('likes')
                 .eq('id', id)
                 .single();
 
@@ -156,33 +105,35 @@ const CommunityStateCard:React.FC<Props> = ({
                 console.error('Error fetching current counter value:', currentRes.error);
                 return;
             }
-            const currentStars = currentRes.data.stars;
+            const currentLikes = currentRes.data.likes;
 
-            const StaredRes = await supabase.from('staredStateCard').select().eq('user_id',user?.id);
-            if(StaredRes.error || !StaredRes.data) {
+            const likedRes = await supabase.from('likedStateCard').select().eq('user_id',user?.id);
+            if(likedRes.error || !likedRes.data) {
                 return;
             }else{
-                const ids = StaredRes.data.map((i) => i.state_id);
+                const ids = likedRes.data.map((i) => i.state_id);
                 if(ids.length > 0 && ids.includes(id)){
-                    const StarRes = await supabase.from('staredStateCard').delete().eq('state_id', id).eq('user_id',user?.id);
-                    if(StarRes.error) {
+                    // 赞过
+                    const likeRes = await supabase.from('likedStateCard').delete().eq('state_id', id).eq('user_id',user?.id);
+                    if(likeRes.error) {
                         return;
                     }else{
                         const res = await supabase.from('graphicState').update({
-                            stars: `${Number(currentStars) - 1}`,
+                            likes: `${Number(currentLikes) - 1}`,
                         }).eq('id',id);
                         if(res.error) return;
                     }
                 }else{
-                    const StarRes = await supabase.from('staredStateCard').insert({
+                    // 加入点赞库
+                    const likeRes = await supabase.from('likedStateCard').insert({
                         state_id: id,
                         user_id: user?.id,
                     })
-                    if(StarRes.error) {
+                    if(likeRes.error) {
                         return;
                     }else{
                         const res = await supabase.from('graphicState').update({
-                            stars: `${Number(currentStars) + 1}`,
+                            likes: `${Number(currentLikes) + 1}`,
                         }).eq('id',id);
                         if(res.error) return;
                     }
@@ -192,6 +143,62 @@ const CommunityStateCard:React.FC<Props> = ({
             handleShowToast(true,'请先登录')
         }
     }
+    const handleStarStateCard = async (item: { id:string,img_url:string,title:string,description:string }) => {
+        const {data:{user}} = await supabase.auth.getUser();
+        if(user){
+            // 获取当前点赞数
+            const currentRes = await supabase
+                .from('graphicState')
+                .select('stars')
+                .eq('id', item.id)
+                .single();
+
+            if (currentRes.error) {
+                console.error('Error fetching current counter value:', currentRes.error);
+                return;
+            }
+            const currentStars = currentRes.data.stars;
+
+            const StaredRes = await supabase.from('staredCard').select().eq('user_id',user?.id);
+            if(StaredRes.error || !StaredRes.data) {
+                return;
+            }else{
+                const ids = StaredRes.data.map((i) => i.state_id);
+                if(ids.length > 0 && ids.includes(item.id)){
+                    const StarRes = await supabase.from('staredCard').delete().eq('card_id', item.id).eq('user_id',user?.id);
+                    if(StarRes.error) {
+                        return;
+                    }else{
+                        const res = await supabase.from('graphicState').update({
+                            stars: `${Number(currentStars) - 1}`,
+                        }).eq('id',item.id);
+                        if(res.error) return;
+                    }
+                }else{
+                    const StarRes = await supabase.from('staredCard').insert({
+                        card_id: item.id,
+                        user_id: user?.id,
+                        img_url: item.img_url.split('/CroKnitTime/stateImages/')[1]?.split('?token=')[0],
+                        title: item.title,
+                        description: item.description,
+                        type: 'graphic state/动态'
+                    })
+                    if(StarRes.error) {
+                        return;
+                    }else{
+                        const res = await supabase.from('graphicState').update({
+                            stars: `${Number(currentStars) + 1}`,
+                        }).eq('id',item.id);
+                        if(res.error) return;
+                    }
+                }
+            }
+        }else{
+            handleShowToast(true,'请先登录')
+        }
+    }
+    const [showDetailDialog,setShowDetailDialog] = useState(false);
+    const [detailItem,setDetailItem] = useState({id:'',img_url:'',title:'',description:'',created_at:'',likes:'',stars:'',user:{username:'',avatar_url: ''}});
     return (
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
@@ -213,7 +220,11 @@ const CommunityStateCard:React.FC<Props> = ({
                         switch (option) {
                             case 'download': handleDownloadStateCard?.(i.img_url);break;
                             case 'like': handleLikeStateCard?.(i.id);break;
-                            case 'star': handleStarStateCard?.(i.id);break;
+                            case 'star': handleStarStateCard?.(i);break;
+                            case 'detail': {
+                                setShowDetailDialog?.(true);
+                                setDetailItem(i)
+                            };break;
                             default: console.log(option);break;
                         }
                     }}
@@ -222,6 +233,14 @@ const CommunityStateCard:React.FC<Props> = ({
                 <LandState type={'empty'} title={isEnglish?<>no states, click the [+] button to publish!</>:<>暂无动态, 点击 [ + ] 发布吧</>}/>
             </div>}
             {toast && <LandMessage show={toast} text={toastText} />}
+            <StateCardDetailDialog
+                show={showDetailDialog}
+                onClose={() => setShowDetailDialog(false)}
+                data={detailItem}
+                description={detailItem.description}
+                onLikeClick={()=> handleLikeStateCard?.(detailItem)}
+                onStarClick={()=> handleStarStateCard?.(detailItem)}
+            />
         </>
     )
 }

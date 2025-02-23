@@ -7,6 +7,7 @@ import {
     LandState
 } from "@suminhan/land-design";
 import ImgPreview from "../../../components/ImgPreivew.tsx";
+import InspirationCard from "./InspirationCard.tsx";
 
 type Props = {
     firstIn?:boolean;
@@ -19,7 +20,7 @@ const CommunityInspirationCard:React.FC<Props> = ({
     const fetchLatestImage = async () => {
         const { data:communityData, error } = await supabase
             .from('inspirationCard')
-            .select('id, img_url')
+            .select('id, img_url').order('created_at', { ascending: false })
 
         if (error) {
             console.error('Error fetching image:', error);
@@ -57,21 +58,6 @@ const CommunityInspirationCard:React.FC<Props> = ({
         }, 1000);
     };
 
-    // const handleDownloadColorCard = async (url:string) => {
-    //     const downloadUrl =url.split('?token=')[0].split('CroKnitTime/inspirationCards/')[1];
-    //     const response = await supabase.storage.from('CroKnitTime/inspirationCards').download(downloadUrl);
-    //     if(response.error){
-    //         handleShowToast(true,'下载失败，请稍后再试')
-    //     }else {
-    //         // 创建一个a标签用于下载
-    //         const link = document.createElement('a');
-    //         link.href = URL.createObjectURL(response.data);
-    //         link.download = downloadUrl.split('.png')[0]; // 设置下载的文件名
-    //         link.click();
-    //         // 释放内存
-    //         URL.revokeObjectURL(link.href);
-    //     }
-    // }
     const [isVip, setIsVip] = useState<boolean>(false);
     const getUserLevel = async () => {
         const res = await supabase.auth.getUser();
@@ -86,6 +72,7 @@ const CommunityInspirationCard:React.FC<Props> = ({
     }, []);
     const [showDialog, setShowDialog] = useState(true);
     const [previewImg, setPreviewImg] = useState<string>('');
+
     return (
         <div className={'relative width-100 height-100 flex-1 flex both-center'}>
             {/*会员查看*/}
@@ -101,12 +88,7 @@ const CommunityInspirationCard:React.FC<Props> = ({
                         <LandAlert type={'warn'} title={'图片均由AI生成，仅供参考！'}/>
                     <div className={'grid gap-24 overflow-auto'}
                          style={{gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))'}}>
-                        {communityColorCardData?.map(i => <div key={i.id} className={'flex column gap-8'} onClick={() => setPreviewImg(i.img_url)}>
-                            <img src={i.img_url} alt={i.img_url} width={'100%'}
-                                 className={'radius-8 overflow-hidden events-none'}
-                                 style={{aspectRatio: '1', objectFit: 'cover'}}
-                            />
-                        </div>)}
+                        {communityColorCardData?.map(i => <InspirationCard id={i.id} img_url={i.img_url} onPreview={() => setPreviewImg(i.img_url)}/>)}
                     </div>
                 </div> : <>
                     <LandState type={'empty'} title={'暂无灵感内容，敬请期待'}/>

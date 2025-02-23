@@ -155,7 +155,7 @@ const ColorCardList:React.FC<Props> = ({
                 onClose={() => setShowDeleteDialog(false)}
                 onCancel={() => setShowDeleteDialog(false)}
                 onSubmit={() => handleDeleteColorCard()}
-                submitLabel={publishLoading?'发布中...':'发布'}
+                submitLabel={publishLoading?'删除中...':'删除'}
             >
                 <LandAlert type={'error'} title={'删除后不可恢复，请谨慎操作！'}/>
             </LandDialog>

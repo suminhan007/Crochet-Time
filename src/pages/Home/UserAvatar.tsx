@@ -5,17 +5,20 @@ import {
     LandAvatar,
     LandDrawer, LandInput,
     LandLoading,
-    LandMenu, LandUploader,
+    LandMenu, LandState, LandUploader,
 } from "@suminhan/land-design";
 import supabase from "../../utils/supabse.ts";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
+import timeAgoTZ from "../../utils/timeAgoTZ.ts";
+import Loading from "../../components/Loading.tsx";
 
 const userOptionMenuData = [
     {key:'publish',title:'发布',},
     {key:'star',title:'收藏',}
 ]
 type Props = {
+    isEnglish?: boolean,
     avatar?:string;
     username: string;
     email?:string;
@@ -24,6 +27,7 @@ type Props = {
     onUpdateUserSuccess: () => void;
 }
 const UserAvatar: React.FC<Props> = ({
+                                         isEnglish,
                                          avatar,
                                    username,
                                          email,
@@ -51,7 +55,10 @@ const UserAvatar: React.FC<Props> = ({
     const [newAvatar, setNewAvatar] = useState<string>('');
     const [newUsername, setNewUsername] = useState<string>('');
     const [userOptionMenu,setUserOptionMenu] = useState<string>('publish');
-    const [userMenuStarData,setUserMenuStarData] = useState<{id:string,img_url:string,title?:string,description?:string}[]>([]);
+    const [starLoading,setStarLoading] = useState<boolean>(true);
+    const [publishLoading,setPublishLoading] = useState<boolean>(false);
+    const [userMenuStarData,setUserMenuStarData] = useState<{id:string,img_url:string,title?:string,description?:string,card_id,type:string,users:{username:string,avatar_url:string}}[]>([]);
+    const [userMenuPublishData,setUserMenuPublishData] = useState<{id:string,created_at:string,img_url:string,title?:string,description?:string}[]>([]);
     // 修改用户昵称
     const onUpdateUsername = async () => {
         if(newUsername == username || !newUsername) setShowUpdateUsername(false);
@@ -98,13 +105,18 @@ const UserAvatar: React.FC<Props> = ({
     const getStarData = async () => {
         const {data:{user}} = await supabase.auth.getUser();
         if(user){
-            const {data:data,error} =await supabase.from('staredStateCard').select(`
-            graphicState (
+            const {data:data,error} =await supabase.from('staredCard').select(`
                 id,
+                card_id,
                 img_url,
                 title,
-                description
-            )
+                description,
+                type,
+                user_id,
+                users (
+                    username,
+                    avatar_url
+                )
             `).eq('user_id',user.id);
             if(error){
                 return;
@@ -112,19 +124,56 @@ const UserAvatar: React.FC<Props> = ({
                 const { data: UrlData, error:UrlError } = await supabase
                     .storage
                     .from('CroKnitTime')
-                    .createSignedUrls(data?.map(i => `stateImages/${i.graphicState.img_url}`), 60)
+                    .createSignedUrls(data?.map(i => `${i.type}/${i.img_url}`), 60)
                 if(UrlError){
                     console.log(UrlError)
                 }else{
-                    const resultData = data?.map((i,idx) => Object.assign(i.graphicState, {img_url: UrlData[idx].signedUrl}));
-                    setUserMenuStarData(resultData);
+                    const { data: UserData, error:UserError } = await supabase
+                        .storage
+                        .from('CroKnitTime')
+                        .createSignedUrls(data?.map(i => `userAvatars/${i.users.avatar_url}`), 60)
+                        if(UserError){}else{
+                            const resultData = data?.map((i,idx) => Object.assign(i, {img_url: UrlData[idx].signedUrl,users: Object.assign(i.users, {avatar_url: UserData[idx].signedUrl}) }));
+                            setUserMenuStarData(resultData);
+                            setStarLoading(false)
+                        }
+                }
+            }
+        }
+    }
+    const getPublishData = async () => {
+        const {data:{user}} = await supabase.auth.getUser();
+        if(user){
+            const {data:data,error} =await supabase.from('graphicState').select('id, created_at,img_url, title, description').eq('user_id',user.id);
+            if(error){
+                return;
+            }else{
+                const { data: UrlData, error:UrlError } = await supabase
+                    .storage
+                    .from('CroKnitTime')
+                    .createSignedUrls(data?.map(i => `stateImages/${i.img_url}`), 60)
+                if(UrlError){
+                    console.log(UrlError)
+                }else{
+                    const resultData = data?.map((i,idx) => Object.assign(i, {img_url: UrlData[idx].signedUrl }));
+                    setUserMenuPublishData(resultData);
                 }
             }
         }
     }
     useEffect(() => {
-        getStarData();
-    }, []);
+        getPublishData();
+        userOptionMenu === 'star' && getStarData();
+    }, [userOptionMenu]);
+    const getType = (type:string) => {
+        switch (type) {
+            case 'stateImages': return isEnglish ? 'state':'动态';break;
+            case 'inspirationCards': return isEnglish ? 'inspiration':'灵感';break;
+            case 'colorCards': return isEnglish ? 'color card':'色卡';break;
+            case 'fillCards': return isEnglish ? 'fill card':'配色卡';break;
+            case 'pixelCards': return isEnglish ? 'pixel card':'像素卡';break
+        }
+    }
     return (
         <>
             <StyledUserAvatar className={'relative'}>
@@ -152,6 +201,7 @@ const UserAvatar: React.FC<Props> = ({
             </StyledUserAvatar>
             {/*个人中心*/}
             <LandDrawer
+                mask
                 size={isMobile ? 'large' : 'small'}
                 show={showUserDetail}
                 onClose={() => setShowUserDetail(false)}
@@ -159,10 +209,11 @@ const UserAvatar: React.FC<Props> = ({
                 contentClassName={'width-100'}
                 wrapClassName={'ct-header-drawer'}
                 placement={isMobile ? 'bottom' : 'right'}
-                bodyClassName={'flex column'}
+                bodyClassName={'flex-1 flex column'}
+                bodyStyle={{paddingInline:'0'}}
             >
-                <div className={'flex justify-between items-center width-100'}>
-                    <div className={'flex items-center gap-8 fs-14 color-gray-2 cursor-pointer width-100'}>
+                <div className={'flex column items-center width-100 px-24'}>
+                    <div className={'flex items-center gap-8 fs-14 color-gray-2 cursor-pointer width-100 shrink-0'}>
                         <LandUploader style={{padding: '0', borderRadius: '100%'}} width={'40px'} height={'40px'}
                                       onUpload={url => handleUpdateUserAvatar?.(url)}>
                             {loading ? <LandLoading size={16} color={'var(--color-primary-6)'}/> :
@@ -189,24 +240,42 @@ const UserAvatar: React.FC<Props> = ({
                     </div>
                 </div>
 
-                    <div className={'flex justify-center width-100 mt-24 border-bottom'} style={{height: '40px'}}>
+                    <div className={'flex column items-center px-24 width-100 mt-24 border-bottom'} style={{height: '40px'}}>
                         <LandMenu data={userOptionMenuData} active={userOptionMenu}
                                   onChange={item => setUserOptionMenu(item.key)} border={false}/></div>
-                <div className={'width-100 flex-1'}>
-                    {userOptionMenu === 'star' &&<div className={'grid gap-12 width-100 py-24'}
-                          style={{gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))'}}>
+                <div className={'width-100 flex-1 px-24 overflow-auto'}>
+                    {userOptionMenu === 'star' && <>
+                    {starLoading ? <Loading/> : userMenuStarData?.length>0 ? <div className={'grid gap-12 width-100 py-24'}
+                          style={{gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))'}}>
                         {userMenuStarData?.map((starItem, starIndex) => <div key={starItem?.id ?? starIndex}
                                                                              className={'flex column gap-8'}>
                             <div className={'width-100 radius-8 overflow-hidden'} style={{aspectRatio: 1}}>
                                 <img src={starItem?.img_url} width={'100%'}/></div>
-                            <div className={'fs-12 color-gray-3'}>{starItem?.title}</div>
+                            <div className={'flex justify-between'}>
+                                <div className={'flex gap-8 items-center'}>
+                                    <LandAvatar imgUrl={starItem?.users.avatar_url} size={24}/>
+                                    <div className={'fs-12 color-gray-2'}>{starItem.users.username}</div>
+                                </div>
+                                {starItem.type && <div
+                                    className={'fit-content fs-10 color-gray-3 bg-gray py-4 px-8 radius-12'}>{getType(starItem.type)}</div>}
+                            </div>
+                        </div>)}
+                    </div>: <div className={'width-100 height-100 flex both-center'}>
+                        <LandState type={'empty'} title={'暂无收藏内容'}/>
+                    </div>}</>}
+                    {userOptionMenu === 'publish' &&<div className={'grid gap-12 width-100 py-24'}
+                                                      style={{gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))'}}>
+                        {userMenuPublishData?.map((publishItem, publishIndex) => <div key={publishItem?.id ?? publishIndex}
+                                                                             className={'flex column gap-8'}>
+                            <div className={'width-100 radius-8 overflow-hidden'} style={{aspectRatio: 1}}>
+                                <img src={publishItem?.img_url} width={'100%'}/></div>
+                            <div className={'flex gap-8 items-center fs-10 color-gray-4 no-wrap'}>
+                                <div className={'ellipsis fs-12 color-gray-2'}>{publishItem?.title}</div>
+                                {timeAgoTZ(publishItem?.created_at)}
+                            </div>
                         </div>)}
                     </div>}
                 </div>
-                {/*<div>*/}
-                {/*    <LandButton type={'text'} icon={<Icon name={'setting'} size={18} strokeWidth={3}/>}*/}
-                {/*                style={{display: 'flex'}}/>*/}
-                {/*</div>*/}
             </LandDrawer>
         </>
     )

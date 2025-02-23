@@ -181,6 +181,7 @@ function App() {
             <LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}
                         selected={language}/>
             {user ? <UserAvatar
+                isEnglish={language === 'en'}
                 avatar={user?.avatar_url}
                 username={user?.username}
                 email={user?.email}

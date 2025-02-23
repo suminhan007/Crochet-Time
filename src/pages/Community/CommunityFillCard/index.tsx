@@ -2,13 +2,12 @@
 import React, {useEffect, useState} from "react";
 import supabase from "../../../utils/supabse.ts";
 import {
-    Icon, LandAvatar,
-    LandButton,
     LandLink,
     LandLoading, LandMessage,
     LandState
 } from "@suminhan/land-design";
 import {useNavigate} from "react-router-dom";
+import FillCard from "./FillCard.tsx";
 
 const CommunityColorCard:React.FC = () => {
     const navigate = useNavigate();
@@ -91,29 +90,14 @@ const CommunityColorCard:React.FC = () => {
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
-                {communityColorCardData?.map(i =>  <div key={i.img_url} className={'flex column gap-8'}>
-                    <img src={i.img_url} alt={i.img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'} style={{aspectRatio:'4/3',objectFit:'cover'}}/>
-                    <div className={'flex gap-4'}>
-                        {
-                            i?.colors?.filter(i => i!=='#DDDDDD').map((color:string) => <div key={color} className={'flex-1'} style={{backgroundColor:color,height:'12px'}}></div>)
-                        }
-                    </div>
-                    <div className={'flex items-center justify-between'}>
-                        <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
-                            <LandAvatar imgUrl={i?.user?.avatar_url} size={24}/>
-                            {i?.user?.username}
-                            {i?.user?.is_official && <div style={{width:'12px',height:'12px'}} className={'flex both-center fs-12 bg-primary radius-8 color-white'}>v</div>}
-                        </div>
-                        <LandButton type={'text'}
-                                    icon={<Icon name={'download'}/>} size={'small'} onClick={() =>handleDownloadColorCard?.(i.img_url)}></LandButton>
-                    </div>
-                </div>)}
-            </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
+                {communityColorCardData?.map(i =>  <FillCard key={i.img_url} item={i} onDownload={() => handleDownloadColorCard?.(i.img_url)} />
+                    )}
+                </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开配色卡, <LandLink
                     onClick={() => navigate('/type=tools-colorPicker')}>前往制作</LandLink>或<LandLink
                     onClick={() => navigate('/type=repository?assetsType=color-card')}>发布我的配色卡</LandLink></>}/>
             </div>}
-            {toast && <LandMessage show={toast} text={toastText} />}
+            {toast && <LandMessage show={toast} text={toastText}/>}
         </>
     )
 }
