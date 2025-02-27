@@ -29,6 +29,7 @@ import WorktopPages from "./pages/Studio/WorktopPages";
 import CourseWire from "./pages/Course/CourseWire.tsx";
 import CourseTool from "./pages/Course/CourseTool.tsx";
 import {IconCTLogo} from "./components/Icon.tsx";
+import ImgToPixel from "./pages/Tool/ImgToPixel.tsx";
 
 function App() {
   const navigate = useNavigate();
@@ -218,6 +219,7 @@ function App() {
           <Route path='type=tools-colorPicker' element={<ImgColorPicker isEnglish={language === 'en'} />} />
           <Route path='type=tools-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
           <Route path='type=tools-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
+          <Route path='type=tools-imgToPixel' element={<ImgToPixel isEnglish={language === 'en'} />} />
 
           {/*资产*/}
           <Route path={'type=repository'} element={<Assets/>}/>
