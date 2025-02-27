@@ -1,14 +1,14 @@
 //@ts-nocheck
 import {
-  Icon,
-  LandButton,
-  LandContent,
-  LandFlex,
-  LandNumberInput,
-  LandSlider,
-  LandSwitch,
-  LandTitle,
-  LandUploader,
+    Icon,
+    LandButton,
+    LandContent,
+    LandFlex, LandMessage,
+    LandNumberInput,
+    LandSlider,
+    LandSwitch,
+    LandTitle,
+    LandUploader,
 } from "@suminhan/land-design";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
@@ -115,7 +115,19 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
   const [usePattern, setUsePattern] = useState<boolean>(false);
   const [opacity, setOpacity] = useState<number>(1);
 
-    async function saveImageToDatabase(imagePath:any,index:number,origin:string) {
+    //提示信息
+    const [toast, setToast] = useState<boolean>(false);
+    const [toastText, setToastText] = useState<string>("");
+
+    const handleShowToast = (show: boolean, text: string) => {
+        setToastText(text);
+        setToast(show);
+        const timer = setTimeout(() => {
+            setToast(false);
+            clearTimeout(timer);
+        }, 1000);
+    };
+    async function saveImageToDatabase(imagePath:any) {
         const {data:{user}} = await supabase.auth.getUser();
         if(user){
             const { data, error } = await supabase
@@ -134,7 +146,8 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
             }
         }
     }
-    async function uploadImageToSupabase(imageData:any,index:number,origin:string) {
+
+    async function uploadImageToSupabase(imageData:any) {
         const blob = await fetch(imageData).then(res => res.blob());
         const fileName = `pixel-card-${Date.now()}.png`;
         const { data, error } = await supabase
@@ -429,6 +442,7 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
               onClick={savePixelCard}
           />
       </LandFlex>
+        {toast && <LandMessage show={toast} text={toastText} />}
     </StyledPixelLandContent >
   );
 };

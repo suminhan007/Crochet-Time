@@ -5,6 +5,7 @@ import ColorCardList from "./ColorCardList.tsx";
 import PixelCardList from "./PixelCardList.tsx";
 import FillCardList from "./FillCardList.tsx";
 import {useNavigate} from "react-router-dom";
+import ImgPixelCardList from "./ImgPixelCardList.tsx";
 
 type Props = {
 
@@ -50,6 +51,7 @@ const Assets:React.FC<Props> = ({
                  {menu === 'colorCard' && <ColorCardList/>}
                  {menu === 'fillCard' && <FillCardList />}
                  {menu === 'pixelCard' && <PixelCardList />}
+                 {menu === 'imgPixelCard' && <ImgPixelCardList />}
              </div>
          </div>
      </div>
