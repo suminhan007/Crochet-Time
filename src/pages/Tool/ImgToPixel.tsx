@@ -255,21 +255,21 @@ const ImgToPixel:React.FC<Props> = ({
                     <LandLoading size={16}/> : isEnglish ? 'Confirm':'确定'}</LandButton>
             </LandFlex>
             <div id={'img-to-pixel-result-puzzle'} className={'flex-1 flex gap-24 height-1 p-24'}>
-                <div className={'flex-1 relative p-12 bg-gray'}>
+                <div className={'flex-1 relative p-12'} id={'img-to-pixel-result-1'}>
                     <canvas ref={canvasRef} style={{display: 'none'}}/>
                     <canvas ref={pixelatedCanvasRef} style={{display: 'none'}}/>
                     {pixelatedImageSrc &&
-                        <img id={'img-to-pixel-result-1'} src={pixelatedImageSrc} width={'100%'} height={'100%'} className={'object-contain'}/>}
+                        <img src={pixelatedImageSrc} width={'100%'} height={'100%'} className={'object-contain'}/>}
                     <div
                         className={`absolute top-0 left-0 width-100 height-100 flex both-center transition ${loading ? '' : 'opacity-0 events-none'}`}
                         style={{zIndex: 1}}>
                         <LandLoading/></div>
                 </div>
-                <div className={'flex-1 relative p-12 bg-gray'}>
+                <div className={'flex-1 relative p-12'} id={'img-to-pixel-result-2'}>
                     <canvas ref={canvasRef2} style={{display: 'none'}}/>
                     <canvas ref={pixelatedCanvasRef2} style={{display: 'none'}}/>
                     {pixelatedImageSrc2 &&
-                        <img id={'img-to-pixel-result-2'} src={pixelatedImageSrc2} width={'100%'} height={'100%'} className={'object-contain'}/>}
+                        <img  src={pixelatedImageSrc2} width={'100%'} height={'100%'} className={'object-contain'}/>}
                     <div
                         className={`absolute top-0 left-0 width-100 height-100 flex both-center transition ${loading ? '' : 'opacity-0 events-none'}`}
                         style={{zIndex: 1}}>
