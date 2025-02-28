@@ -174,7 +174,7 @@ const ImgToPixel:React.FC<Props> = ({
             clearTimeout(timer);
         }, 1000);
     };
-    async function saveImageToDatabase(imagePath:any) {
+    async function saveImageToDatabase(imagePath:any,isPuzzle?:boolean) {
         const {data:{user}} = await supabase.auth.getUser();
         if(user){
             const { data, error } = await supabase
@@ -182,6 +182,7 @@ const ImgToPixel:React.FC<Props> = ({
                 .insert([{
                     img_url: imagePath,
                     user_id: user.id,
+                    is_puzzle: isPuzzle
                 }]);
 
             if (error) {
@@ -192,7 +193,7 @@ const ImgToPixel:React.FC<Props> = ({
             }
         }
     }
-    async function uploadImageToSupabase(imageData:any) {
+    async function uploadImageToSupabase(imageData:any,isPuzzle?:boolean) {
         const blob = await fetch(imageData).then(res => res.blob());
         const fileName = `img-to-pixel-card-${Date.now()}.png`;
         const { data, error } = await supabase
@@ -203,11 +204,11 @@ const ImgToPixel:React.FC<Props> = ({
         if (error) {
             console.error('Error uploading image:', error);
         } else {
-            saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
+            saveImageToDatabase(data.path,isPuzzle); // 将图片路径保存到素材库表中
         }
     }
 
-    const saveFillCard = async  (node:HTMLElement|null) => {
+    const saveFillCard = async  (node:HTMLElement|null,isPuzzle:boolean) => {
         if(!node) return;
         const {data:{user}} = await supabase.auth.getUser();
         if(!user) {
@@ -219,7 +220,7 @@ const ImgToPixel:React.FC<Props> = ({
             useCORS: true,
         }).then(canvas => {
             const image = canvas.toDataURL('image/png');
-            uploadImageToSupabase(image);
+            uploadImageToSupabase(image,isPuzzle);
         });
     }
     const pixelMax = useMemo(() => Math.round(Math.min(imgSize.w, imgSize.h)/20), [imgSize.w, imgSize.h]);
@@ -279,15 +280,15 @@ const ImgToPixel:React.FC<Props> = ({
             <div className={'flex items-center justify-between width-100'}>
                 <div className={'flex items-center gap-12'}>
                     {pixelatedImageSrc && <LandButton type={'background'} onClick={() => downloadHtmlAsImg(document.getElementById('img-to-pixel-result-1'), `${Date.now()}`,4)}>下载左图</LandButton>}
-                    {pixelatedImageSrc && <LandButton type={'background'} status={'primary'} onClick={()=> saveFillCard(document.getElementById('img-to-pixel-result-1'))}>保存左图</LandButton>}
+                    {pixelatedImageSrc && <LandButton type={'background'} status={'primary'} onClick={()=> saveFillCard(document.getElementById('img-to-pixel-result-1'),false)}>保存左图</LandButton>}
                 </div>
                 <div className={'flex items-center gap-12'}>
                     {(pixelatedImageSrc && pixelatedImageSrc2) && <LandButton type={'background'} onClick={() => downloadHtmlAsImg(document.getElementById('img-to-pixel-result-puzzle'), `${Date.now()}`,4)}>下载拼图</LandButton>}
-                    {(pixelatedImageSrc && pixelatedImageSrc2) && <LandButton type={'background'} status={'primary'} onClick={() => document.getElementById('img-to-pixel-result-puzzle')}>保存拼图</LandButton>}
+                    {(pixelatedImageSrc && pixelatedImageSrc2) && <LandButton type={'background'} status={'primary'} onClick={() => saveFillCard(document.getElementById('img-to-pixel-result-puzzle'),true)}>保存拼图</LandButton>}
                 </div>
                     <div className={'flex items-center gap-12'}>
                         { pixelatedImageSrc2 && <LandButton type={'background'} onClick={() => downloadHtmlAsImg(document.getElementById('img-to-pixel-result-2'), `${Date.now()}`,4)}>下载右图</LandButton>}
-                        {pixelatedImageSrc2 && <LandButton type={'background'} status={'primary'} onClick={()=> saveFillCard(document.getElementById('img-to-pixel-result-2'))}>保存右图</LandButton>}
+                        {pixelatedImageSrc2 && <LandButton type={'background'} status={'primary'} onClick={()=> saveFillCard(document.getElementById('img-to-pixel-result-2'),false)}>保存右图</LandButton>}
                     </div>
                 </div>
             </div>

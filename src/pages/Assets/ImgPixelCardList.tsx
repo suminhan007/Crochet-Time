@@ -15,14 +15,14 @@ type Props = {
 }
 const ImgPixelCardList:React.FC<Props> = ({
 }) => {
-    const [pixelData,setPixelData] = useState<{id:string,img_url:string}[]>([]);
+    const [pixelData,setPixelData] = useState<{id:string,img_url:string,is_puzzle:boolean}[]>([]);
     const [loading,setLoading] = useState(true);
     const fetchLatestImage = async () => {
         const {data:{user}} = await supabase.auth.getUser();
         const userId = user?.id;
         const { data:ImgData, error } = await supabase
             .from('imgPixelCard') // 替换为你的表名
-            .select('id,img_url')
+            .select('id,img_url,is_puzzle')
             .eq('user_id',userId)
             .order('created_at', { ascending: false })// 按创建时间倒序排列
 
@@ -106,7 +106,7 @@ const ImgPixelCardList:React.FC<Props> = ({
             </div> : (pixelData && pixelData?.length >0) ? <div className={'grid gap-16'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))'}}>
                 {pixelData?.map(i => <div key={i.img_url}
                                           className={'relative flex column gap-12 radius-8 border-box'} >
-                    <img src={i.img_url} className={'radius-8 overflow-hidden bg-gray'} width={'100%'} style={{objectFit:'cover',aspectRatio:'1'}}/>
+                    <img src={i.img_url} className={'radius-8 overflow-hidden bg-gray'} width={'100%'} style={{objectFit: i.is_puzzle ? 'contain':'cover',aspectRatio:'1'}}/>
                     <div className={'flex items-center gap-12'}>
                         <LandButton size={'small'} type={'text'} icon={<Icon name={'download'}/>} onClick={()=>handleDownloadColorCard?.(i.img_url)} />
                         <LandButton size={'small'} type={'text'} icon={<Icon name={'upload'} size={16}/>} pop={'发布'} onClick={()=> {
