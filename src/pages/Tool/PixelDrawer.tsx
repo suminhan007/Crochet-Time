@@ -339,16 +339,7 @@ const PixelDrawer: React.FC<Props> = ({ isEnglish}) => {
           </div>
           <div className={'flex-1 width-1 flex column items-end gap-12 height-100'}>
               <div
-                  className="flex-1 width-100 scrollbar-none"
-                  style={{
-                      // width: "calc(100vw - 32px - 20px)",
-                      // maxHeight:
-                      //     "calc(100vh - 64px - 48px - 76px - 140px - 37px - 72px - 26px)",
-                      // minHeight: "192px",
-                      // maxWidth: "800px",
-                      // margin: "0 auto",
-                      // overflow: "auto",
-                  }}
+                  className="flex-1 flex both-center width-100 scrollbar-none"
               >
                   <div
                       ref={pixelCanvasRef}

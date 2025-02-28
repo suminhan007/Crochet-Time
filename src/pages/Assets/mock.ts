@@ -13,5 +13,6 @@ export const Assets_Menu_Data = [
             {key:'colorCard', title:'Color Card'},
             {key:'fillCard', title:'ColorFill Card'},
             {key:'pixelCard', title:'Pixel Card'},
+            {key:'imgPixelCard', title:'Img Pixel Card'},
         ]},
 ]

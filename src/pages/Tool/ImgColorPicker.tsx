@@ -465,8 +465,6 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
           )}
         </div>
       </div>
-      {/* <Message text={toastText} show={toast} /> */}
-      {/* </Flex> */}
       {/* 色卡 */}
       <LandFlex column gap={8}>
         <LandTitle title={isEnglish ? 'Step 03: Download & Save Color Cards' : "Step 03：下载 & 保存色卡"} type="h3" />
