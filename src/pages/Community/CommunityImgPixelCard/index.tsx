@@ -21,7 +21,6 @@ const CommunityPixelCard:React.FC = () => {
             .select(`
                 id,
                 img_url,
-                is_puzzle
               user_id,
               users (
                 id,
@@ -94,9 +93,9 @@ const CommunityPixelCard:React.FC = () => {
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <PixelCard key={i.id} item={i}/>)}
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
-                <LandState type={'empty'} title={<>暂无公开像素卡, <LandLink
+                <LandState type={'empty'} title={<>暂无公开像素图, <LandLink
                     onClick={() => navigate('/type=tools-pixelDrawer')}>前往制作</LandLink>或<LandLink
-                    onClick={() => navigate('/type=repository?assetsType=pixel-card')}>发布我的像素卡</LandLink></>}/>
+                    onClick={() => navigate('/type=repository?assetsType=pixel-card')}>发布我的像素图</LandLink></>}/>
             </div>}
             {toast && <LandMessage show={toast} text={toastText} />}
         </>

@@ -3,7 +3,7 @@ import {Icon, LandAvatar, LandButton, LandLoading} from "@suminhan/land-design";
 import supabase from "../../../utils/supabse.ts";
 
 type Props = {
-    item:{id:string,img_url:string,is_puzzle:boolean,user:{username:string,avatar_url:string,is_official?:boolean}};
+    item:{id:string,img_url:string,user:{username:string,avatar_url:string,is_official?:boolean}};
 }
 const PixelCard:React.FC<Props> = ({
                                        item
@@ -58,7 +58,7 @@ const PixelCard:React.FC<Props> = ({
 
     return <div  className={'flex column gap-8'}>
         <img src={item.img_url} alt={item.img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'}
-             style={{aspectRatio: '1', objectFit: item.is_puzzle ? 'contain':'cover'}}/>
+             style={{aspectRatio: '1', objectFit: 'contain'}}/>
         <div className={'flex items-center justify-between'}>
             <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
                 <LandAvatar imgUrl={item?.user?.avatar_url} size={24}/>

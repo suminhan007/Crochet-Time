@@ -8,6 +8,7 @@ import CommunityPixelCard from "./CommunityPixelCard";
 import CommunityFillCard from "./CommunityFillCard";
 import CommunityInspirationCard from "./CommunityInspirationCard";
 import CommunityCKTCard from "./CommunityCKTCard";
+import CommunityImgPixelCard from "./CommunityImgPixelCard";
 
 const menuData = [
     {key: 'ckt',title:'CKT'},
@@ -16,7 +17,8 @@ const menuData = [
     {key: 'publicAssets', title: '公开素材',dropData:[
             {key: 'colorCard',title:'色卡'},
             {key: 'fillCard',title:'配色卡'},
-            {key: 'pixelCard',title:'像素卡'}
+            {key: 'pixelCard',title:'像素卡'},
+            {key: 'imgPixelCard',title:'像素图'}
         ]},
 ]
 const enMenuData = [
@@ -26,7 +28,7 @@ const enMenuData = [
     {key: 'publicAssets', title: 'public Assets',dropData:[
             {key: 'colorCard',title:'ColorCard'},
             {key: 'fillCard',title:'ColorFillCard'},
-            {key: 'pixelCard',title:'PixelCard'}
+            {key: 'imgPixelCard',title:'Img Pixel Card'}
         ]}
 ]
 type Props = {
@@ -150,6 +152,7 @@ const Community:React.FC<Props> = ({
                     {curTab === 'colorCard' && <CommunityColorCard/>}
                     {curTab === 'fillCard' && <CommunityFillCard/>}
                     {curTab === 'pixelCard' && <CommunityPixelCard/>}
+                    {curTab === 'imgPixelCard' && <CommunityImgPixelCard/>}
                 </div>
             </div>
         </div>

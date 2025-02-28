@@ -1,8 +1,8 @@
-import {LandButton, LandFlex, LandLoading, LandMessage, LandSlider, LandUploader} from "@suminhan/land-design";
+import { LandButton, LandFlex, LandLoading, LandMessage, LandSlider, LandUploader} from "@suminhan/land-design";
 import React, {useEffect, useMemo, useRef, useState} from "react";
-import {downloadHtmlAsImg} from "../../utils";
-import supabase from "../../utils/supabse.ts";
-import html2canvas from "html2canvas";
+import supabase from "../../../utils/supabse.ts";
+import ImgPreview from "../../../components/ImgPreivew.tsx";
+import CanvasImgCard from "./components/CanvasImgCard.tsx";
 type Props = {
     isEnglish: boolean,
 }
@@ -12,7 +12,7 @@ const ImgToPixel:React.FC<Props> = ({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const pixelatedCanvasRef = useRef<HTMLCanvasElement>(null);
     const [imgUrl, setImgUrl] = useState("");
-    const [pixelatedImageSrc, setPixelatedImageSrc] = useState<string | null>(null);
+    const [pixelatedImageSrc, setPixelatedImageSrc] = useState<string>('');
     const [finished, setFinished] = useState<boolean>(false);
     const [imgSize, setImgSize] = useState<{w:number,h:number}>({w:100,h:100});
     const [pixelSize, setPixelSize] = useState<number>(1);
@@ -22,7 +22,7 @@ const ImgToPixel:React.FC<Props> = ({
     /*平均化*/
     const canvasRef2 = useRef<HTMLCanvasElement>(null);
     const pixelatedCanvasRef2 = useRef<HTMLCanvasElement>(null);
-    const [pixelatedImageSrc2, setPixelatedImageSrc2] = useState<string | null>(null);
+    const [pixelatedImageSrc2, setPixelatedImageSrc2] = useState<string>('');
     useEffect(() => {
         if(!canvasRef.current || !canvasRef2.current) return;
         imgUrl && setFinished(false)
@@ -174,7 +174,7 @@ const ImgToPixel:React.FC<Props> = ({
             clearTimeout(timer);
         }, 1000);
     };
-    async function saveImageToDatabase(imagePath:any,isPuzzle?:boolean) {
+    async function saveImageToDatabase(imagePath:any) {
         const {data:{user}} = await supabase.auth.getUser();
         if(user){
             const { data, error } = await supabase
@@ -182,7 +182,6 @@ const ImgToPixel:React.FC<Props> = ({
                 .insert([{
                     img_url: imagePath,
                     user_id: user.id,
-                    is_puzzle: isPuzzle
                 }]);
 
             if (error) {
@@ -193,7 +192,7 @@ const ImgToPixel:React.FC<Props> = ({
             }
         }
     }
-    async function uploadImageToSupabase(imageData:any,isPuzzle?:boolean) {
+    async function uploadImageToSupabase(imageData:any) {
         const blob = await fetch(imageData).then(res => res.blob());
         const fileName = `img-to-pixel-card-${Date.now()}.png`;
         const { data, error } = await supabase
@@ -204,26 +203,28 @@ const ImgToPixel:React.FC<Props> = ({
         if (error) {
             console.error('Error uploading image:', error);
         } else {
-            saveImageToDatabase(data.path,isPuzzle); // 将图片路径保存到素材库表中
+            saveImageToDatabase(data.path); // 将图片路径保存到素材库表中
         }
     }
 
-    const saveFillCard = async  (node:HTMLElement|null,isPuzzle:boolean) => {
-        if(!node) return;
+    const saveFillCard = async  (src?:string) => {
+        if( !src) return;
         const {data:{user}} = await supabase.auth.getUser();
         if(!user) {
             handleShowToast(true, '请先登录')
             return;
         }
-        html2canvas(node,{
-            scale: 3,
-            useCORS: true,
-        }).then(canvas => {
-            const image = canvas.toDataURL('image/png');
-            uploadImageToSupabase(image,isPuzzle);
-        });
+            uploadImageToSupabase(src);
     }
     const pixelMax = useMemo(() => Math.round(Math.min(imgSize.w, imgSize.h)/20), [imgSize.w, imgSize.h]);
+    const download = (src:string) => {
+        // 创建一个a标签用于下载
+        const link = document.createElement('a');
+        link.href = src;
+            link.download = `img-to-pixel-${Date.now()}.png`; // 设置下载的文件名
+        link.click();
+    }
+    const [previewUrl,setPreviewUrl] = useState('');
     return <div className={'width-100 height-100 py-32 border-box'}>
         <div className={'flex column gap-24 px-24 pt-32 width-100 height-100 mx-auto'}
              style={{maxWidth: '848px', boxSizing: 'border-box'}}>
@@ -255,44 +256,39 @@ const ImgToPixel:React.FC<Props> = ({
                             disabled={loading || !imgUrl || finished} pop={!imgUrl ? isEnglish?'Please upload img first':'请先上传图片':''}>{loading ?
                     <LandLoading size={16}/> : isEnglish ? 'Confirm':'确定'}</LandButton>
             </LandFlex>
-            <div id={'img-to-pixel-result-puzzle'} className={'flex-1 flex gap-24 height-1 p-24'}>
-                <div className={'flex-1 relative p-12'} id={'img-to-pixel-result-1'}>
+            <div id={'img-to-pixel-result-puzzle'} className={'flex-1 grid gap-24 height-1 p-32'} style={{gridTemplateColumns:'repeat(auto-fit, minmax(200px,1fr))'}}>
+                <div className={'relative p-12 flex column gap-12 items-center fs-12 color-gray-4'}>
                     <canvas ref={canvasRef} style={{display: 'none'}}/>
                     <canvas ref={pixelatedCanvasRef} style={{display: 'none'}}/>
-                    {pixelatedImageSrc &&
-                        <img src={pixelatedImageSrc} width={'100%'} height={'100%'} className={'object-contain'}/>}
-                    <div
-                        className={`absolute top-0 left-0 width-100 height-100 flex both-center transition ${loading ? '' : 'opacity-0 events-none'}`}
-                        style={{zIndex: 1}}>
-                        <LandLoading/></div>
+                    <CanvasImgCard
+                        src={pixelatedImageSrc}
+                        desc={'合并算法'}
+                        loading={loading}
+                        onPreview={() => setPreviewUrl(pixelatedImageSrc)}
+                        onDownload={() => download(pixelatedImageSrc)}
+                        onSave={() => saveFillCard(pixelatedImageSrc)}
+                        widthCount={Math.floor(imgSize.w/pixelSize) - 2}
+                        heightCount={Math.floor(imgSize.h/pixelSize) - 2}
+                    />
                 </div>
-                <div className={'flex-1 relative p-12'} id={'img-to-pixel-result-2'}>
+                <div className={'relative p-12 flex column gap-12 items-center fs-12 color-gray-4'}>
                     <canvas ref={canvasRef2} style={{display: 'none'}}/>
                     <canvas ref={pixelatedCanvasRef2} style={{display: 'none'}}/>
-                    {pixelatedImageSrc2 &&
-                        <img  src={pixelatedImageSrc2} width={'100%'} height={'100%'} className={'object-contain'}/>}
-                    <div
-                        className={`absolute top-0 left-0 width-100 height-100 flex both-center transition ${loading ? '' : 'opacity-0 events-none'}`}
-                        style={{zIndex: 1}}>
-                        <LandLoading/></div>
+                    <CanvasImgCard
+                        src={pixelatedImageSrc2}
+                        desc={'平均算法'}
+                        loading={loading}
+                        onPreview={() => setPreviewUrl(pixelatedImageSrc2)}
+                        onDownload={() => download(pixelatedImageSrc2)}
+                        onSave={() => saveFillCard(pixelatedImageSrc2)}
+                        widthCount={imgSize.w/pixelSize - 2}
+                        heightCount={imgSize.h/pixelSize - 2}
+                    />
                 </div>
             </div>
-            <div className={'flex items-center justify-between width-100'}>
-                <div className={'flex items-center gap-12'}>
-                    {pixelatedImageSrc && <LandButton type={'background'} onClick={() => downloadHtmlAsImg(document.getElementById('img-to-pixel-result-1'), `${Date.now()}`,4)}>下载左图</LandButton>}
-                    {pixelatedImageSrc && <LandButton type={'background'} status={'primary'} onClick={()=> saveFillCard(document.getElementById('img-to-pixel-result-1'),false)}>保存左图</LandButton>}
-                </div>
-                <div className={'flex items-center gap-12'}>
-                    {(pixelatedImageSrc && pixelatedImageSrc2) && <LandButton type={'background'} onClick={() => downloadHtmlAsImg(document.getElementById('img-to-pixel-result-puzzle'), `${Date.now()}`,4)}>下载拼图</LandButton>}
-                    {(pixelatedImageSrc && pixelatedImageSrc2) && <LandButton type={'background'} status={'primary'} onClick={() => saveFillCard(document.getElementById('img-to-pixel-result-puzzle'),true)}>保存拼图</LandButton>}
-                </div>
-                    <div className={'flex items-center gap-12'}>
-                        { pixelatedImageSrc2 && <LandButton type={'background'} onClick={() => downloadHtmlAsImg(document.getElementById('img-to-pixel-result-2'), `${Date.now()}`,4)}>下载右图</LandButton>}
-                        {pixelatedImageSrc2 && <LandButton type={'background'} status={'primary'} onClick={()=> saveFillCard(document.getElementById('img-to-pixel-result-2'),false)}>保存右图</LandButton>}
-                    </div>
-                </div>
-            </div>
-        {toast && <LandMessage show={toast} text={toastText} />}
         </div>
-        }
-        export default ImgToPixel
+        {toast && <LandMessage show={toast} text={toastText}/>}
+        <ImgPreview show={Boolean(previewUrl)} img_url={previewUrl} onClose={() => setPreviewUrl('')}/>
+    </div>
+}
+export default ImgToPixel
