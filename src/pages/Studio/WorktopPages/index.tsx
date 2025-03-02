@@ -6,6 +6,7 @@ import WorktopWool from "./WorktopWool";
 import { useNavigate } from "react-router-dom";
 import {CT_DESIGN_FILTER_SELECT_TYPE_DATA, CT_DESIGN_FILTER_SELECT_TYPE_DATA_EN} from "../mock.ts";
 import supabase from "../../../utils/supabse.ts";
+import WorktopPattern from "./WorktopPattern";
 
 type Props = {isEnglish?:boolean};
 const WorktopPages: React.FC<Props> = ({isEnglish}) => {
@@ -35,7 +36,6 @@ const WorktopPages: React.FC<Props> = ({isEnglish}) => {
     [type]
   );
   const projectId = useMemo(() => window.location.hash?.includes('project_id') ? window.location.hash.split('?project_id=')[1]:undefined,[window.location])
-  const showSaveButton = useMemo(() => type === 'draft'||type === 'wool',[type])
 
     // 修改文件名
   const [projectName, setProjectName] = useState<string>('');
@@ -96,12 +96,11 @@ const WorktopPages: React.FC<Props> = ({isEnglish}) => {
                </div>
             </div>
         </div>
-          {showSaveButton && <LandButton type={'background'} status={'primary'} text={'保存作品'} icon={<Icon name={'save'}/>}
-                       className="ml-auto" onClick={handleSaveProjectOption}/>}
       </div>
       <div className="flex-1 height-1">
         {type === "draft" && <WorktopDraft />}
         {type === "wool" && <WorktopWool isEnglish={isEnglish}/>}
+          {type === "pattern" &&<WorktopPattern isEnglish={isEnglish}/>}
       </div>
     </StyledWorktop>
   );
