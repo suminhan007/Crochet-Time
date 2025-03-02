@@ -9,12 +9,12 @@ export const Nav_Data = [
     key: 'course',
     title: "教程",
     enTitle: 'ImageCourse',
-    dropData: [
-      { key: 'wire', title: "线材" },
-      { key: 'tool', title: "器材" },
-      { key: 'crochet', title: "钩针插图教程" },
-      { key: 'knit', title: "棒针插图教程" },
-    ],
+    // dropData: [
+    //   { key: 'wire', title: "线材" },
+    //   { key: 'tool', title: "器材" },
+    //   { key: 'crochet', title: "钩针插图教程" },
+    //   { key: 'knit', title: "棒针插图教程" },
+    // ],
   },
   {key: 'studio', title: "工作台", enTitle: 'Studio',},
   {
@@ -38,12 +38,12 @@ export const English_Nav_Data = [
   {
     key: 'course',
     title: "Course",
-    dropData: [
-      { key: 'wire', title: "Wire Material" },
-      { key: 'tool', title: "Wave Tools" },
-      { key: 'crochet', title: "Crochet Illustration Tutorial" },
-      { key: 'knit', title: "Knit Illustration Tutorial" },
-    ],
+    // dropData: [
+    //   { key: 'wire', title: "Wire Material" },
+    //   { key: 'tool', title: "Wave Tools" },
+    //   { key: 'crochet', title: "Crochet Illustration Tutorial" },
+    //   { key: 'knit', title: "Knit Illustration Tutorial" },
+    // ],
   },
   {key: 'studio', title: "Studio"},
   {

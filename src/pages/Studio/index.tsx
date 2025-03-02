@@ -135,7 +135,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
         }
     }
     return (
-        <div className="flex-1 flex column items-center gap-24 width-100 height-100 overflow-auto p-32">
+        <div className="flex-1 flex column items-center gap-24 width-100 height-100 overflow-auto p-24">
             <div
                 className="flex justify-between width-100"
                 style={{ maxWidth: "1200px" }}

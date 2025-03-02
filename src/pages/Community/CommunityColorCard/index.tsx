@@ -8,6 +8,7 @@ import {
 } from "@suminhan/land-design";
 import {useNavigate} from "react-router-dom";
 import ColorCard from "./ColorCard.tsx";
+import ImgPreview from "../../../components/ImgPreivew.tsx";
 
 const CommunityColorCard:React.FC = () => {
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ const CommunityColorCard:React.FC = () => {
             clearTimeout(timer);
         }, 1000);
     };
-
+    const [previewUrl, setPreviewUrl] = useState<string>('');
     return (
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
@@ -97,6 +98,7 @@ const CommunityColorCard:React.FC = () => {
                     colors={i.colors}
                     onDownloadFail={() => handleShowToast(true,'下载失败，请稍后再试')}
                     onDownloadSuccess={() => handleShowToast(true,'下载成功，请前往电脑文件夹中查看')}
+                    onPreview={()=> setPreviewUrl(i.img_url)}
                 />)}
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开色卡, <LandLink
@@ -104,6 +106,7 @@ const CommunityColorCard:React.FC = () => {
                     onClick={() => navigate('/type=repository?assetsType=color-card')}>发布我的色卡</LandLink></>}/>
             </div>}
             {toast && <LandMessage show={toast} text={toastText} />}
+            <ImgPreview show={Boolean(previewUrl)} img_url={previewUrl} onClose={()=>setPreviewUrl('')}/>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Icon, LandAvatar, LandButton, LandLoading} from "@suminhan/land-design";
 import supabase from "../../../utils/supabse.ts";
 
@@ -13,6 +13,7 @@ type Props = {
     onDownloadClick?: () => void;
     onDownloadFail?: () => void;
     onDownloadSuccess?: () => void;
+    onPreview?: () => void;
 }
 const ColorCard:React.FC<Props> = ({
     id,
@@ -24,8 +25,9 @@ const ColorCard:React.FC<Props> = ({
                                        colors,
                                        onDownloadFail,
     onDownloadSuccess,
+    onPreview,
                                    }) => {
-    const [downloadLoading, setDownloadLoading] = useState(false);
+    const [ downloadLoading, setDownloadLoading] = useState(false);
     const handleDownloadColorCard = async (url?:string) => {
         if(!url) return;
         setDownloadLoading(true);
@@ -94,13 +96,22 @@ const ColorCard:React.FC<Props> = ({
             }
         }
     }
+    const downloadPop = useMemo(()=>{
+        return <div className={'flex column gap-8 items-center'}>
+            <img src={img_url} width={'120px'}/>
+            {downloadLoading?'下载中...':'下载原色卡'}
+        </div>
+    },[downloadLoading,img_url])
+
     return <div className={'flex column gap-8'}>
-        <img src={origin_img_url} alt={origin_img_url} width={'100%'}
-             className={'radius-8 overflow-hidden events-none'} style={{aspectRatio: '4/3', objectFit: 'cover'}}/>
+        <div style={{aspectRatio: '4/3'}} className={`width-100 radius-8 overflow-hidden ${onPreview?'cursor-zoom-in':''}`} onClick={onPreview}>
+            <img src={origin_img_url} alt={origin_img_url} width={'100%'} height={'100%'}
+                 className={'events-none'} style={{ objectFit: 'cover'}}/>
+        </div>
         <div className={'flex gap-4'}>
             {
                 colors?.map((color: { id: string, value: string }) => <div key={color.id} className={'flex-1'}
-                                                                              style={{
+                                                                           style={{
                                                                                   backgroundColor: color.value,
                                                                                   height: '12px'
                                                                               }}></div>)
@@ -120,7 +131,7 @@ const ColorCard:React.FC<Props> = ({
                             icon={(starLoading||cancelStarLoading) ? <LandLoading size={16}/> : <Icon name={'star'} size={18} strokeWidth={0} fill={stared ? 'var(--color-orange-4)':'var(--color-border-3)'}/>}
                             size={'small'} onClick={() => handleStarColorCard?.()}></LandButton>
                 <LandButton type={'text'}
-                            pop={downloadLoading?'下载中...':'下载原色卡'}
+                            pop={downloadPop}
                             disabled={downloadLoading}
                             icon={downloadLoading ? <LandLoading size={16}/> : <Icon name={'download'} size={16}/>}
                             size={'small'} onClick={() => handleDownloadColorCard?.(img_url)}></LandButton>

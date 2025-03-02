@@ -8,6 +8,7 @@ import {
 } from "@suminhan/land-design";
 import {useNavigate} from "react-router-dom";
 import FillCard from "./FillCard.tsx";
+import ImgPreview from "../../../components/ImgPreivew.tsx";
 
 const CommunityColorCard:React.FC = () => {
     const navigate = useNavigate();
@@ -85,12 +86,13 @@ const CommunityColorCard:React.FC = () => {
             URL.revokeObjectURL(link.href);
         }
     }
+    const [previewUrl, setPreviewUrl] = useState('');
     return (
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
-                {communityColorCardData?.map(i =>  <FillCard key={i.img_url} item={i} onDownload={() => handleDownloadColorCard?.(i.img_url)} />
+                {communityColorCardData?.map(i =>  <FillCard key={i.img_url} item={i} onDownload={() => handleDownloadColorCard?.(i.img_url)} onPreview={()=> setPreviewUrl(i.img_url)}/>
                     )}
                 </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开配色卡, <LandLink
@@ -98,6 +100,7 @@ const CommunityColorCard:React.FC = () => {
                     onClick={() => navigate('/type=repository?assetsType=color-card')}>发布我的配色卡</LandLink></>}/>
             </div>}
             {toast && <LandMessage show={toast} text={toastText}/>}
+            <ImgPreview show={Boolean(previewUrl)} img_url={previewUrl} onClose={()=>setPreviewUrl('')}/>
         </>
     )
 }

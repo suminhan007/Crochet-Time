@@ -1,6 +1,6 @@
-import React, {useMemo} from "react";
+import React from "react";
 import CourseHomeItem from "./components/CourseHomeItem.tsx";
-import {CourseHomeData, CourseHomeDataEn} from "./mock.tsx";
+import {CourseHomeData} from "./mock.tsx";
 
 type Props = {
 isEnglish?: boolean;
@@ -8,11 +8,10 @@ isEnglish?: boolean;
 const Course:React.FC<Props> = ({
 isEnglish
                                 }) => {
-    const data = useMemo(() => isEnglish ? CourseHomeDataEn : CourseHomeData, [isEnglish])
-    return <div className={`relative flex column gap-32 width-100`} style={{paddingTop: '64px'}}>
+    return <div className={`relative flex column gap-24 pt-12 width-100`}>
         {
-            data?.map((item, index) => <div key={item.id ?? index}>
-                <CourseHomeItem data={item} />
+            CourseHomeData?.map((item, index) => <div key={item.id ?? index}>
+                <CourseHomeItem data={item} isEnglish={isEnglish} />
             </div>)
         }
     </div>

@@ -6,11 +6,13 @@ type Props = {
     id: string;
     img_url: string;
     onPreview?:()=>void;
+    className?:string;
 }
 const InspirationCard:React.FC<Props> = ({
     id,
     img_url,
     onPreview,
+    className=''
 }) => {
     const [stared, setStarred] = useState<boolean>(false);
     const getStaredStatus = async () => {
@@ -52,7 +54,7 @@ const InspirationCard:React.FC<Props> = ({
     }
     return <LandAffixContainer
         key={id}
-        className={'flex column gap-8'}
+        className={`flex column gap-8 ${className}`}
         onClick={() => onPreview?.()}
         rtOption={{
             content: <Icon name={'star'} size={20} strokeWidth={0} fill={stared ? 'var(--color-orange-4)':'var(--color-text-light)'}/>,

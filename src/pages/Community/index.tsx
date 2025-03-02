@@ -148,7 +148,7 @@ const Community:React.FC<Props> = ({
                 <div className={'width-100 height-100 bg-white p-24 radius-12'}>
                     {curTab === 'ckt' && <CommunityCKTCard/>}
                     {curTab === 'state' && <CommunityStateCard isEnglish={isEnglish}/>}
-                    {curTab === 'inspiration' && <CommunityInspirationCard firstIn={firstIn}/>}
+                    {curTab === 'inspiration' && <CommunityInspirationCard isEnglish={isEnglish} firstIn={firstIn}/>}
                     {curTab === 'colorCard' && <CommunityColorCard/>}
                     {curTab === 'fillCard' && <CommunityFillCard/>}
                     {curTab === 'pixelCard' && <CommunityPixelCard/>}

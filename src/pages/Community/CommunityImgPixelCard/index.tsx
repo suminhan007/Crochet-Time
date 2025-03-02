@@ -10,6 +10,7 @@ import {
 } from "@suminhan/land-design";
 import {useNavigate} from "react-router-dom";
 import PixelCard from "./PixelCard.tsx";
+import ImgPreview from "../../../components/ImgPreivew.tsx";
 
 const CommunityPixelCard:React.FC = () => {
     const navigate = useNavigate();
@@ -86,18 +87,20 @@ const CommunityPixelCard:React.FC = () => {
             URL.revokeObjectURL(link.href);
         }
     }
+    const [previewUrl, setPreviewUrl] = useState('');
     return (
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
             </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
-                {communityColorCardData?.map(i =>  <PixelCard key={i.id} item={i}/>)}
+                {communityColorCardData?.map(i =>  <PixelCard key={i.id} item={i} onPreview={()=>setPreviewUrl(i.img_url)}/>)}
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开像素图, <LandLink
                     onClick={() => navigate('/type=tools-pixelDrawer')}>前往制作</LandLink>或<LandLink
                     onClick={() => navigate('/type=repository?assetsType=pixel-card')}>发布我的像素图</LandLink></>}/>
             </div>}
             {toast && <LandMessage show={toast} text={toastText} />}
+            <ImgPreview show={Boolean(previewUrl)} img_url={previewUrl} onClose={()=>setPreviewUrl('')}/>
         </>
     )
 }

@@ -4,9 +4,11 @@ import supabase from "../../../utils/supabse.ts";
 
 type Props = {
     item:{id:string,img_url:string,user:{username:string,avatar_url:string,is_official?:boolean}};
+    onPreview?:() => void;
 }
 const PixelCard:React.FC<Props> = ({
-                                       item
+                                       item,
+                                       onPreview
 }) => {
     const [stared, setStarred] = useState<boolean>(false);
     const [starLoading, setStarLoading] = useState<boolean>(false);
@@ -57,8 +59,10 @@ const PixelCard:React.FC<Props> = ({
     }
 
     return <div  className={'flex column gap-8'}>
-        <img src={item.img_url} alt={item.img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'}
-             style={{aspectRatio: '1', objectFit: 'contain'}}/>
+        <div className={`width-100 ${onPreview?'cursor-zoom-in':''}`} style={{aspectRatio: '1'}} onClick={onPreview}>
+            <img src={item.img_url} alt={item.img_url} width={'100%'} height={'100%'} className={'radius-8 overflow-hidden events-none'}
+                 style={{objectFit: 'contain'}}/>
+        </div>
         <div className={'flex items-center justify-between'}>
             <div className={'flex items-center gap-4 fs-12 color-gray-3'}>
                 <LandAvatar imgUrl={item?.user?.avatar_url} size={24}/>

@@ -12,6 +12,7 @@ import { ColorFill_Path_List_Data, English_Nav_Data, Nav_Data } from "./pages/mo
 import Course from "./pages/Course";
 import CardList from "./pages/Course/CardList.tsx";
 import CourseList from "./pages/Course/CourseList.tsx";
+import Tools from './pages/Tool';
 import ColorFill from "./pages/Tool/ColorFill";
 import ImgColorPicker from "./pages/Tool/ImgColorPicker";
 import PixelDrawer from "./pages/Tool/PixelDrawer";
@@ -33,7 +34,7 @@ import ImgToPixel from "./pages/Tool/ImgTopPixel/ImgToPixel.tsx";
 
 function App() {
   const navigate = useNavigate();
-  const [language, setLanguage] = useState<string>('en');
+  const [language, setLanguage] = useState<string>('zh');
   const [navData, setNavData] = useState<any[]>(language === 'en' ? English_Nav_Data : Nav_Data);
   useEffect(() => {
     language === 'en' ? setNavData(English_Nav_Data) : setNavData(Nav_Data);
@@ -215,7 +216,7 @@ function App() {
           <Route path='type=studio/worktop' element={<WorktopPages isEnglish={language === 'en'} />} />
 
           {/*工具*/}
-          <Route path='type=tools' element={<ImgColorPicker isEnglish={language === 'en'} />} />
+          <Route path='type=tools' element={<Tools isEnglish={language === 'en'} />} />
           <Route path='type=tools-colorPicker' element={<ImgColorPicker isEnglish={language === 'en'} />} />
           <Route path='type=tools-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
           <Route path='type=tools-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />

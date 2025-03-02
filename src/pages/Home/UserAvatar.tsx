@@ -171,7 +171,8 @@ const UserAvatar: React.FC<Props> = ({
             case 'inspirationCards': return isEnglish ? 'inspiration':'灵感';break;
             case 'colorCards': return isEnglish ? 'color card':'色卡';break;
             case 'fillCards': return isEnglish ? 'fill card':'配色卡';break;
-            case 'pixelCards': return isEnglish ? 'pixel card':'像素卡';break
+            case 'pixelCards': return isEnglish ? 'pixel card':'像素卡';break;
+            case 'imgPixelCards': return isEnglish ? 'img pixel card':'像素图';break
         }
     }
     return (
@@ -209,7 +210,7 @@ const UserAvatar: React.FC<Props> = ({
                 contentClassName={'width-100'}
                 wrapClassName={'ct-header-drawer'}
                 placement={isMobile ? 'bottom' : 'right'}
-                bodyClassName={'flex-1 flex column'}
+                bodyClassName={'flex-1 height-1 flex column'}
                 bodyStyle={{paddingInline:'0'}}
             >
                 <div className={'flex column items-center width-100 px-24'}>
@@ -243,7 +244,7 @@ const UserAvatar: React.FC<Props> = ({
                     <div className={'flex column items-center px-24 width-100 mt-24 border-bottom'} style={{height: '40px'}}>
                         <LandMenu data={userOptionMenuData} active={userOptionMenu}
                                   onChange={item => setUserOptionMenu(item.key)} border={false}/></div>
-                <div className={'width-100 flex-1 px-24 overflow-auto'}>
+                <div className={'width-100 flex-1 height-1 px-24 overflow-auto'}>
                     {userOptionMenu === 'star' && <>
                     {starLoading ? <Loading/> : userMenuStarData?.length>0 ? <div className={'grid gap-12 width-100 py-24'}
                           style={{gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))'}}>

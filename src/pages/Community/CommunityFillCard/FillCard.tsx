@@ -5,11 +5,12 @@ import {Icon, LandAvatar, LandButton, LandLoading} from "@suminhan/land-design";
 type Props = {
     item: {id:string,img_url:string,colors:string[],user:{username:string,avatar_url:string,is_official?:boolean}};
     onDownload?: () => void;
+    onPreview?: () => void;
 }
 const FillCard: React.FC<Props> = ({
                                        item,
-    onDownload
-
+    onDownload,
+    onPreview
                                    }) => {
     const [stared, setStarred] = useState<boolean>(false);
     const [starLoading, setStarLoading] = useState<boolean>(false);
@@ -60,8 +61,10 @@ const FillCard: React.FC<Props> = ({
     }
 
     return <div className={'flex column gap-8'}>
-        <img src={item.img_url} alt={item.img_url} width={'100%'} className={'radius-8 overflow-hidden events-none'}
-             style={{aspectRatio: '4/3', objectFit: 'cover'}}/>
+        <div className={`width-100 ${onPreview?'cursor-zoom-in':''}`} style={{aspectRatio: '4/3'}} onClick={onPreview}>
+            <img src={item.img_url} alt={item.img_url} width={'100%'} height={'100%'} className={'radius-8 overflow-hidden events-none'}
+                 style={{ objectFit: 'cover'}}/>
+        </div>
         <div className={'flex gap-4'}>
             {
                 item?.colors?.filter(i => i !== '#DDDDDD').map((color: string) => <div key={color} className={'flex-1'}

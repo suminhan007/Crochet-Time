@@ -1,12 +1,9 @@
-import React, {useState} from "react";
-import {Icon, LandCheckBox, LandSwitch} from "@suminhan/land-design";
+import React, {useMemo, useState} from "react";
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
-
-const wireFilterCheckData = [
-    {value: '1', label:'新手'},
-    {value: '2', label:'label2'}
-]
+import CourseHeader from "./components/CourseHeader.tsx";
+import {YarnTypeData} from "./mock.tsx";
+import {IconCrochet, IconKnit} from "../../components/Icon.tsx";
+import {LandTable} from "@suminhan/land-design";
 
 type Props = {
     isEnglish?: boolean;
@@ -15,24 +12,79 @@ type Props = {
 const CourseWire:React.FC<Props> = ({
                                         isEnglish
                                     }) => {
-    const navigate = useNavigate();
-    const [inOrderChecked,setInOrderChecked] = useState<boolean>(false);
-    return <StyledCourseInnerPage className="fixed left-0 top-0 flex column p-24 bg-white">
-        <div
-            className="flex items-center width-100 cursosr-pointer fs-14 cursor-pointer"
-            onClick={() => navigate('/type=course')}
-        >
-            <Icon name="arrow" className="rotate-90"/>
-            {isEnglish ? 'Back':'返回'}
-        </div>
-        <div className={'content width-100 flex-1 flex column'}>
-            <div className={'flex justify-between'}>
-                <LandCheckBox data={wireFilterCheckData}/>
-                <LandSwitch label={'InOder'} checked={inOrderChecked} onChange={setInOrderChecked}/>
-            </div>
-            <div className={'flex-1'}>
+    const [cur, setCur] = useState<string>('1')
+    const curItem = useMemo(() => YarnTypeData?.filter(i => i.id === cur)[0],[cur])
+    return <StyledCourseInnerPage className="fixed left-0 top-0 flex column bg-white">
+        <CourseHeader isEnglish={isEnglish} title={'纱线种类及特性'}/>
+        <div className={'content width-100 flex-1 flex column gap-24 py-24 border-box'}>
+            <div className={'flex-1 flex column gap-24'}>
                     {/*雷达图：透气性、价格、稀有度*/}
-                    {/*发展史时间轴*/}
+                <div className={'width-100vw px-24 overflow-auto'} style={{height:'132px'}}>
+                    <div className={'flex gap-12 items-center mx-auto'}>
+                        {
+                            YarnTypeData?.map((item,index) => <div key={item.id??index} className={'flex column gap-8 items-center fs-12 color-gray-3 cursor-pointer'} onClick={() => setCur(item.id)}>
+                                {isEnglish?item.label?.split('??')[1]:item.label?.split('??')[0]}
+                                <div className={'radius-50 overflow-hidden bg-gray'} style={{width:'100px',aspectRatio:'1',transform: cur===item.id ? '':'scale(0.7)',transformOrigin: 'top center',transition:'transform 0.2s ease-in-out'}}>
+                                    {item.img_url && <img src={item.img_url} width={'100%'} height={'100%'} className={'object-cover'}/>}
+                                </div>
+                            </div>)
+                        }
+                    </div>
+                </div>
+                <div className={'flex-1 flex px-24 width-100 mx-auto'}  style={{maxWidth:'1248px'}}>
+                    <div className={'flex-1 flex column gap-12 height-100 bg-gray radius-12 p-24 shrink-0'}>
+                        <div
+                            className={'fs-20 fw-600'}>{isEnglish ? curItem?.label?.split('??')[1] : curItem?.label?.split('??')[0]}
+                            {curItem?.nickname&&<span className={'fs-12 color-gray-4 ml-4 fw-400'}>（{isEnglish ? curItem?.nickname?.split('??')[1] : curItem?.nickname?.split('??')[0]}）</span>}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>原材料：</span>{isEnglish ? curItem?.material?.split('??')[1] : curItem?.material?.split('??')[0]}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>产地：</span>{isEnglish ? curItem?.origin?.split('??')[1] : curItem?.origin?.split('??')[0]}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>物理特性：</span>{isEnglish ? curItem?.physical_properties?.split('??')[1] : curItem?.physical_properties?.split('??')[0]}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>使用特性：</span>{isEnglish ? curItem?.usage_features?.split('??')[1] : curItem?.usage_features?.split('??')[0]}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>使用场景或人群：</span>{isEnglish ? curItem?.applicable?.split('??')[1] : curItem?.applicable?.split('??')[0]}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>保养与清洗：</span>{isEnglish ? curItem?.maintainance?.split('??')[1] : curItem?.maintainance?.split('??')[0]}
+                        </div>
+                        <div className={'fs-14 color-gray-2'}><span
+                            className={'color-gray-4'}>环保性：</span>{isEnglish ? curItem?.sustainability?.split('??')[1] : curItem?.sustainability?.split('??')[0]}
+                        </div>
+                        <LandTable
+                            titleData={[
+                                {title:'优点',value:'advantages'},
+                                {title:'缺点',value:'disadvantages'}
+                            ]}
+                            data={[
+                                {col1:isEnglish ? curItem?.advantages?.split('??')[1] : curItem?.advantages?.split('??')[0],col2:isEnglish ? curItem?.disadvantages?.split('??')[1] : curItem?.disadvantages?.split('??')[0]}
+                            ]}
+                        />
+                        <div className={'flex justify-between items-center'}>
+                            {curItem.crochet_size && <div className={'flex gap-8 items-center fs-12 color-gray-2 mt-12'}>
+                                <IconCrochet fill={'var(--color-bg-1)'}/>
+                                {curItem.crochet_size}
+                            </div>}
+                            {curItem.knit_size && <div className={'flex gap-8 items-center fs-12 color-gray-2'}>
+                                <IconKnit fill={'var(--color-bg-1)'}/>
+                                {curItem.knit_size}
+                            </div>}
+                        </div>
+                        <div
+                            className={'fs-14 color-gray-4 mt-12'}>{isEnglish ? curItem?.details?.split('??')[1] : curItem?.details?.split('??')[0]}
+                        </div>
+                    </div>
+                    <div className={'flex-1 p-24'}>
+                        <img src={curItem.example} width={'100%'} height={'100%'} className={'object-contain'}/>
+                    </div>
+                </div>
             </div>
         </div>
     </StyledCourseInnerPage>
