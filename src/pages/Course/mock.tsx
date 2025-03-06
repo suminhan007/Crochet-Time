@@ -117,6 +117,24 @@ export const CourseHomeData = [
 
 export const YarnTypeData = [
     {
+        id:'0',
+        label:'毛线参数',
+        img_url: "https://croknittime.com/images/xc/mx.jpg",
+        types: ['newer','doll'],
+        material: '棉花??cotton',
+        origin:'中国、印度??China, India',
+        physical_properties: '中等粗细，强度高，无弹性，光泽柔和??Medium thickness, high strength, inelastic, soft luster',
+        usage_features:'吸湿透气，柔软，易染色，耐热??Moisture-absorbing, breathable, soft, easy to dye, heat-resistant',
+        crochet_size: '2.5-4.5mm',
+        knit_size: '3.5-5mm',
+        applicable:'夏季衣物、婴儿用品、家居装饰??Summer Clothes, Baby Products, Home Decor',
+        maintainance:'可机洗，耐高温??Machine washable, high temperature resistant',
+        sustainability:'天然可再生，但种植耗水量大??Naturally renewable, but cultivation consumes a lot of water',
+        advantages:'柔软、吸湿??Soft and hygroscopic',
+        disadvantages:'易皱、弹性差??Easy to wrinkle, poor elasticity',
+        details: '纯棉线由棉花经过采摘、清理、纺纱等工艺制成。??Pure cotton thread is made from cotton through picking, cleaning, spinning and other processes.'
+    },
+    {
         id:'1',
         label:'纯棉线??Pure cotton yarn',
         img_url: "https://croknittime.com/images/xc/mx.jpg",
