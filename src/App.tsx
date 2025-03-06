@@ -159,7 +159,7 @@ function App() {
     <>
       <LandHeader
         fixed
-        logo={<IconCTLogo />}
+        // logo={<IconCTLogo />}
         menuProps={{
           data: navData,
           active: active,
@@ -196,6 +196,8 @@ function App() {
         mobileSize={1052}
         align="center"
         className="relative"
+        style={{backgroundColor:'var(--color-bg-1)'}}
+        borderBottom={false}
       />
       <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
         <Routes>

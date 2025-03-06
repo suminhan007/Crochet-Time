@@ -1,4 +1,15 @@
-
+export const Tool_Data = [
+  { key: 'colorPicker', title: "取色",desc:'提取图片主要颜色，快速生成色卡' },
+  { key: 'colorFill', title: "配色", desc:'内置常用图样、真实毛线颜色，快速预览配色效果' },
+  { key: 'pixelDrawer', title: "像素格",desc:'在线绘制像素画，支持针法图样' },
+  { key: 'imgToPixel', title: "图片转像素",desc:'图片一键转像素画，两种风格任选' },
+]
+export const English_Tool_Data = [
+  { key: 'colorPicker', title: "Extract image colors",desc:'Extract the main colors of the picture and quickly generate a color card' },
+  { key: 'colorFill', title: "Match Colors",desc:'Built-in commonly used patterns, real wool colors, and quick preview of color matching effects' },
+  { key: 'pixelDrawer', title: "Draw Pixel Patterns",desc:'Draw pixel art online, supporting stitch patterns' },
+  { key: 'imgToPixel', title: "Img To Pixel",desc:'Convert images to pixel art with one click, with two styles to choose from' },
+]
 export const Nav_Data = [
   {
     key: 'community',

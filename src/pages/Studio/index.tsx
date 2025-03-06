@@ -1,4 +1,13 @@
-import {Icon, LandButton, LandLoading, LandMessage, LandSelect, LandState} from "@suminhan/land-design";
+import {
+    Icon,
+    LandAlert,
+    LandButton,
+    LandDialog,
+    LandLoading,
+    LandMessage,
+    LandSelect,
+    LandState
+} from "@suminhan/land-design";
 import React, {useEffect,  useState} from "react";
 import { CTWorksType } from "./type.ts";
 import styled from "styled-components";
@@ -134,6 +143,18 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
             handleShowToast(true,'请先登录')
         }
     }
+    const [showDeleteDialog,setShowDeleteDialog] = useState(false);
+    const [selectId, setSelectId] = useState<string>("");
+    const handleDeleteColorCard = async () => {
+        const response = await supabase.from('CKTStudioTask').delete().eq('id',selectId);
+        if(response.status<300 && response.status>100){
+            window.location.reload();
+            handleShowToast(true,'删除成功')
+        }else{
+            handleShowToast(true,'删除失败')
+        }
+        setShowDeleteDialog(false);
+    }
     return (
         <div className="flex-1 flex column items-center gap-24 width-100 height-100 overflow-auto p-24">
             <div
@@ -212,18 +233,34 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                             className="flex column gap-8 hover-translate-y-4 transition cursor-pointer"
                             onClick={() => navigate(`worktop?type=${item.type}?project_id=${item.id}`)}
                         >
-                            <div className="width-100 ratio-1 bg-gray radius-12"></div>
-                            <div className="flex items-center gap-8 fs-14 color-gray-1 fw-500">
-                                {getTypeIcon(item.type)}
-                                {item.name || isEnglish?'untitled':'未命名'}
+                            <div className="flex both-center width-100 ratio-1 radius-12 bg-primary-light">
                             </div>
-                            <div className="fs-12 color-gray-4">{timeAgo(item.edit_time,isEnglish)}</div>
+                            <div className="flex items-center gap-8 fs-14 color-gray-1 fw-500">
+                            {getTypeIcon(item.type)}
+                                {item.project || (isEnglish?'untitled':'未命名')}
+                            </div>
+                            <div className="flex items-center justify-between fs-12 color-gray-4">{timeAgo(item.edit_time,isEnglish)}
+                                <LandButton icon={<Icon name={'delete'} size={16}/>} size={'small'} type={'text'} onClick={e => {
+                                    e.stopPropagation();
+                                    setShowDeleteDialog(true);
+                                    setSelectId(item.id)
+                                }}/>
+                            </div>
                         </div>
                     ))}
                 </div> : <div className={'flex both-center width-100 height-100'}><LandState type={'empty'}
                                                                                title={isEnglish?'No work yet, click New to start creating!':'暂无作品，点击新建开始创作吧'}/>
                 </div>}
             {toast && <LandMessage show={toast} text={toastText} />}
+            <LandDialog
+                title={'确认删除该项目？'}
+                show={showDeleteDialog}
+                onClose={() => setShowDeleteDialog(false)}
+                onCancel={() => setShowDeleteDialog(false)}
+                onSubmit={() => handleDeleteColorCard()}
+            >
+                <LandAlert type={'error'} title={'删除后不可恢复，项目中上传的素材也会一起删除，请谨慎操作！'}/>
+            </LandDialog>
         </div>
     );
 };

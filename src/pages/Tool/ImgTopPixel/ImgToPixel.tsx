@@ -3,6 +3,7 @@ import React, {useEffect, useMemo, useRef, useState} from "react";
 import supabase from "../../../utils/supabse.ts";
 import ImgPreview from "../../../components/ImgPreivew.tsx";
 import CanvasImgCard from "./components/CanvasImgCard.tsx";
+import CourseHeader from "../../Course/components/CourseHeader.tsx";
 type Props = {
     isEnglish: boolean,
 }
@@ -225,7 +226,8 @@ const ImgToPixel:React.FC<Props> = ({
         link.click();
     }
     const [previewUrl,setPreviewUrl] = useState('');
-    return <div className={'width-100 height-100 py-32 border-box'} >
+    return <div className={'fixed top-0 left-0 width-100 height-100 bg-white'} style={{zIndex:1024}}>
+        <CourseHeader title={'图片转像素画'} isEnglish={isEnglish} backHref={'/type=tools'}/>
         <div className={'flex column gap-24 px-24 pt-32 width-100 mx-auto'}
              style={{maxWidth: '848px', boxSizing: 'border-box'}}>
             <LandUploader height={'200px'} onUpload={url => setImgUrl(url)} style={{boxSizing: 'border-box'}}>

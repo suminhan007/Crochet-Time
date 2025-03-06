@@ -58,6 +58,9 @@ const CourseWire:React.FC<Props> = ({
                         <div className={'fs-14 color-gray-2'}><span
                             className={'color-gray-4'}>环保性：</span>{isEnglish ? curItem?.sustainability?.split('??')[1] : curItem?.sustainability?.split('??')[0]}
                         </div>
+                        <div className={'flex gap-8 items-center'}>
+                            {curItem?.types?.map((typeItm,typeIdx) => <div key={typeIdx} className={'px-12 py-4 fs-12 color-gray-3 border radius-4'}>{isEnglish ? typeItm?.split('??')[1] : typeItm?.split('??')[0]}</div>)}
+                        </div>
                         <LandTable
                             titleData={[
                                 {title:'优点',value:'advantages'},

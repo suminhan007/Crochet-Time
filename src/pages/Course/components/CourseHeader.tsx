@@ -4,10 +4,12 @@ import {useNavigate} from "react-router-dom";
 type Props = {
     title?:string;
     isEnglish?: boolean;
+    backHref?:string;
 }
 const CourseHeader:React.FC<Props> = ({
                                           title,
-                                          isEnglish
+                                          isEnglish,
+                                          backHref='/type=course'
                                       }) => {
     const navigate = useNavigate();
     return <div
@@ -16,7 +18,7 @@ const CourseHeader:React.FC<Props> = ({
     >
         <div
             className="flex items-center cursosr-pointer fs-12 cursor-pointer"
-            onClick={() => navigate('/type=course')}
+            onClick={() => navigate(backHref)}
         >
             <Icon name="arrow" className="rotate-90"/>
             {isEnglish?'Back':'返回'}

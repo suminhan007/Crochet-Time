@@ -25,6 +25,7 @@ import HoverCardIcon from "../../components/HoverCardIcon";
 import { IconColorPicker } from "../../components/Icon";
 import supabase from "../../utils/supabse.ts";
 import html2canvas from "html2canvas";
+import CourseHeader from "../Course/components/CourseHeader.tsx";
 
 const unitImg =
   "https://croknittime.com/images/colorcard_default.jpeg";
@@ -296,317 +297,320 @@ const ImgColorPicker: React.FC<Props> = ({ isEnglish }) => {
     }
   }
   return (
-    <LandContent className="flex-1 flex column items-start gap-32 pt-32 px-24 pb-24 width-100">
-      {/* 上传框 */}
-      <LandFlex column gap={24}>
-        <PageTitle
-          mainTitle={isEnglish ? 'Step 01: Upload File' : "Step 01：上传图片"}
-          subTitle={isEnglish ? "Click or drag to upload images, counting colors in pixels." : "点击或拖拽来上传图片，以像素为单位对颜色计数"}
-        />
-        <div className="width-100" style={{ height: "240px" }}>
-          <LandUploader
-            fileType="image/*"
-            onUpload={(url) => {
-              setImgUrl(url);
-              setColorArr([]);
-              setOriginUrl('');
-            }}
-            desc={isEnglish ? 'Click to upload an image or drag and drop an image here' : "点击上传图片或将图片拖拽于此"}
-            height="240px"
-            className="radius-12"
-          >
-            {imgUrl && (
-              <div
-                ref={imgWrapRef}
-                className="flex items-center justify-center width-100 height-100"
-              >
-                <img
-                  ref={imgRef}
-                  src={imgUrl}
-                  className={`radius-8 ${size.ratio < wrapRatio ? "height-100" : "width-100"
-                    }`}
-                />
-              </div>
-            )}
-          </LandUploader>
-        </div>
-      </LandFlex>
-      {/* 颜色 */}
-      <div className="flex column width-100">
-        {/* 取色配置 */}
-        <div className="width-100 flex column">
-          <LandTitle title={isEnglish ? "Step 02: Color configuration" : "Step 02：取色配置"} type="h3" />
-          <LandTitle
-            title={isEnglish ? <>
-              ·Filter Colors: Setting the range for filtering neutral colors
-              <br />
-              ·Quantity of extraction: Can extract 6, 8, 10 colors at a time
-              <br />
-              ·Edit Color: Support to delete, add and modify the list of extracted colors
-            </> :
-              <>
-                【过滤颜色】设置过滤中性色的范围
-                <br />
-                【提取数量】可一次提取6、8、10个颜色
-                <br />
-                【编辑颜色】支持删除、添加、修改提取的颜色列表
-              </>
-            }
-            type="p"
-            className="color-gray-4 mt-8"
+    <div className="fixed top-0 left-0 height-100 width-100 bg-white" style={{zIndex:1025}}>
+      <CourseHeader title={'提取图片主色'} isEnglish={isEnglish} backHref={'/type=tools'}/>
+      <div className={'flex column items-start gap-32 pt-32 px-24 pb-24'}>
+        {/* 上传框 */}
+        <LandFlex column gap={24}>
+          <PageTitle
+              mainTitle={isEnglish ? 'Step 01: Upload File' : "Step 01：上传图片"}
+              subTitle={isEnglish ? "Click or drag to upload images, counting colors in pixels." : "点击或拖拽来上传图片，以像素为单位对颜色计数"}
           />
-          {colorArr?.length !== 0 && (
-            <div className="flex gap-24 mt-12">
-              <div className="flex column gap-8" style={{ width: isEnglish ? "200px" : "124px" }}>
-                <LandCheck
-                  text={isEnglish ? 'Filter Neutral Colors' : "过滤中性色"}
-                  checked={filterChecked}
-                  onChange={() => {
-                    setFilterChecked(!filterChecked);
-                  }}
-                  pop={isEnglish ? <>·When checked, colors with saturation or purity below 10 will be automatically filtered.<br />·Support for entering customized filter ranges (≤35)</> : <>勾选后将自动过滤饱和度或纯度低于 10 的颜色<br />支持输入自定义过滤范围（≤35）</>}
-                />
-                <LandNumberInput
-                  max={35}
-                  min={0}
-                  step={5}
-                  value={filter}
-                  onChange={(val) => setFilter(Number(val))}
-                />
-              </div>
-              <LandSelect
-                title={isEnglish ? 'quantities' : "数量"}
-                width={124}
-                data={[
-                  { value: "1", label: "4" },
-                  { value: "2", label: "6" },
-                  { value: "3", label: "8" },
-                ]}
-                selected="2"
-                onChange={(item) => {
-                  setColorNum(Number(item.label));
+          <div className="width-100" style={{ height: "240px" }}>
+            <LandUploader
+                fileType="image/*"
+                onUpload={(url) => {
+                  setImgUrl(url);
+                  setColorArr([]);
+                  setOriginUrl('');
                 }}
-              />
-            </div>
-          )}
-        </div>
-        {/* 颜色列表 */}
-        <div
-          className={`relative flex items-center justify-center flex-wrap gap-12 p-24 flex-1`}
-          style={{ minWidth: "325px" }}
-        >
-          {colorArr?.length === 0 && imgUrl && (
-            <div className="absolute" style={{ zIndex: 1 }}>
-              {picking ? (
-                <LandLoading />
-              ) : (
-                <LandButton
-                  text={isEnglish ? 'color extraction' : "提取颜色"}
-                  type="background"
-                  status="primary"
-                  onClick={() => {
-                    getImgColor(imgUrl);
-                    setPicking(true);
-                  }}
-                />
-              )}
-            </div>
-          )}
-          {colorArr?.length === 0
-            ? unitColorArr?.map((item0: any, index0: number) => (
-              <StyleColorItem
-                key={index0}
-                className="flex column items-center relative justify-center gap-4 disabled"
-              >
-                <LandColorPicker value={item0.value} size={36} border />
-                <div className="color-gray-4" style={{ fontSize: "10px" }}>
-                  {item0.value}
-                </div>
-              </StyleColorItem>
-            ))
-            : colorArr?.map((item: any, index: number) => (
-              <HoverCardIcon
-                key={index}
-                onClick={() => handleDeleteColor(item.id)}
-              >
-                <StyleColorItem
-                  key={index}
-                  className="flex column items-center relative justify-center gap-4"
-                >
-                  <LandColorPicker
-                    value={item.value}
-                    size={36}
-                    border
-                    onChange={(color) => {
-                      const newColorArr = colorArr.map((itm) => {
-                        return {
-                          id: itm.id,
-                          value:
-                            itm.id == item.id
-                              ? `#${tinycolor(color).toHex()}`
-                              : itm.value,
-                        };
-                      });
-                      setColorArr(newColorArr);
-                    }}
-                  />
-                  <div className="fs-10 color-gray-4">{item.value}</div>
-                </StyleColorItem>
-              </HoverCardIcon>
-            ))}
-          {colorArr?.length !== 0 && colorArr?.length < 8 && (
-            <StyleAddColorBtn
-              className="StyleAddColorBtn relative flex both-center border radius-50 cursor-pointer hover-pop"
-              onClick={() => handlePick()}
+                desc={isEnglish ? 'Click to upload an image or drag and drop an image here' : "点击上传图片或将图片拖拽于此"}
+                height="240px"
+                className="radius-12"
             >
-              <IconColorPicker />
-              <LandPop content={isEnglish ? 'Click to draw color' : "点击吸取颜色"} theme="dark" />
-            </StyleAddColorBtn>
-          )}
-        </div>
-      </div>
-      {/* 色卡 */}
-      <LandFlex column gap={8}>
-        <LandTitle title={isEnglish ? 'Step 03: Download & Save Color Cards' : "Step 03：下载 & 保存色卡"} type="h3" />
-        <LandTitle
-          title={isEnglish ? 'After adjusting the color to a satisfactory value, click Download Color Swatch to save it locally' : "调整颜色至满意值后，点击下载色卡，即可保存到本地"}
-          type="p"
-          className="color-gray-4"
-        />
-      </LandFlex>
-
-      {colorArr?.length === 0 ? (
-        <StyleColorCardWrap
-          className="grid mx-32 gap-24 pb-24 disabled"
-          length={6}
-        >
-          {Array.from({ length: 6 }).map((_itm, index) => (
-            <div key={index} className="flex column items-center gap-12">
-              <StyleColorCardBox
-                className={`StyleColorCardBox relative p-24 flex gap-4 width-100 border color-card card-${index} column`}
-                width={size.w}
-                height={size.h}
-                ratio={size.ratio}
-              >
-                <div className="color-img">
-                  <img src={unitImg} />
-                </div>
-                <div className="color-list grid gap-4">
-                  {colorArr?.length === 0
-                    ? unitColorArr.map((itm0: any) => (
-                      <div
-                        key={itm0.id}
-                        className="color-item flex column items-center gap-4"
-                      >
-                        <div
-                          style={{
-                            background: itm0.value,
-                          }}
-                          className="width-100 flex-1"
-                        ></div>
-                        <p>{itm0.value}</p>
-                      </div>
-                    ))
-                    : colorArr.map((itm: any) => (
-                      <div
-                        key={itm.id}
-                        className="color-item flex column items-center gap-4"
-                      >
-                        <div
-                          style={{
-                            background: itm.value,
-                          }}
-                          className="width-100 flex-1"
-                        ></div>
-                        <p>{itm.value}</p>
-                      </div>
-                    ))}
-                </div>
-              </StyleColorCardBox>
-              <LandButton
-                type="background"
-                className="width-100"
-                text={isEnglish ? 'Download' : "下载色卡"}
-                icon={<Icon name="download" />}
-              />
-            </div>
-          ))}
-        </StyleColorCardWrap>
-      ) : (
-        <StyleColorCardWrap
-          className="grid mx-32 gap-24 pb-24"
-          length={colorArr?.length}
-        >
-          {Array.from({ length: 6 }).map((_itm, index) => (
-            <div key={index} className="flex column items-center gap-12">
-              <StyleColorCardBox
-                className={`relative p-24 flex gap-4 width-100 border color-card card-${index} ${size.ratio < 1 ? "" : "column"
-                  }`}
-                width={size.w}
-                height={size.h}
-                ratio={size.ratio}
-              >
-                <div className="color-img">
-                  <img src={imgUrl} />
-                </div>
-                <div className="color-list grid gap-4">
-                  {colorArr.map((itm: any) => (
-                    <div
-                      key={itm.id}
-                      className="color-item flex column items-center gap-4"
-                    >
-                      <div
-                        style={{
-                          background: itm.value,
+              {imgUrl && (
+                  <div
+                      ref={imgWrapRef}
+                      className="flex items-center justify-center width-100 height-100"
+                  >
+                    <img
+                        ref={imgRef}
+                        src={imgUrl}
+                        className={`radius-8 ${size.ratio < wrapRatio ? "height-100" : "width-100"
+                        }`}
+                    />
+                  </div>
+              )}
+            </LandUploader>
+          </div>
+        </LandFlex>
+        {/* 颜色 */}
+        <div className="flex column width-100">
+          {/* 取色配置 */}
+          <div className="width-100 flex column">
+            <LandTitle title={isEnglish ? "Step 02: Color configuration" : "Step 02：取色配置"} type="h3" />
+            <LandTitle
+                title={isEnglish ? <>
+                      ·Filter Colors: Setting the range for filtering neutral colors
+                      <br />
+                      ·Quantity of extraction: Can extract 6, 8, 10 colors at a time
+                      <br />
+                      ·Edit Color: Support to delete, add and modify the list of extracted colors
+                    </> :
+                    <>
+                      【过滤颜色】设置过滤中性色的范围
+                      <br />
+                      【提取数量】可一次提取6、8、10个颜色
+                      <br />
+                      【编辑颜色】支持删除、添加、修改提取的颜色列表
+                    </>
+                }
+                type="p"
+                className="color-gray-4 mt-8"
+            />
+            {colorArr?.length !== 0 && (
+                <div className="flex gap-24 mt-12">
+                  <div className="flex column gap-8" style={{ width: isEnglish ? "200px" : "124px" }}>
+                    <LandCheck
+                        text={isEnglish ? 'Filter Neutral Colors' : "过滤中性色"}
+                        checked={filterChecked}
+                        onChange={() => {
+                          setFilterChecked(!filterChecked);
                         }}
-                        className="width-100 flex-1"
-                      ></div>
-                      <p>{itm.value}</p>
-                    </div>
-                  ))}
+                        pop={isEnglish ? <>·When checked, colors with saturation or purity below 10 will be automatically filtered.<br />·Support for entering customized filter ranges (≤35)</> : <>勾选后将自动过滤饱和度或纯度低于 10 的颜色<br />支持输入自定义过滤范围（≤35）</>}
+                    />
+                    <LandNumberInput
+                        max={35}
+                        min={0}
+                        step={5}
+                        value={filter}
+                        onChange={(val) => setFilter(Number(val))}
+                    />
+                  </div>
+                  <LandSelect
+                      title={isEnglish ? 'quantities' : "数量"}
+                      width={124}
+                      data={[
+                        { value: "1", label: "4" },
+                        { value: "2", label: "6" },
+                        { value: "3", label: "8" },
+                      ]}
+                      selected="2"
+                      onChange={(item) => {
+                        setColorNum(Number(item.label));
+                      }}
+                  />
                 </div>
-              </StyleColorCardBox>
-              <div className="width-100 flex gap-12">
-                <LandInput
-                  placeholder={isEnglish ? 'Custom Color Card Names' : "自定义色卡名称"}
-                  value={cardName[index]}
-                  onChange={(val) => {
-                    const newArr = cardName.map((n, i) => {
-                      if (i === index) {
-                        return String(val);
-                      } else {
-                        return n;
-                      }
-                    });
-                    setCardName(newArr);
-                  }}
-                  className="flex-1"
-                />
-                <LandButton
-                  type="background"
-                  className="flex-1"
-                  text={isEnglish ? 'Download' : "下载色卡"}
-                  icon={<Icon name="download" />}
-                  onClick={() => {
-                    const card = document.querySelectorAll(".color-card");
-                    downloadHtmlAsImg(card[index], cardName[index], 4);
-                  }}
-                />
-                <LandButton
-                    type="background"
-                    status={'primary'}
-                    className="flex-1"
-                    text={isEnglish ? 'Save' : "保存到仓库"}
-                    icon={<Icon name="download" />}
-                    onClick={(e) => saveColorCard?.(e,index)}
-                />
-              </div>
-            </div>
-          ))}
-        </StyleColorCardWrap>
-      )}
+            )}
+          </div>
+          {/* 颜色列表 */}
+          <div
+              className={`relative flex items-center justify-center flex-wrap gap-12 p-24 flex-1`}
+              style={{ minWidth: "325px" }}
+          >
+            {colorArr?.length === 0 && imgUrl && (
+                <div className="absolute" style={{ zIndex: 1 }}>
+                  {picking ? (
+                      <LandLoading />
+                  ) : (
+                      <LandButton
+                          text={isEnglish ? 'color extraction' : "提取颜色"}
+                          type="background"
+                          status="primary"
+                          onClick={() => {
+                            getImgColor(imgUrl);
+                            setPicking(true);
+                          }}
+                      />
+                  )}
+                </div>
+            )}
+            {colorArr?.length === 0
+                ? unitColorArr?.map((item0: any, index0: number) => (
+                    <StyleColorItem
+                        key={index0}
+                        className="flex column items-center relative justify-center gap-4 disabled"
+                    >
+                      <LandColorPicker value={item0.value} size={36} border />
+                      <div className="color-gray-4" style={{ fontSize: "10px" }}>
+                        {item0.value}
+                      </div>
+                    </StyleColorItem>
+                ))
+                : colorArr?.map((item: any, index: number) => (
+                    <HoverCardIcon
+                        key={index}
+                        onClick={() => handleDeleteColor(item.id)}
+                    >
+                      <StyleColorItem
+                          key={index}
+                          className="flex column items-center relative justify-center gap-4"
+                      >
+                        <LandColorPicker
+                            value={item.value}
+                            size={36}
+                            border
+                            onChange={(color) => {
+                              const newColorArr = colorArr.map((itm) => {
+                                return {
+                                  id: itm.id,
+                                  value:
+                                      itm.id == item.id
+                                          ? `#${tinycolor(color).toHex()}`
+                                          : itm.value,
+                                };
+                              });
+                              setColorArr(newColorArr);
+                            }}
+                        />
+                        <div className="fs-10 color-gray-4">{item.value}</div>
+                      </StyleColorItem>
+                    </HoverCardIcon>
+                ))}
+            {colorArr?.length !== 0 && colorArr?.length < 8 && (
+                <StyleAddColorBtn
+                    className="StyleAddColorBtn relative flex both-center border radius-50 cursor-pointer hover-pop"
+                    onClick={() => handlePick()}
+                >
+                  <IconColorPicker />
+                  <LandPop content={isEnglish ? 'Click to draw color' : "点击吸取颜色"} theme="dark" />
+                </StyleAddColorBtn>
+            )}
+          </div>
+        </div>
+        {/* 色卡 */}
+        <LandFlex column gap={8}>
+          <LandTitle title={isEnglish ? 'Step 03: Download & Save Color Cards' : "Step 03：下载 & 保存色卡"} type="h3" />
+          <LandTitle
+              title={isEnglish ? 'After adjusting the color to a satisfactory value, click Download Color Swatch to save it locally' : "调整颜色至满意值后，点击下载色卡，即可保存到本地"}
+              type="p"
+              className="color-gray-4"
+          />
+        </LandFlex>
+
+        {colorArr?.length === 0 ? (
+            <StyleColorCardWrap
+                className="grid mx-32 gap-24 pb-24 disabled"
+                length={6}
+            >
+              {Array.from({ length: 6 }).map((_itm, index) => (
+                  <div key={index} className="flex column items-center gap-12">
+                    <StyleColorCardBox
+                        className={`StyleColorCardBox relative p-24 flex gap-4 width-100 border color-card card-${index} column`}
+                        width={size.w}
+                        height={size.h}
+                        ratio={size.ratio}
+                    >
+                      <div className="color-img">
+                        <img src={unitImg} />
+                      </div>
+                      <div className="color-list grid gap-4">
+                        {colorArr?.length === 0
+                            ? unitColorArr.map((itm0: any) => (
+                                <div
+                                    key={itm0.id}
+                                    className="color-item flex column items-center gap-4"
+                                >
+                                  <div
+                                      style={{
+                                        background: itm0.value,
+                                      }}
+                                      className="width-100 flex-1"
+                                  ></div>
+                                  <p>{itm0.value}</p>
+                                </div>
+                            ))
+                            : colorArr.map((itm: any) => (
+                                <div
+                                    key={itm.id}
+                                    className="color-item flex column items-center gap-4"
+                                >
+                                  <div
+                                      style={{
+                                        background: itm.value,
+                                      }}
+                                      className="width-100 flex-1"
+                                  ></div>
+                                  <p>{itm.value}</p>
+                                </div>
+                            ))}
+                      </div>
+                    </StyleColorCardBox>
+                    <LandButton
+                        type="background"
+                        className="width-100"
+                        text={isEnglish ? 'Download' : "下载色卡"}
+                        icon={<Icon name="download" />}
+                    />
+                  </div>
+              ))}
+            </StyleColorCardWrap>
+        ) : (
+            <StyleColorCardWrap
+                className="grid mx-32 gap-24 pb-24"
+                length={colorArr?.length}
+            >
+              {Array.from({ length: 6 }).map((_itm, index) => (
+                  <div key={index} className="flex column items-center gap-12">
+                    <StyleColorCardBox
+                        className={`relative p-24 flex gap-4 width-100 border color-card card-${index} ${size.ratio < 1 ? "" : "column"
+                        }`}
+                        width={size.w}
+                        height={size.h}
+                        ratio={size.ratio}
+                    >
+                      <div className="color-img">
+                        <img src={imgUrl} />
+                      </div>
+                      <div className="color-list grid gap-4">
+                        {colorArr.map((itm: any) => (
+                            <div
+                                key={itm.id}
+                                className="color-item flex column items-center gap-4"
+                            >
+                              <div
+                                  style={{
+                                    background: itm.value,
+                                  }}
+                                  className="width-100 flex-1"
+                              ></div>
+                              <p>{itm.value}</p>
+                            </div>
+                        ))}
+                      </div>
+                    </StyleColorCardBox>
+                    <div className="width-100 flex gap-12">
+                      <LandInput
+                          placeholder={isEnglish ? 'Custom Color Card Names' : "自定义色卡名称"}
+                          value={cardName[index]}
+                          onChange={(val) => {
+                            const newArr = cardName.map((n, i) => {
+                              if (i === index) {
+                                return String(val);
+                              } else {
+                                return n;
+                              }
+                            });
+                            setCardName(newArr);
+                          }}
+                          className="flex-1"
+                      />
+                      <LandButton
+                          type="background"
+                          className="flex-1"
+                          text={isEnglish ? 'Download' : "下载色卡"}
+                          icon={<Icon name="download" />}
+                          onClick={() => {
+                            const card = document.querySelectorAll(".color-card");
+                            downloadHtmlAsImg(card[index], cardName[index], 4);
+                          }}
+                      />
+                      <LandButton
+                          type="background"
+                          status={'primary'}
+                          className="flex-1"
+                          text={isEnglish ? 'Save' : "保存到仓库"}
+                          icon={<Icon name="download" />}
+                          onClick={(e) => saveColorCard?.(e,index)}
+                      />
+                    </div>
+                  </div>
+              ))}
+            </StyleColorCardWrap>
+        )}
+      </div>
       {toast && <LandMessage show={toast} text={toastText} />}
-    </LandContent>
+    </div>
   );
 };
 
