@@ -29,7 +29,6 @@ import Studio from "./pages/Studio";
 import WorktopPages from "./pages/Studio/WorktopPages";
 import CourseWire from "./pages/Course/CourseWire.tsx";
 import CourseTool from "./pages/Course/CourseTool.tsx";
-import {IconCTLogo} from "./components/Icon.tsx";
 import ImgToPixel from "./pages/Tool/ImgTopPixel/ImgToPixel.tsx";
 
 function App() {
