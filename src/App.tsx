@@ -175,7 +175,7 @@ function App() {
           dropProps: {
             direction: "column",
             active: dropActive,
-            theme: { activeBg: "var(--color-bg-2)", lineColor: "transparent", }
+            theme: { activeBg: "var(--color-bg-2)", lineColor: "transparent"}
           },
         }}
         rightComponent={

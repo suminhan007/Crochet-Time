@@ -8,7 +8,7 @@ type Props = {
     onLogined?: (user:User) => void;
 }
 
-const Login:React.FC<Props> = ({
+const Login_bak:React.FC<Props> = ({
                                    onLogined
 }) => {
     const navigate = useNavigate();
@@ -49,11 +49,11 @@ const Login:React.FC<Props> = ({
             <LandLoading/>
             登录中...
         </div>:<div className={`flex column gap-12 ${loginLoading ? 'events-none' : ''}`}>
-            <LandInput width={'100%'} prefix={'邮箱：'} autocomplete name={'email'} onChange={val => {
+            <LandInput type={'background'} width={'100%'} prefix={'邮箱：'} autocomplete name={'email'} onChange={val => {
                 setError(false);
                 setEmail(val)
             }}/>
-            <LandInput inputType={'password'} width={'100%'} prefix={'密码：'} autocomplete name={'password'} onChange={val => {
+            <LandInput type={'background'} inputType={'password'} width={'100%'} prefix={'密码：'} autocomplete name={'password'} onChange={val => {
                 setError(false);
                 setPassword(val)
             }}/>
@@ -61,4 +61,4 @@ const Login:React.FC<Props> = ({
         </div>}
     </LandDialog>)
 }
-export default Login;
+export default Login_bak;

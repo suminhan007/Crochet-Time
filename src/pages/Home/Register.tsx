@@ -98,13 +98,13 @@ const Register:React.FC<Props> = ({
         headerLeftComponent={<LandTitle type={'h2'} title={'注册'}/>}
     >
        <div className={'relative flex column gap-12'}>
-           <LandUploader width={'64px'} height={'64px'} className={'mx-auto radius-100'} onUpload={url => setAvatar(url)} style={{padding:'0px',borderRadius:'100%',overflow:'hidden'}}>
+           <LandUploader width={'64px'} height={'64px'} className={'mx-auto radius-100 mb-24'} onUpload={url => setAvatar(url)} style={{padding:'0px',borderRadius:'100%',overflow:'hidden'}}>
                {avatar && <img width={'100%'} height={'100%'} src={avatar} style={{objectFit: 'cover'}}/>}
            </LandUploader>
-            <LandInput width={'100%'} prefix={'昵称：'} onChange={val => setUsername(val)}/>
+            <LandInput type={'background'} width={'100%'} prefix={'昵称：'} onChange={val => setUsername(val)}/>
             <LandRadio data={registerSexData} checked={sex} onChange={item => setSex(item.value)}/>
-            <LandInput width={'100%'} prefix={'邮箱：'} onChange={val => setEmail(val)}/>
-            <LandInput inputType={'password'} width={'100%'} prefix={'密码：'} onChange={val => setPassword(val)}/>
+            <LandInput type={'background'} width={'100%'} prefix={'邮箱：'} onChange={val => setEmail(val)}/>
+            <LandInput type={'background'} inputType={'password'} width={'100%'} prefix={'密码：'} onChange={val => setPassword(val)}/>
            <div className={`absolute width-100 height-100 top-0 left-0 flex both-center ${authing ? '':'opacity-0 events-none'} transition`} style={{backgroundColor: 'rgba(255,255,255,0.8)'}}>
                <LandAlert title={'注册信息提交成功，请前往邮箱进行验证。'}/>
            </div>
