@@ -1,7 +1,7 @@
 export const Tool_Data = [
   { key: 'colorPicker', title: "取色",desc:'提取图片主要颜色，快速生成色卡' },
   { key: 'colorFill', title: "配色", desc:'内置常用图样、真实毛线颜色，快速预览配色效果' },
-  { key: 'pixelDrawer', title: "像素格",desc:'在线绘制像素画，支持针法图样' },
+  { key: 'pixelDrawer', title: "绘制像素格",desc:'在线绘制像素画，支持针法图样' },
   { key: 'imgToPixel', title: "图片转像素",desc:'图片一键转像素画，两种风格任选' },
 ]
 export const English_Tool_Data = [

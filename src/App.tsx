@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
@@ -158,7 +157,7 @@ function App() {
     <>
       <LandHeader
         fixed
-        // logo={<IconCTLogo />}
+        logo={<img src={'./ckt_logo.png'} height={32} onClick={() => navigate('/')}/>}
         menuProps={{
           data: navData,
           active: active,
@@ -171,6 +170,7 @@ function App() {
             setDropActive(dropItem.key);
             navigate(`type=${parentItem.key}-${dropItem.key}`);
           },
+          theme: {hoverBg: 'transparent',lineColor:'transparent'},
           dropProps: {
             direction: "column",
             active: dropActive,
@@ -195,7 +195,7 @@ function App() {
         mobileSize={1052}
         align="center"
         className="relative"
-        style={{backgroundColor:'var(--color-bg-1)'}}
+        style={{backgroundColor: (active === 'course'||active === 'studio') ? '':'var(--color-bg-1)'}}
         borderBottom={false}
       />
       <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
@@ -224,7 +224,7 @@ function App() {
           <Route path='type=tools-imgToPixel' element={<ImgToPixel isEnglish={language === 'en'} />} />
 
           {/*资产*/}
-          <Route path={'type=repository'} element={<Assets/>}/>
+          <Route path={'type=repository'} element={<Assets isEnglish={language === 'en'} />}/>
 
           {/*注册&登录*/}
           <Route path={'register'} element={<Register/>}/>

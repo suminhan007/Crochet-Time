@@ -20,7 +20,7 @@ const Tools:React.FC<Props> = ({
         }
     }
     const data = useMemo(() => isEnglish ? English_Tool_Data:Tool_Data,[isEnglish])
-    return <div className={'p-24 width-100 height-100 bg-gray'}>
+    return <div className={'px-16 pb-16 width-100 height-100 bg-gray'}>
         <div className={'flex items-center justify-center p-24 width-100 height-100 radius-12 bg-white'}>
             <div className={'grid gap-12 width-100'}
                  style={{gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',maxWidth:'1248px'}}>

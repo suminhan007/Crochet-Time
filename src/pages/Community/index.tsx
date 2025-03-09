@@ -39,7 +39,7 @@ const Community:React.FC<Props> = ({
                                      isEnglish,
                                        user
                                  }) => {
-    const newMenuData = useMemo(() => isEnglish ? enMenuData : menuData, [enMenuData]);
+    const newMenuData = useMemo(() => isEnglish ? enMenuData : menuData, [isEnglish]);
     const [curTab, setCurTab] = useState('state');
     const [showCreateStateDrawer,setShowCreateStateDrawer] = useState(false);
     const [showCreateOfficialStateDrawer,setShowCreateOfficialStateDrawer] = useState(false);
@@ -116,7 +116,7 @@ const Community:React.FC<Props> = ({
     const [firstIn,setFirstIn] = useState(true);
     return (<>
         <div className={'flex width-100 height-100 bg-gray'}>
-            <div className={'height-100 flex column py-16 px-24'} style={{width: 'fit-content'}}>
+            <div className={'height-100 flex column pb-16 px-24'} style={{width: 'fit-content'}}>
                 {newMenuData?.map((item: any, index: number) => <div key={item.key ?? index}
                                                                      className={`flex column gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
                                                                      onClick={() => {
@@ -125,7 +125,7 @@ const Community:React.FC<Props> = ({
                                                                      }}>
                     <div className={'flex items-center gap-8'}>
                         {item.title}
-                        {item.key === 'ckt' && <div className={'flex items-center gap-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'official':'官方'}
+                        {item.key === 'ckt' && <div className={'flex items-center gap-4 px-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'store':'商店'}
                             {user?.id === '82758977-37d6-4917-9220-fe25e3064e08' &&
                                 <div onClick={() => setShowCreateOfficialStateDrawer(true)}><Icon name={'add'} size={16}
                                                                                                   strokeWidth={4}/></div>}
@@ -144,7 +144,7 @@ const Community:React.FC<Props> = ({
                     >{itm.title}</div>)}</div>}
                 </div>)}
             </div>
-            <div className={'flex-1 height-100 p-16'}>
+            <div className={'flex-1 height-100 pr-16 pb-16'}>
                 <div className={'width-100 height-100 bg-white p-24 radius-12'}>
                     {curTab === 'ckt' && <CommunityCKTCard/>}
                     {curTab === 'state' && <CommunityStateCard isEnglish={isEnglish}/>}
