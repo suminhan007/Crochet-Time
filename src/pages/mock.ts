@@ -12,7 +12,7 @@ export const English_Tool_Data = [
 ]
 export const Nav_Data = [
   {
-    key: 'community',
+    key: 'community?communityType=ckt',
     title: "社区",
     enTitle:'Community',
   },
@@ -38,12 +38,12 @@ export const Nav_Data = [
       { key: 'imgToPixel', title: "图片转像素" },
     ],
   },
-  { key: 'repository', title: "仓库" },
+  { key: 'repository?assetsType=draft', title: "仓库" },
 ]
 
 export const English_Nav_Data = [
   {
-    key: 'community',
+    key: 'community?communityType=ckt',
     title: "Community",
   },
   {
@@ -67,7 +67,7 @@ export const English_Nav_Data = [
       { key: 'imgToPixel', title: "Img To Pixel" },
     ],
   },
-  { key: 'repository', title: "Repository" },
+  { key: 'repository?assetsType=draft', title: "Repository" },
 ]
 
 export const Crochet_Course_Data = [

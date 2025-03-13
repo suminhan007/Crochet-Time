@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Icon, LandMessage} from "@suminhan/land-design";
 import CommunityColorCard from "./CommunityColorCard";
 import StateUploadDrawerContent from "./CommunityStateCard/StateUploadDrawerContent.tsx";
@@ -9,6 +9,7 @@ import CommunityFillCard from "./CommunityFillCard";
 import CommunityInspirationCard from "./CommunityInspirationCard";
 import CommunityCKTCard from "./CommunityCKTCard";
 import CommunityImgPixelCard from "./CommunityImgPixelCard";
+import {useNavigate} from "react-router-dom";
 
 const menuData = [
     {key: 'ckt',title:'CKT'},
@@ -39,8 +40,16 @@ const Community:React.FC<Props> = ({
                                      isEnglish,
                                        user
                                  }) => {
+    const navigate = useNavigate();
     const newMenuData = useMemo(() => isEnglish ? enMenuData : menuData, [isEnglish]);
     const [curTab, setCurTab] = useState('state');
+    useEffect(() => {
+        if(!window.location.href.includes('communityType=')) return;
+        const href = window.location.href.split('communityType=')[1];
+        if (href?.length >= 2) {
+            setCurTab(href);
+        }
+    }, [window.location.href]);
     const [showCreateStateDrawer,setShowCreateStateDrawer] = useState(false);
     const [showCreateOfficialStateDrawer,setShowCreateOfficialStateDrawer] = useState(false);
 
@@ -120,7 +129,13 @@ const Community:React.FC<Props> = ({
                 {newMenuData?.map((item: any, index: number) => <div key={item.key ?? index}
                                                                      className={`flex column gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
                                                                      onClick={() => {
-                                                                         item.dropData ? setCurTab(item.dropData[0].key) : setCurTab(item.key);
+                                                                         if(item.dropData) {
+                                                                             navigate(`?communityType=${item.dropData[0].key}`)
+                                                                             setCurTab(item.dropData[0].key)
+                                                                         }else {
+                                                                             navigate(`?communityType=${item.key}`)
+                                                                             setCurTab(item.key)
+                                                                         }
                                                                          if(item.key === 'inspiration')setFirstIn(false)
                                                                      }}>
                     <div className={'flex items-center gap-8'}>

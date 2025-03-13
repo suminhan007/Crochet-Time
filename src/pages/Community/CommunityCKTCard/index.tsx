@@ -1,5 +1,5 @@
 import React from "react";
-import {LandAffixContainer, LandBadge, LandFlex, LandSelect} from "@suminhan/land-design";
+import {LandAffixContainer,  LandFlex, LandSelect} from "@suminhan/land-design";
 import FilterListOrButton from "./components/FilterListOrButton.tsx";
 
 type Props = {
