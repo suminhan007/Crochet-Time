@@ -133,7 +133,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                 id: `${id}`,
                 project_name: 'Untitled',
                 project_type: type,
-                edit_time: `${id}`,
+                edit_time: Date.now(),
                 data: initData
             }]).eq('user_id', user?.id)
             if(res.error){}else{
@@ -237,7 +237,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                             </div>
                             <div className="flex items-center gap-8 fs-14 color-gray-1 fw-500">
                             {getTypeIcon(item.type)}
-                                {item.project || (isEnglish?'untitled':'未命名')}
+                                {item.project_name || (isEnglish?'untitled':'未命名')}
                             </div>
                             <div className="flex items-center justify-between fs-12 color-gray-4">{timeAgo(item.edit_time,isEnglish)}
                                 <LandButton icon={<Icon name={'delete'} size={16}/>} size={'small'} type={'text'} onClick={e => {
