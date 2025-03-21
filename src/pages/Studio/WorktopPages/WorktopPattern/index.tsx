@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useMemo, useState} from "react";
+import React, {Fragment, useEffect, useMemo, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import styled from "styled-components";
 import {Icon, LandButton, LandDivider, LandInput,  LandMessage} from "@suminhan/land-design";
@@ -22,7 +22,7 @@ const WorktopPattern:React.FC<Props> = ({
         }, 1000);
     };
     const initData = [
-        {id:'1',title:'第 1 部分',values: [{id:'1-1',value:''}]}
+        {id:'1',title:'第 1 部分',values:''}
     ]
     const [data,setData] = useState(initData);
     const projectId = useMemo(() => window.location.hash?.includes('project_id') ? window.location.hash.split('?project_id=')[1]:undefined,[window.location])
@@ -44,35 +44,20 @@ const WorktopPattern:React.FC<Props> = ({
     }, []);
     const [cur, setCur] = useState('1');
     const curItem = useMemo(() => data?.filter(i=>i.id===cur)[0], [data,cur]);
-    const addPartDisabled = useMemo(() => !data[data?.length-1].values?.some(i=>i.value), [data]);
+    const addPartDisabled = useMemo(() => !data[data?.length-1].values, [data]);
     const handleAddPart = () => {
         if(addPartDisabled) return;
-        const newData = [...data,{id:`${data?.length+1}`,title:`第 ${data?.length+1} 部分`,values: [{id:`${data?.length+1}-1`,value:''}]}]
+        const newData = [...data,{id:`${data?.length+1}`,title:`第 ${data?.length+1} 部分`,values: ''}]
         setData(newData);
         setCur(`${data?.length+1}`);
     }
-    const handleInputChange = (val:string,id:string,e:any)=>{
+    const handleInputChange = (val:string,e:any)=>{
         e.stopPropagation();
-        const newData = data?.map((i) => i.id===cur ? Object.assign(i,{values:i.values?.map((j) => j.id===id ? Object.assign(j, {value:val}):j)}):i);
+        const newData = data?.map((i) => i.id===cur ? Object.assign(i,{values: val}):i);
         setData(newData);
     }
-    const [focusId, setFocusId] = useState('');
-    const focusEmpty = useMemo(() => focusId ? !data?.filter(i=>i.id===cur)[0].values?.filter(j=>j.id===focusId)[0]?.value : true,[cur, focusId,data]);
-    const handleInputEnter = (e:any,index:number) => {
-        if(!focusId || focusEmpty || focusId !== `${curItem.id}-${curItem?.values?.length}`) return;
-        if(e.code === 'Enter'){
-            e.preventDefault()
-            const newData = data?.map(((i)=> cur===i.id ? Object.assign(i, {values: [...i.values, {id:`${curItem.id}-${curItem?.values?.length+1}`,value: ''}]}):i));
-            setData(newData);
-            const nextId = data?.filter(i=>i.id===cur)[0].values[index+1].id;
-            setFocusId(nextId);
-            const inputs = document.querySelectorAll('.pattern-line-input');
-            const focusInout = inputs[index+1] as HTMLInputElement;
-            focusInout.autofocus();
-        }
-    }
     const [saving, setSaving] = useState(false);
-    const saveDisabled = useMemo(() => saving || !data?.some(i=>i.values?.some(j=>j.value)),[saving,data])
+    const saveDisabled = useMemo(() => saving || !data?.some(i=>i.values),[saving,data])
     const handleSave = async () => {
         setSaving(true)
             const res = await supabase.from('CKTStudioTask').update({
@@ -91,6 +76,7 @@ const WorktopPattern:React.FC<Props> = ({
         const newData = data?.map(i=>i.id===titleInputId ? Object.assign(i,{title: val}) : i);
         setData(newData);
     }
+    const lines = useMemo(() => curItem?.values.split('\n').length, [curItem?.values]);
     return <>
         <div className="relative flex p-24 width-100 height-100 bg-gray border-box">
             <div className={'flex column width-100 bg-white radius-12 p-24'}>
@@ -120,20 +106,16 @@ const WorktopPattern:React.FC<Props> = ({
                         </Fragment>)}
                         <LandButton size={'small'} type={'transparent'} disabled={addPartDisabled} icon={<Icon name={'add'} strokeWidth={3}/>} pop={addPartDisabled ? isEnglish ? 'New sections can be added after typing':'输入内容后可添加新部分':isEnglish?'Click to add new part':'点击添加新的部分'} onClick={handleAddPart}/>
                     </div>
-                    <div className={'flex column gap-8 mt-12'}>
-                        {curItem?.values?.map((item: { id:string,value:string }, index:number) => <div key={index} className={'flex items-center gap-8 fs-14 color-gray-2'} >
-                                <span className={'color-gray-4'}>R{index + 1}:</span>
-                                <StyledInput
-                                    className={'pattern-line-input'}
-                                    placeholder={'请输入（输入内容后按回车键增加行）'}
-                                    value={item.value}
-                                    onFocus={() => setFocusId(item.id)}
-                                    onBlur={() => setFocusId('')}
-                                    onChange={e=>handleInputChange?.(e.target.value,item.id,e)}
-                                    onKeyDown={e=>handleInputEnter?.(e,index)}
-                                />
-                            </div>
-                        )}
+                    <div className={'flex gap-8 mt-12 height-100'}>
+                        <div className={'flex column fs-14 color-gray-4'}>
+                            {Array.from({length: lines}).map((_i,idx) => <div>R{idx+1}: </div>)}
+                        </div>
+                        <StyledInput
+                            className={'pattern-line-input fs-14'}
+                            placeholder={`请输入 ${curItem?.title} 的图解内容`}
+                            value={curItem?.values}
+                            onChange={e=>handleInputChange?.(e.target.value,e)}
+                        />
                     </div>
                         </div>
                     </div>
@@ -142,12 +124,13 @@ const WorktopPattern:React.FC<Props> = ({
         {toast && <LandMessage show={toast} text={toastText} />}
     </>
 }
-const StyledInput = styled.input`
+const StyledInput = styled.textarea`
     width: 100%;
     height: 100%;
     border: none;
     outline: none;
     background-color: transparent;
+    resize: none;
     &:focus,
     &:focus-within,
     &:focus-visible,
