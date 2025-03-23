@@ -1,13 +1,15 @@
 import {Icon, LandButton, LandLoading} from "@suminhan/land-design";
 import React from "react";
+import styled from "styled-components";
 
 type Props = {
     src?:string;
     desc?:string;
 
     showGrid?:boolean;
-    widthCount?:number;
-    heightCount?:number;
+    width?:number;
+    height?:number;
+    pixelSize?:number;
 
     loading?:boolean;
     onPreview?: () => void;
@@ -19,8 +21,9 @@ const CanvasImgCard:React.FC<Props> = ({
                                            desc,
     loading,
                                            showGrid,
-    widthCount=1,
-    heightCount=1,
+                                           width=1,
+                                           height=1,
+                                           pixelSize=1,
     onPreview,
     onDownload,
     onSave,
@@ -37,16 +40,14 @@ const CanvasImgCard:React.FC<Props> = ({
             </div>
             {/*网格线*/}
             {src && showGrid && <div className={'absolute width-100 height-100 top-0 left-0 events-none'} style={{zIndex: 1}}>
-                <div className={'absolute width-100 height-100 flex justify-around'}>
+                <div className={'absolute  height-100 flex justify-between'} style={{width: `calc(100% - ${width%pixelSize}px)`}}>
                     {
-                        Array.from({length: widthCount}).map((_, i) => <div key={i} className={'height-100 bg-gray'}
-                                                                            style={{width: '0.5px'}}></div>)
+                        Array.from({length: Math.ceil(width/pixelSize)}).map((_, i) => <StyledVDivider key={i} className={'flex-1 border height-100 shrink-0'}></StyledVDivider>)
                     }
                 </div>
-                <div className={'absolute width-100 height-100 flex column justify-around'}>
+                <div className={'absolute width-100  flex column justify-between'} style={{height: `calc(100% - ${height%pixelSize}px)`}}>
                     {
-                        Array.from({length: heightCount}).map((_, j) => <div key={j} className={'width-100 bg-gray'}
-                                                                             style={{height: '0.5px'}}></div>)
+                        Array.from({length: Math.ceil(height/pixelSize)}).map((_, j) => <StyledHDivider key={j} className={'flex-1 border width-100 shrink-0'}></StyledHDivider>)
                     }
                 </div>
                 </div>
@@ -62,4 +63,16 @@ const CanvasImgCard:React.FC<Props> = ({
         </div>}
     </>
 }
+
+const StyledVDivider = styled.div`  
+    &:not(:first-child) {
+        margin-left: -1px;
+    }
+`
+
+const StyledHDivider = styled.div`  
+    &:not(:first-child) {
+        margin-top: -1px;
+    }
+`
 export default CanvasImgCard;

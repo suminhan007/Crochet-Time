@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -8,12 +8,10 @@ type Props = {
 const CourseHomeBook:React.FC<Props> = ({
                                             item,
     isEnglish,
-                                        }) => {
-    const [open,setOpen] = useState<boolean>(false);
-    return <StyledHomeListItem
-        className={`relative flex justify-end ${open ? 'open':''} cursor-pointer`}
-        onClick={()=>setOpen(true)}
-        onMouseLeave={()=>setOpen(false)}
+                                        }) => <StyledHomeListItem
+        className={'relative flex justify-end cursor-pointer'}
+        // onMouseEnter={()=>setOpen(true)}
+        // onMouseLeave={()=>setOpen(false)}
         isEnglish={isEnglish}
     >
         <div className={'relative height-100'} style={{width: '200px'}}>
@@ -43,7 +41,6 @@ const CourseHomeBook:React.FC<Props> = ({
                  style={{backgroundColor: 'var(--color-primary-6)', opacity: 0.2}}></div>
         </div>
     </StyledHomeListItem>
-}
 const StyledHomeListItem = styled.div<{
     color?: string;
     isEnglish?: boolean;
@@ -130,7 +127,7 @@ const StyledHomeListItem = styled.div<{
     z-index: -2;
     pointer-events: none;
   }
-  &.open{
+  &:hover{
     width: 400px;
     .cover{
       transform: perspective(1000px) rotateY(-180deg);

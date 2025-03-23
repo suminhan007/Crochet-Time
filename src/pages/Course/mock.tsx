@@ -34,8 +34,9 @@ export const CourseHomeData = [
                 title: '编织发展史',
                 title_en: 'Weaving development history',
                 desc: '介绍编织发展到现在的过程',
-                href:'/#/type=course-wire',
+                href:'/#/type=course-history',
                 details: '纱线由纤维制成，可以由羊毛等单一纤维制成，也可以与其他纤维混合以增强其性能。毛线通常指羊毛纺成的纱。',
+                disabled: true
             },
             // {
             //     id: '2025-4',
@@ -117,24 +118,6 @@ export const CourseHomeData = [
 
 export const YarnTypeData = [
     {
-        id:'0',
-        label:'毛线参数',
-        img_url: "https://croknittime.com/images/xc/mx.jpg",
-        types: ['newer','doll'],
-        material: '棉花??cotton',
-        origin:'中国、印度??China, India',
-        physical_properties: '中等粗细，强度高，无弹性，光泽柔和??Medium thickness, high strength, inelastic, soft luster',
-        usage_features:'吸湿透气，柔软，易染色，耐热??Moisture-absorbing, breathable, soft, easy to dye, heat-resistant',
-        crochet_size: '2.5-4.5mm',
-        knit_size: '3.5-5mm',
-        applicable:'夏季衣物、婴儿用品、家居装饰??Summer Clothes, Baby Products, Home Decor',
-        maintainance:'可机洗，耐高温??Machine washable, high temperature resistant',
-        sustainability:'天然可再生，但种植耗水量大??Naturally renewable, but cultivation consumes a lot of water',
-        advantages:'柔软、吸湿??Soft and hygroscopic',
-        disadvantages:'易皱、弹性差??Easy to wrinkle, poor elasticity',
-        details: '纯棉线由棉花经过采摘、清理、纺纱等工艺制成。??Pure cotton thread is made from cotton through picking, cleaning, spinning and other processes.'
-    },
-    {
         id:'1',
         label:'纯棉线??Pure cotton yarn',
         img_url: "https://croknittime.com/images/xc/mx.jpg",
@@ -150,7 +133,9 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但种植耗水量大??Naturally renewable, but cultivation consumes a lot of water',
         advantages:'柔软、吸湿??Soft and hygroscopic',
         disadvantages:'易皱、弹性差??Easy to wrinkle, poor elasticity',
-        details: '纯棉线由棉花经过采摘、清理、纺纱等工艺制成。??Pure cotton thread is made from cotton through picking, cleaning, spinning and other processes.'
+        details: '纯棉线由棉花经过采摘、清理、纺纱等工艺制成。??Pure cotton thread is made from cotton through picking, cleaning, spinning and other processes.',
+        // 价格、难度、环保、常见
+        datas: [40, 40, 40,45]
     },
     {
         id:'1-1',
@@ -170,7 +155,8 @@ export const YarnTypeData = [
         advantages:'柔软亲肤、环保??Soft, skin-friendly and environmentally friendly',
         disadvantages:'强度较低、价格较高??Lower strength, higher price',
         details: '牛奶棉也称牛奶丝，是将液状牛奶脱脂、去水后所得到的牛奶蛋白质，加上柔和剂，制成牛奶浆液，然后通过湿纺工艺及科学处理，纺制成牛奶蛋白纤维，再经湿纺工艺及科技处理成牛奶丝。市场上牛奶棉通常使用棉+牛奶纤维合成。\n牛奶棉是新手入门最常用的线材。根据股数分为不同粗细，最常见的有4股牛奶棉、5股牛奶棉、8股牛奶棉。??Milk cotton is also called milk silk. Milk protein fiber products are a kind of textile material. They belong to the animal and plant protein fiber series. They are milk proteins obtained by defatting and removing water from liquid milk, and adding softeners to make milk slurry. Then through wet spinning technology and scientific treatment, milk protein fiber is spun into milk protein fiber, and then wet spinning technology and technology are used to process it into milk silk. Milk cotton on the market is usually synthesized from cotton + milk fiber.\n' +
-            'Milk cotton is the most commonly used wire for beginners. According to the number of strands, it is divided into different thicknesses. The most common ones are 4-strand milk cotton, 5-strand milk cotton, and 8-strand milk cotton.'
+            'Milk cotton is the most commonly used wire for beginners. According to the number of strands, it is divided into different thicknesses. The most common ones are 4-strand milk cotton, 5-strand milk cotton, and 8-strand milk cotton.',
+        datas: [32, 44, 42,47]
     },
     {
         id:'2',
@@ -188,7 +174,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但羊毛生产可能涉及动物福利问题。??Naturally renewable, but wool production may involve animal welfare issues.',
         advantages:'保暖、弹性好??Warmth and good elasticity',
         disadvantages:'易起球??Easy to pill',
-        details: '羊毛通过剪毛、清洗、梳理、纺纱等工艺制成。??Wool is made through shearing, cleaning, carding, spinning and other processes.'
+        details: '羊毛通过剪毛、清洗、梳理、纺纱等工艺制成。??Wool is made through shearing, cleaning, carding, spinning and other processes.',
+        datas: [20, 32, 42,40]
     },
     {
         id:'3',
@@ -206,7 +193,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但产量低，价格高。??Naturally renewable, but yields are low and prices are high.',
         advantages:'柔软、保暖??Soft and warm',
         disadvantages:'价格高??expensive',
-        details: '山羊绒通过梳理、清洗、纺纱等工艺制成。??Cashmere is made through carding, cleaning, spinning and other processes.'
+        details: '山羊绒通过梳理、清洗、纺纱等工艺制成。??Cashmere is made through carding, cleaning, spinning and other processes.',
+        datas: [15, 25, 35, 30]
     },
     {
         id:'4',
@@ -224,7 +212,8 @@ export const YarnTypeData = [
         sustainability:'合成纤维，不可降解，生产能耗高。??Synthetic fibers are non-degradable and require high energy consumption for production.',
         advantages:'价格低、易护理??Low price and easy care',
         disadvantages:'透气性差??poor breathability',
-        details: '丙烯腈通过聚合、纺丝等工艺制成。??Acrylonitrile is made through polymerization, spinning and other processes.'
+        details: '丙烯腈通过聚合、纺丝等工艺制成。??Acrylonitrile is made through polymerization, spinning and other processes.',
+        datas: [47, 40, 10, 15]
     },
     {
         id:'5',
@@ -242,7 +231,8 @@ export const YarnTypeData = [
         sustainability:'取决于混合成分，天然纤维部分可再生。??Depending on the mix ingredients, natural fibers are partially renewable.',
         advantages:'多功能性??Versatility',
         disadvantages:'特性受混合比例影响??Properties affected by mix ratio',
-        details: ''
+        details: '',
+        datas: [25, 40, 25, 35]
     },
     {
         id:'6',
@@ -260,7 +250,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生。??Naturally renewable.',
         advantages:'光泽好、柔软??Good gloss and soft',
         disadvantages:'价格高、易勾丝??High price, easy to snag',
-        details: '蚕丝通过缫丝、捻丝等工艺制成。??Silk is made through reeling, twisting and other processes.'
+        details: '蚕丝通过缫丝、捻丝等工艺制成。??Silk is made through reeling, twisting and other processes.',
+        datas: [15, 10, 45, 15]
     },
     {
         id:'7',
@@ -278,7 +269,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，竹资源生长快，环保。??Naturally renewable, bamboo resources grow quickly and are environmentally friendly.',
         advantages:'环保、抗菌??Environmentally friendly, antibacterial',
         disadvantages:'强度较低??Less intense',
-        details: '竹子通过粉碎、蒸煮、纺丝等工艺制成。??Bamboo is made through processes such as crushing, cooking, and spinning.'
+        details: '竹子通过粉碎、蒸煮、纺丝等工艺制成。??Bamboo is made through processes such as crushing, cooking, and spinning.',
+        datas: [40, 35, 47, 20]
     },
     {
         id:'8',
@@ -296,7 +288,8 @@ export const YarnTypeData = [
         sustainability:'再生纤维素纤维，生产过程中使用化学溶剂。??Regenerated cellulose fiber, which uses chemical solvents in the production process.',
         advantages:'柔软、环保??Soft and environmentally friendly',
         disadvantages:'易变形??Easy to deform',
-        details: '莫代尔纱由木浆通过湿法纺丝工艺制成。??Modal yarn is made from wood pulp through a wet spinning process.'
+        details: '莫代尔纱由木浆通过湿法纺丝工艺制成。??Modal yarn is made from wood pulp through a wet spinning process.',
+        datas: [40, 35, 47, 20]
     },
     {
         id:'9',
@@ -314,7 +307,8 @@ export const YarnTypeData = [
         sustainability:'再生纤维素纤维，使用环保溶剂，可生物降解。??Regenerated cellulose fiber, using environmentally friendly solvents, is biodegradable.',
         advantages:'柔软、环保??Soft and environmentally friendly',
         disadvantages:'价格较高??higher price',
-        details: '天丝纱由木浆通过溶剂纺丝工艺制成。??Tencel yarn is made from wood pulp through a solvent spinning process'
+        details: '天丝纱由木浆通过溶剂纺丝工艺制成。??Tencel yarn is made from wood pulp through a solvent spinning process',
+        datas: [15, 20, 45, 25]
     },
     {
         id:'10',
@@ -332,7 +326,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但产量低，价格高。??Naturally renewable, but yields are low and prices are high.',
         advantages:'蓬松、保暖??Fluffy and warm',
         disadvantages:'易掉毛??Easy to shed',
-        details: '马海毛纱由安哥拉山羊毛通过剪毛、清洗、纺纱等工艺制成。??Mohair yarn is made from Angora goat hair through shearing, cleaning, spinning and other processes.'
+        details: '马海毛纱由安哥拉山羊毛通过剪毛、清洗、纺纱等工艺制成。??Mohair yarn is made from Angora goat hair through shearing, cleaning, spinning and other processes.',
+        datas: [10, 35, 40, 40]
     },
     {
         id:'11',
@@ -350,7 +345,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，羊驼毛采集对动物无害。??Naturally renewable, alpaca wool is harvested in an animal-friendly way.',
         advantages:'柔软、保暖??Fluffy and warm',
         disadvantages:'价格较高??higher price',
-        details: '羊驼毛通过梳理、清洗、纺纱等工艺制成。??Alpaca wool is made through carding, cleaning, spinning and other processes.'
+        details: '羊驼毛通过梳理、清洗、纺纱等工艺制成。??Alpaca wool is made through carding, cleaning, spinning and other processes.',
+        datas: [15, 35, 47, 25]
     },
     {
         id:'12',
@@ -368,7 +364,8 @@ export const YarnTypeData = [
         sustainability:'合成纤维，不可降解，生产能耗高。??Synthetic fibers are non-degradable and require high energy consumption for production.',
         advantages:'价格低、易护理??Low price and easy care',
         disadvantages:'透气性差??Poor breathability',
-        details: '丙烯腈通过聚合、纺丝等工艺制成。??Acrylonitrile is made through polymerization, spinning and other processes.'
+        details: '丙烯腈通过聚合、纺丝等工艺制成。??Acrylonitrile is made through polymerization, spinning and other processes.',
+        datas: [35, 20, 10, 20]
     },
     {
         id:'13',
@@ -385,7 +382,8 @@ export const YarnTypeData = [
         sustainability:'取决于原材料，棉为天然，化纤为合成。??Depends on the raw material, cotton is natural and chemical fiber is synthetic.',
         advantages:'细腻、轻盈??Delicate and light',
         disadvantages:'强度较低??Less intense',
-        details: '棉或化纤通过高捻纺纱工艺制成。??Cotton or chemical fiber is made through high twist spinning process.'
+        details: '棉或化纤通过高捻纺纱工艺制成。??Cotton or chemical fiber is made through high twist spinning process.',
+        datas: [20, 10, 25, 30]
     },
     {
         id:'14',
@@ -402,7 +400,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但种植耗水量大。??Naturally renewable, but cultivation consumes a lot of water.',
         advantages:'细腻、轻盈??Delicate and light',
         disadvantages:'强度较低??Less intense',
-        details: '棉花通过高捻纺纱工艺制成。??Cotton is produced through a high-twist spinning process'
+        details: '棉花通过高捻纺纱工艺制成。??Cotton is produced through a high-twist spinning process',
+        datas: [20, 25, 40, 30]
     },
     {
         id:'15',
@@ -420,7 +419,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但羊毛生产可能涉及动物福利问题。??Naturally renewable, but wool production may involve animal welfare issues.',
         advantages:'保暖、蓬松??Warm and fluffy',
         disadvantages:'易起球??Easy to pill',
-        details: '羊毛通过粗梳、纺纱等工艺制成。??Wool is made through processes such as carding and spinning.'
+        details: '羊毛通过粗梳、纺纱等工艺制成。??Wool is made through processes such as carding and spinning.',
+        datas: [25, 30, 40, 35]
     },
     {
         id:'16',
@@ -440,6 +440,7 @@ export const YarnTypeData = [
         disadvantages:'较粗糙??Rougher',
         details: '冰岛羊毛通过剪毛、清洗、纺纱等工艺制成。??Icelandic wool is made through shearing, cleaning, spinning and other processes.',
         example: "https://croknittime.com/images/xc/bdx01.jpg",
+        datas: [35, 40, 45, 30]
     },
     {
         id:'17',
@@ -457,7 +458,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，但丝光处理涉及化学工艺。??Naturally renewable, but mercerization involves a chemical process.',
         advantages:'光泽好、柔软??Good gloss and soft',
         disadvantages:'易变形??Easy to deform',
-        details: '棉花经过丝光处理（碱液处理）后纺纱制成。??Cotton is mercerized (lye treated) and then spun.'
+        details: '棉花经过丝光处理（碱液处理）后纺纱制成。??Cotton is mercerized (lye treated) and then spun.',
+        datas: [25, 35, 20, 25]
     },
     {
         id:'18',
@@ -475,7 +477,8 @@ export const YarnTypeData = [
         sustainability:'合成纤维，不可降解，生产能耗高。??Synthetic fibers are non-degradable and require high energy consumption for production.',
         advantages:'弹性好、舒适??Good elasticity and comfort',
         disadvantages:'易松散??Easy to loosen',
-        details: '棉或涤纶与氨纶通过包芯纺纱工艺制成。??Made of cotton or polyester and spandex through core spinning process.'
+        details: '棉或涤纶与氨纶通过包芯纺纱工艺制成。??Made of cotton or polyester and spandex through core spinning process.',
+        datas: [45, 10, 10, 10]
     },
     {
         id:'19',
@@ -493,7 +496,8 @@ export const YarnTypeData = [
         sustainability:'取决于成分，羊毛为天然，混纺可能含合成纤维。??Depending on the ingredients, wool is natural and blends may contain synthetic fibers.',
         advantages:'风格独特、保暖??Unique style and warmth',
         disadvantages:'较厚重??thicker',
-        details: '羊毛或混纺纤维通过混色纺纱工艺制成。??Wool or blended fibers produced through a melange spinning process'
+        details: '羊毛或混纺纤维通过混色纺纱工艺制成。??Wool or blended fibers produced through a melange spinning process',
+        datas: [25, 30, 30, 25]
     },
     {
         id:'20',
@@ -510,7 +514,8 @@ export const YarnTypeData = [
         sustainability:'天然可再生，麻类植物生长快，环保。??Naturally renewable, hemp plants grow quickly and are environmentally friendly.',
         advantages:'透气、吸湿??Breathable and moisture absorbent',
         disadvantages:'较硬??Harder',
-        details: '亚麻通过高捻纺纱工艺制成。??Linen is produced through a high-twist spinning process'
+        details: '亚麻通过高捻纺纱工艺制成。??Linen is produced through a high-twist spinning process',
+        datas: [20, 30, 47, 20]
     },
     {
         id:'21',
@@ -528,7 +533,8 @@ export const YarnTypeData = [
         sustainability:'不可降解，部分可回收、生产过程中碳排放较高??Non-degradable, partially recyclable, high carbon emissions during production',
         advantages:'高强度、耐磨、易清洗??High strength, wear-resistant, easy to clean',
         disadvantages:'不透气??airtight',
-        details: '塑料线别名尼龙线、涤纶线、聚丙烯线等。??Plastic thread is also known as nylon thread, polyester thread, polypropylene thread, etc.'
+        details: '塑料线别名尼龙线、涤纶线、聚丙烯线等。??Plastic thread is also known as nylon thread, polyester thread, polypropylene thread, etc.',
+        datas: [35, 30, 10, 20]
     },
     {
         id:'22',
@@ -548,6 +554,7 @@ export const YarnTypeData = [
         disadvantages:'易断裂、不透气??Easy to break, airtight',
         details: '金属线由金属纤维提炼制成，可能添加涂层（如聚酯）以增强耐用性。??Metal wire is made from refined metal fibers and may have a coating (such as polyester) added for durability.',
         example: "https://croknittime.com/images/xc/jsx.jpg",
+        datas: [25, 10, 30, 10]
     },
 ]
 export const ToolTypeData = [

@@ -38,7 +38,7 @@ export const Nav_Data = [
       { key: 'imgToPixel', title: "图片转像素" },
     ],
   },
-  { key: 'repository?assetsType=draft', title: "仓库" },
+  { key: 'repository?assetsType=pattern', title: "仓库" },
 ]
 
 export const English_Nav_Data = [
@@ -67,7 +67,7 @@ export const English_Nav_Data = [
       { key: 'imgToPixel', title: "Img To Pixel" },
     ],
   },
-  { key: 'repository?assetsType=draft', title: "Repository" },
+  { key: 'repository?assetsType=pattern', title: "Repository" },
 ]
 
 export const Crochet_Course_Data = [

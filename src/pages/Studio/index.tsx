@@ -35,7 +35,7 @@ const Studio: React.FC<Props> = ({ isEnglish}) => {
                     />
                 );
                 break;
-            case CTWorksType.Design:
+            case CTWorksType.Sketch:
                 return (
                     <Icon
                         name="formatting-brush"

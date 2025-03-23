@@ -1,6 +1,6 @@
 export enum CTWorksType {
     Draft = "draft",
-    Design = "design",
+    Sketch = "sketch",
     Pattern = "pattern",
     Product = "product",
     Material = "material",

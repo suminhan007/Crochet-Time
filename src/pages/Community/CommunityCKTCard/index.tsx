@@ -18,7 +18,7 @@ const CommunityCKTCard:React.FC<Props> = ({
         }
     }
     return <div className={'flex-1 flex column gap-16 height-100 width-100'}>
-       <LandFlex style={{height:'240px'}}>
+       <LandFlex style={{height:'240px'}} className={'shrink-0'}>
            {/*活动：swiper*/}
            <div className={'flex-1 height-100 bg-gray radius-12'}>
 
@@ -48,7 +48,7 @@ const CommunityCKTCard:React.FC<Props> = ({
             <FilterListOrButton/>
         </LandFlex>
         <div className={'grid gap-12 overflow-auto'} style={{gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))'}}>
-            {Array.from({length: 24}).map((_item: any, index: number) => <div key={index} className={'bg-gray radius-12 ratio-1'}>
+            {Array.from({length: 24}).map((_item: any, index: number) => <div key={index} className={'flex both-center fs-14 color-gray-4 bg-gray radius-12 ratio-1'}>
                 {index}</div>)}
         </div>
     </div>

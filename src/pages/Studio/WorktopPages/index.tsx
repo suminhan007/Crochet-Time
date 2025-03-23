@@ -64,7 +64,7 @@ const WorktopPages: React.FC<Props> = ({isEnglish}) => {
   return (
     <StyledWorktop className="fixed left-0 top-0 flex column">
       <div
-        className="flex items-center border-bottom px-12 bg-white shrink-0"
+        className="flex items-center px-12 bg-gray shrink-0"
         style={{ height: "64px" }}
       >
         <div
@@ -100,7 +100,7 @@ const WorktopPages: React.FC<Props> = ({isEnglish}) => {
       <div className="flex-1 height-1">
         {type === "draft" && <WorktopDraft />}
         {type === "wool" && <WorktopWool isEnglish={isEnglish}/>}
-          {type === "pattern" &&<WorktopPattern isEnglish={isEnglish}/>}
+          {type === "pattern" &&<WorktopPattern isEnglish={isEnglish} title={lastestData?.project_name}/>}
       </div>
     </StyledWorktop>
   );

@@ -6,6 +6,7 @@ import PixelCardList from "./PixelCardList.tsx";
 import FillCardList from "./FillCardList.tsx";
 import {useNavigate} from "react-router-dom";
 import ImgPixelCardList from "./ImgPixelCardList.tsx";
+import PatternList from "./PatternList.tsx";
 
 type Props = {
     isEnglish?:boolean;
@@ -49,6 +50,7 @@ const Assets:React.FC<Props> = ({
          </div>
          <div className={'flex-1 pr-16 pb-16 height-100'}>
              <div className={'flex column width-100 height-100 p-24 bg-white radius-12'}>
+                 {menu === 'pattern' && <PatternList/>}
                  {menu === 'colorCard' && <ColorCardList/>}
                  {menu === 'fillCard' && <FillCardList />}
                  {menu === 'pixelCard' && <PixelCardList />}

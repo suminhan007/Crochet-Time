@@ -29,6 +29,7 @@ import WorktopPages from "./pages/Studio/WorktopPages";
 import CourseWire from "./pages/Course/CourseWire.tsx";
 import CourseTool from "./pages/Course/CourseTool.tsx";
 import ImgToPixel from "./pages/Tool/ImgTopPixel/ImgToPixel.tsx";
+import CourseHistory from "./pages/Course/CourseHistory.tsx";
 
 function App() {
   const navigate = useNavigate();
@@ -39,17 +40,6 @@ function App() {
   }, [language]);
   const [active, setActive] = useState<string>("community");
   const [dropActive, setDropActive] = useState<string>("");
-  useEffect(() => {
-    if(!window.location.href.includes('type=')) return;
-    const href = window.location.href.split('type=')[1]?.split('?')[0].split('-');
-    if (href?.length >= 2) {
-      setDropActive(href[1]);
-      setActive(href[0]);
-    }else{
-      setDropActive(href[0]);
-      setActive(href[0]);
-    }
-  }, [window.location.href]);
   useEffect(() => {
     const wrap = document.querySelector("#root") || document.body;
     const rect = wrap.getBoundingClientRect();
@@ -211,6 +201,7 @@ function App() {
 
           <Route path='type=course-wire' element={<CourseWire isEnglish={language === 'en'} />} />
           <Route path='type=course-tool' element={<CourseTool isEnglish={language === 'en'} />} />
+          <Route path='type=course-history' element={<CourseHistory isEnglish={language === 'en'} />} />
 
           {/*工作台*/}
           <Route path='type=studio' element={<Studio isEnglish={language === 'en'} />} />

@@ -263,14 +263,16 @@ const ImgToPixel:React.FC<Props> = ({
                     <canvas ref={canvasRef} style={{display: 'none'}}/>
                     <canvas ref={pixelatedCanvasRef} style={{display: 'none'}}/>
                     <CanvasImgCard
+                        showGrid
                         src={pixelatedImageSrc}
                         desc={'合并算法'}
                         loading={loading}
                         onPreview={() => setPreviewUrl(pixelatedImageSrc)}
                         onDownload={() => download(pixelatedImageSrc)}
                         onSave={() => saveFillCard(pixelatedImageSrc)}
-                        widthCount={Math.floor(imgSize.w/pixelSize) - 2}
-                        heightCount={Math.floor(imgSize.h/pixelSize) - 2}
+                        width={imgSize.w}
+                        height={imgSize.h}
+                        pixelSize={pixelSize}
                     />
                 </div>
                 <div className={'relative p-12 flex column gap-12 items-center fs-12 color-gray-4'}>
@@ -283,8 +285,9 @@ const ImgToPixel:React.FC<Props> = ({
                         onPreview={() => setPreviewUrl(pixelatedImageSrc2)}
                         onDownload={() => download(pixelatedImageSrc2)}
                         onSave={() => saveFillCard(pixelatedImageSrc2)}
-                        widthCount={imgSize.w/pixelSize - 2}
-                        heightCount={imgSize.h/pixelSize - 2}
+                        width={imgSize.w}
+                        height={imgSize.h}
+                        pixelSize={pixelSize}
                     />
                 </div>
             </div>

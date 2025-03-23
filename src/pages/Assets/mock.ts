@@ -3,8 +3,7 @@ export const Assets_Menu_Data = [
         title:'项目',
         open:true,
         dropData:[
-            {key:'draft', title:'草稿'},
-            {key:'design', title:'设计稿'},
+            {key:'pattern', title:'图解'},
         ]},
     {key:'tools',
         title:'工具',
