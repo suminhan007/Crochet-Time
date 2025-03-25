@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useMemo, useRef, useState} from "react";
+import React, {Fragment, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import styled from "styled-components";
 import {Icon, LandButton, LandDialog, LandDivider, LandInput, LandMessage, LandSwitch} from "@suminhan/land-design";
@@ -25,9 +25,9 @@ const WorktopPattern:React.FC<Props> = ({
         }, 1000);
     };
     const initData = [
-        {id:'1',title:'第 1 部分',values:'',nums: []}
+        {id:'1',title:'第 1 部分',values:'',nums: '',edited:false},
     ]
-    const [data,setData] = useState<{id:string,title:string,values:string,nums:{id:string,value:string}[]}[]>(initData);
+    const [data,setData] = useState<{id:string,title:string,values:string,nums:string,edited:boolean}[]>(initData);
     const projectId = useMemo(() => window.location.hash?.includes('project_id') ? window.location.hash.split('?project_id=')[1]:undefined,[window.location])
     const getData = async () => {
         const {data,error} = await supabase.from('CKTStudioTask').select().eq('id',projectId).single();
@@ -49,13 +49,13 @@ const WorktopPattern:React.FC<Props> = ({
     const addPartDisabled = useMemo(() => !data[data?.length-1].values, [data]);
     const handleAddPart = () => {
         if(addPartDisabled) return;
-        const newData = [...data,{id:`${data?.length+1}`,title:`第 ${data?.length+1} 部分`,values: '',nums:[]}]
+        const newData = [...data,{id:`${data?.length+1}`,title:`第 ${data?.length+1} 部分`,values: '',nums:'',edited:false}];
         setData(newData);
         setCur(`${data?.length+1}`);
     }
     const handleInputChange = (val:string,e:any)=>{
         e.stopPropagation();
-        const newData = data?.map((i) => i.id===cur ? Object.assign(i,{values: val, nums: val?.split('\n')?.map((s:string,sdx) => ({id:`${i.id}-${sdx+1}`,value:calculateExpression(s)}))}):i);
+        const newData = data?.map((i) => i.id===cur ? Object.assign(i,{values: val}):i);
         setData(newData);
     }
     const [saving, setSaving] = useState(false);
@@ -200,7 +200,22 @@ const WorktopPattern:React.FC<Props> = ({
         return expressions.reduce((sum, expr) => sum + parse(expr), 0);
     }
 
-    const [showStich,setShowStich] = useState(false)
+    const [showStich,setShowStich] = useState(false);
+    const getInitNums = useCallback(() => {
+        return curItem?.values?.split('\n').map(item => calculateExpression(item)).join('\n');
+    },[cur])
+    const [curLine,setCurLine] = useState(-1);
+    const updateLineNumber = (e:any) =>{
+        const text = e.target.value;
+        const cursorPos = e.target.selectionStart;
+
+        // 获取光标前的文本，并按换行符分割成行数组
+        const textBeforeCursor = text.substring(0, cursorPos);
+        const lines = textBeforeCursor.split('\n');
+
+        // 当前行号 = 行数组的长度
+        setCurLine(lines.length-1);
+    }
     return <>
         <div className="relative flex px-24 pb-24 width-100 height-100 bg-gray border-box">
             <div className={'flex column width-100 bg-white radius-12 p-24'}>
@@ -231,7 +246,19 @@ const WorktopPattern:React.FC<Props> = ({
                             </Fragment>)}
                             <LandButton size={'small'} type={'transparent'} disabled={addPartDisabled} icon={<Icon name={'add'} strokeWidth={3}/>} pop={addPartDisabled ? isEnglish ? 'New sections can be added after typing':'输入内容后可添加新部分':isEnglish?'Click to add new part':'点击添加新的部分'} onClick={handleAddPart}/>
                         </div>
-                        <LandSwitch label={'显示针数'} checkedLabel={'显示针数'} className={'ml-auto'} info={'开启后会自动计算每行针数，支持手动修改'} popProps={{placement:'bottom',style:{maxWidth:'120px'}}} onChange={() => setShowStich(!showStich)} />
+                        <LandSwitch
+                            label={'显示针数'}
+                            checkedLabel={'显示针数'}
+                            className={'ml-auto'}
+                            info={'开启后会自动计算每行针数，支持手动修改'}
+                            popProps={{placement:'bottom',style:{maxWidth:'120px'}}}
+                            onChange={() => {
+                                setShowStich(!showStich);
+                                if(curItem?.edited) return;
+                                const newData = data?.map(i =>i.id===cur ? Object.assign(i,{nums: getInitNums()}):i)
+                                setData(newData);
+                            }}
+                        />
                     </div>
                     <div className={'relative flex gap-8 mt-12 height-100'}>
                         <div className={'flex column fs-14 color-gray-4'} style={{width: '40px'}}>
@@ -243,17 +270,23 @@ const WorktopPattern:React.FC<Props> = ({
                             value={curItem?.values}
                             onChange={e => handleInputChange?.(e.target.value, e)}
                         />
-                        <div className={`flex column ml-auto ${showStich ? '' : 'opacity-0 events-none'}`}>
-                            {curItem.nums?.map((sItm) => <StyleNumInput value={sItm.value??'0'} onChange={e=>{
-                                const newData = data?.map((i) => i.id===cur ? Object.assign(i,{nums: i.nums?.map(s => s.id === sItm.id ? Object.assign(s,{value:e.target.value}):s)}):i);
-                                setData(newData)
-                            }}/>)}
+                        <div className={`flex ml-auto height-100 ${showStich ? '' : 'opacity-0 events-none'}`}>
+                            <StyleNumInput
+                                value={curItem.nums}
+                                onFocus={updateLineNumber}
+                                onClick={updateLineNumber}
+                                onKeyDown={updateLineNumber}
+                                onBlur={()=>setCurLine(-1)}
+                                onChange={e=>{
+                                const newData = data?.map((i) => i.id===cur ? Object.assign(i,{nums: e.target.value,edited:true}):i);
+                                setData(newData);
+                            }}/>
                         </div>
                         <div className={`absolute top-0 left-0 flex column events-none ${showStich ? '':'opacity-0'} transition`} style={{paddingLeft: '48px',width:'calc(100% - 72px)'}}>
                             {curItem.values?.split('\n').map((numItm,numIdx) => <div key={numIdx} className={'flex gap-24'}>
                                 <div className={'opacity-0'}>{numItm}</div>
                                 <div className={'flex-1 width-1 flex items-center gap-24 color-gray-4'}>
-                                    <div className={'flex-1 width-1 border-dash'} style={{transform:'translateY(1px)'}}></div>
+                                    <div className={'flex-1 width-1 border-dash'} style={{borderColor: numIdx === curLine ? 'var(--color-primary-6)':'',transform:'translateY(1px)'}}></div>
 
                                 </div>
                             </div>)}
@@ -319,15 +352,17 @@ const StyledInput = styled.textarea`
         outline: none;
     }
 `
-const StyleNumInput = styled.input`
-    width: 48px;
+const StyleNumInput = styled.textarea`
+    width: 4em;
     font-size: 14px;
-    height: 22px;
+    line-height: 22px;
+    height: 100%;
     color: var(--color-text-5);
     appearance: none;
     border: none;
     background-color: transparent;
     outline: none;
+    resize: none;
     &:focus,
     &:focus-within{
         border: none;
