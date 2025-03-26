@@ -216,6 +216,20 @@ const WorktopPattern:React.FC<Props> = ({
         // 当前行号 = 行数组的长度
         setCurLine(lines.length-1);
     }
+    useEffect(() => {
+        if(curItem?.edited) return;
+        const newData = data?.map(i =>i.id===cur ? Object.assign(i,{nums: getInitNums()}):i)
+        setData(newData);
+    }, [cur,showStich]);
+
+    const [autoSave, setAutoSave] = useState(false);
+    useEffect(() => {
+        if(!autoSave) return;
+        const saveTimer = setTimeout(() => {
+            handleSave()
+        }, 10000)
+        return () => clearTimeout(saveTimer);
+    }, [autoSave]);
     return <>
         <div className="relative flex px-24 pb-24 width-100 height-100 bg-gray border-box">
             <div className={'flex column width-100 bg-white radius-12 p-24'}>
@@ -252,12 +266,7 @@ const WorktopPattern:React.FC<Props> = ({
                             className={'ml-auto'}
                             info={'开启后会自动计算每行针数，支持手动修改'}
                             popProps={{placement:'bottom',style:{maxWidth:'120px'}}}
-                            onChange={() => {
-                                setShowStich(!showStich);
-                                if(curItem?.edited) return;
-                                const newData = data?.map(i =>i.id===cur ? Object.assign(i,{nums: getInitNums()}):i)
-                                setData(newData);
-                            }}
+                            onChange={() => setShowStich(!showStich)}
                         />
                     </div>
                     <div className={'relative flex gap-8 mt-12 height-100'}>
@@ -298,6 +307,7 @@ const WorktopPattern:React.FC<Props> = ({
             </div>
         </div>
         <SubmitButton loading={saving} label={saving ? '' : isEnglish?'Save Pattern':'保存图解'} disabled={saveDisabled} onClick={handleSave}/>
+        <LandSwitch checked={autoSave} onChange={()=>setAutoSave(!autoSave)} label={'自动保存'} checkedLabel={'自动保存'}/>
         {toast && <LandMessage show={toast} text={toastText} />}
         <LandDialog
             mask
@@ -319,15 +329,16 @@ const WorktopPattern:React.FC<Props> = ({
                        <div className={'flex column color-gray-2'}>
                            {itm.values?.split('\n').map((itm2, idx2) => <div key={idx2}>{itm2}</div>)}
                        </div>
+                       <div className={'ml-auto fs-14 color-gray-4'}>{itm.nums?.split('\n').map((itm3, idx3) => <div key={idx3}>{itm3}</div>)}</div>
                        <div className={'absolute top-0 left-0 flex column pr-12 width-100 events-none'}
-                            style={{paddingLeft: '48px'}}>
+                            style={{paddingLeft: '24px',paddingRight: '32px'}}>
                            {itm.values?.split('\n').map((numItm, numIdx) => <div key={numIdx}
                                                                                      className={'flex gap-24'}>
                                <div className={'opacity-0'}>{numItm}</div>
                                <div className={'flex-1 width-1 flex items-center gap-24 color-gray-4'}>
                                    <div className={'flex-1 width-1 border-dash'}
                                         style={{transform: 'translateY(1px)'}}></div>
-                                   {numItm.length}</div>
+                               </div>
                            </div>)}
                        </div>
                    </div>
