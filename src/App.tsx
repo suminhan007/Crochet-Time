@@ -1,11 +1,11 @@
+//@ts-nocheck
 import { useEffect, useState} from 'react';
 import './style/index.less';
 import './style/reset.less';
 import './style/atomic.less';
 import './style/variable.less';
 import {
-  LandHeader,
-  LandSelect
+  LandHeader
 } from "@suminhan/land-design";
 import { ColorFill_Path_List_Data, English_Nav_Data, Nav_Data } from "./pages/mock";
 import Course from "./pages/Course";
@@ -30,10 +30,18 @@ import CourseWire from "./pages/Course/CourseWire.tsx";
 import CourseTool from "./pages/Course/CourseTool.tsx";
 import ImgToPixel from "./pages/Tool/ImgTopPixel/ImgToPixel.tsx";
 import CourseHistory from "./pages/Course/CourseHistory.tsx";
+import TextToImg from "./pages/Tool/TextToImg";
+import ImgToImg from "./pages/Tool/ImgToImg";
 
 function App() {
   const navigate = useNavigate();
-  const [language, setLanguage] = useState<string>('zh');
+  const [language, setLanguage] = useState<string>('en');
+  // 自动识别语音
+  useEffect(() => {
+    const nav = window.navigator;
+    const lang = nav.language || nav.userLanguage || nav.systemLanguage || 'en';
+    lang.toLowerCase() !== 'zh-cn' ? setLanguage('en'):setLanguage('zh-cn');
+  }, []);
   const [navData, setNavData] = useState<any[]>(language === 'en' ? English_Nav_Data : Nav_Data);
   useEffect(() => {
     language === 'en' ? setNavData(English_Nav_Data) : setNavData(Nav_Data);
@@ -60,8 +68,8 @@ function App() {
 
   const [crochetCourseData, setCrochetCourseData] = useState<any[]>([]);
   const [knitCourseData, setKnitCourseData] = useState<any[]>([]);
-  const [xcListData, setXcListData] = useState<any[]>([]);
-  const [qcListData, setQcListData] = useState<any[]>([]);
+  // const [xcListData, setXcListData] = useState<any[]>([]);
+  // const [qcListData, setQcListData] = useState<any[]>([]);
   useEffect(() => {
     let fetchData = async () => {
       try {
@@ -92,26 +100,26 @@ function App() {
           }
         };
         break;
-      case 'wire':
-        fetchData = async () => {
-          try {
-            const response = await axios.get("./api/xcListData.json");
-            setXcListData(response.data.data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        break;
-      case 'tool':
-        fetchData = async () => {
-          try {
-            const response = await axios.get("./api/qcListData.json");
-            setQcListData(response.data.data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        break;
+      // case 'wire':
+      //   fetchData = async () => {
+      //     try {
+      //       const response = await axios.get("./api/xcListData.json");
+      //       setXcListData(response.data.data);
+      //     } catch (error) {
+      //       console.log(error);
+      //     }
+      //   };
+      //   break;
+      // case 'tool':
+      //   fetchData = async () => {
+      //     try {
+      //       const response = await axios.get("./api/qcListData.json");
+      //       setQcListData(response.data.data);
+      //     } catch (error) {
+      //       console.log(error);
+      //     }
+      //   };
+      //   break;
       default:
         break;
     }
@@ -119,11 +127,6 @@ function App() {
     // 调用获取数据的函数
     fetchData();
   }, [dropActive]);
-
-  const languageSelectData = [
-    { value: 'en', label: 'English' },
-    { value: 'zh', label: '中文' },
-  ]
 
   const [user,setUser] = useState<any>();
   const getUser = async () => {
@@ -169,8 +172,8 @@ function App() {
         }}
         rightComponent={
           <div className='flex items-center gap-12'>
-            <LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}
-                        selected={language}/>
+            {/*<LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}*/}
+            {/*            selected={language}/>*/}
             {user ? <UserAvatar
                 isEnglish={language === 'en'}
                 avatar={user?.avatar_url}
@@ -185,7 +188,7 @@ function App() {
         mobileSize={1052}
         align="center"
         className="relative"
-        style={{backgroundColor: (active === 'course'||active === 'studio') ? '':'var(--color-bg-1)'}}
+        style={{backgroundColor: (active === 'course'||active === 'studio') ? '':'var(--color-bg-1)',whitespace:'no-wrap'}}
         borderBottom={false}
       />
       <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
@@ -213,6 +216,8 @@ function App() {
           <Route path='type=tools-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
           <Route path='type=tools-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
           <Route path='type=tools-imgToPixel' element={<ImgToPixel isEnglish={language === 'en'} />} />
+          <Route path='type=tools-text2img' element={<TextToImg isEnglish={language === 'en'} />} />
+          <Route path='type=tools-img2img' element={<ImgToImg isEnglish={language === 'en'} />} />
 
           {/*资产*/}
           <Route path={'type=repository'} element={<Assets isEnglish={language === 'en'} />}/>

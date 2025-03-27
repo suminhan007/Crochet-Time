@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {Fragment, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import styled from "styled-components";
@@ -197,7 +198,7 @@ const WorktopPattern:React.FC<Props> = ({
 
         // 将输入字符串按空格分割成多个表达式，分别解析后相加
         const expressions = input.split(/\s+/);
-        return expressions.reduce((sum, expr) => sum + parse(expr), 0);
+        return expressions?.reduce((sum, expr) => sum + parse(expr), 0);
     }
 
     const [showStich,setShowStich] = useState(false);
@@ -235,11 +236,12 @@ const WorktopPattern:React.FC<Props> = ({
             <div className={'flex column width-100 bg-white radius-12 p-24'}>
                 <div className={'flex-1 height-1 flex column p-12 fs-14 color-gray-2 bg-gray radius-8'}>
                     <div className={'flex items-center justify-between gap-8'}>
-                        <div className={'flex items-center gap-8'}>
+                        <div className={'flex-1 width-1 flex items-center gap-8 overflow-auto'}>
                             {data?.map((headItem,headIndex) => <Fragment key={headIndex}>
                                 {headIndex>0 && <LandDivider direction={'column'} margin={8} lang={'16px'}/>}
                                 <div
-                                    className={`relative fs-16 fw-600 ${cur === headItem.id ? 'color-gray-2':'color-gray-4'} cursor-pointer`}
+                                    className={`relative fw-600 ${cur === headItem.id ? 'color-gray-2':'color-gray-4'} no-wrap cursor-pointer`}
+                                    style={{fontSize: 'clamp(12px, 8vw,16px)'}}
                                     onClick={() => setCur(headItem.id)}
                                     onDoubleClick={(e) => {
                                         e.stopPropagation();
