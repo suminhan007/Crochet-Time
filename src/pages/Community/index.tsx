@@ -10,6 +10,7 @@ import CommunityInspirationCard from "./CommunityInspirationCard";
 import CommunityCKTCard from "./CommunityCKTCard";
 import CommunityImgPixelCard from "./CommunityImgPixelCard";
 import {useNavigate} from "react-router-dom";
+import styled from "styled-components";
 
 const menuData = [
     {key: 'ckt',title:'CKT'},
@@ -37,9 +38,9 @@ type Props = {
     user?: {id:string,userName:string};
 }
 const Community:React.FC<Props> = ({
-                                     isEnglish,
+                                       isEnglish,
                                        user
-                                 }) => {
+                                   }) => {
     const navigate = useNavigate();
     const newMenuData = useMemo(() => isEnglish ? enMenuData : menuData, [isEnglish]);
     const [curTab, setCurTab] = useState('state');
@@ -125,7 +126,7 @@ const Community:React.FC<Props> = ({
     const [firstIn,setFirstIn] = useState(true);
     return (<>
         <div className={'flex width-100 height-100 bg-gray'}>
-            <div className={'height-100 flex column pb-16 px-24'} style={{width: 'fit-content'}}>
+            <StyledCommunityMenu className={'height-100 flex column pb-16 px-24 no-wrap'} style={{width: 'fit-content'}}>
                 {newMenuData?.map((item: any, index: number) => <div key={item.key ?? index}
                                                                      className={`flex column gap-8 py-8 fs-14 cursor-pointer ${curTab === item.key ? 'fw-600 color-gray-2' : ' color-gray-3'}`}
                                                                      onClick={() => {
@@ -142,8 +143,8 @@ const Community:React.FC<Props> = ({
                         {item.title}
                         {item.key === 'ckt' && <div className={'flex items-center gap-4 px-4 radius-4 color-gray-4 fw-400 fs-12 bg-gray'}>{isEnglish? 'store':'商店'}
                             {user?.id === '82758977-37d6-4917-9220-fe25e3064e08' &&
-                                <div onClick={() => setShowCreateOfficialStateDrawer(true)}><Icon name={'add'} size={16}
-                                                                                                  strokeWidth={4}/></div>}
+                                <div onClick={() => setShowCreateOfficialStateDrawer(true)} className={'p-2 bg-dark color-white radius-4 flex both-center'} ><Icon name={'add'} size={14}
+                                                                                                                                                                   strokeWidth={4}/></div>}
                         </div>}
                         {item.key === 'state' &&
                             <div onClick={() => setShowCreateStateDrawer(true)} className={'p-2 bg-dark color-white radius-4 flex both-center'}><Icon name={'add'} size={14} strokeWidth={4} /></div>
@@ -158,9 +159,9 @@ const Community:React.FC<Props> = ({
                         }}
                     >{itm.title}</div>)}</div>}
                 </div>)}
-            </div>
-            <div className={'flex-1 height-100 pr-16 pb-16'}>
-                <div className={'width-100 height-100 bg-white p-24 radius-12'}>
+            </StyledCommunityMenu>
+            <div className={'flex-1 width-1 height-100 pr-16 pb-16'}>
+                <div className={'width-100 height-100 bg-white radius-12'}>
                     {curTab === 'ckt' && <CommunityCKTCard/>}
                     {curTab === 'state' && <CommunityStateCard isEnglish={isEnglish}/>}
                     {curTab === 'inspiration' && <CommunityInspirationCard isEnglish={isEnglish} firstIn={firstIn}/>}
@@ -188,4 +189,9 @@ const Community:React.FC<Props> = ({
         {toast && <LandMessage show={toast} text={toastText} />}
     </>)
 }
+const StyledCommunityMenu = styled.div`
+    @media screen and (max-width: 767px) {
+        padding-inline: 12px;
+    }
+`
 export default Community;

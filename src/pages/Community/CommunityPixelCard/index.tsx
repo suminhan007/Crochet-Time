@@ -91,7 +91,7 @@ const CommunityPixelCard:React.FC = () => {
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
-            </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
+            </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24 p-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <PixelCard key={i.id} item={i}/>)}
             </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开像素卡, <LandLink

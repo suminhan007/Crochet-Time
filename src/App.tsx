@@ -54,12 +54,12 @@ function App() {
     const data = language === 'en' ? English_Nav_Data : Nav_Data;
     if (rect.width <= 768) {
       setNavData(
-        data.map((itm) => ({
-          key: itm.key,
-          title: itm.title,
-          dropData: itm.dropData,
-          open: open,
-        }))
+          data.map((itm) => ({
+            key: itm.key,
+            title: itm.title,
+            dropData: itm.dropData,
+            open: open,
+          }))
       );
     } else {
       setNavData(data);
@@ -100,26 +100,26 @@ function App() {
           }
         };
         break;
-      // case 'wire':
-      //   fetchData = async () => {
-      //     try {
-      //       const response = await axios.get("./api/xcListData.json");
-      //       setXcListData(response.data.data);
-      //     } catch (error) {
-      //       console.log(error);
-      //     }
-      //   };
-      //   break;
-      // case 'tool':
-      //   fetchData = async () => {
-      //     try {
-      //       const response = await axios.get("./api/qcListData.json");
-      //       setQcListData(response.data.data);
-      //     } catch (error) {
-      //       console.log(error);
-      //     }
-      //   };
-      //   break;
+        // case 'wire':
+        //   fetchData = async () => {
+        //     try {
+        //       const response = await axios.get("./api/xcListData.json");
+        //       setXcListData(response.data.data);
+        //     } catch (error) {
+        //       console.log(error);
+        //     }
+        //   };
+        //   break;
+        // case 'tool':
+        //   fetchData = async () => {
+        //     try {
+        //       const response = await axios.get("./api/qcListData.json");
+        //       setQcListData(response.data.data);
+        //     } catch (error) {
+        //       console.log(error);
+        //     }
+        //   };
+        //   break;
       default:
         break;
     }
@@ -140,94 +140,94 @@ function App() {
         const resultData = Object.assign(user.user_metadata,{avatar_url:UrlData.signedUrl});
         setUser(resultData)
       }
-      }
+    }
   }
   useEffect(() => {
     getUser()
   }, []);
 
   return (
-    <>
-      <LandHeader
-        fixed
-        logo={<img src={'./ckt_logo.png'} height={32} onClick={() => navigate('/')}/>}
-        menuProps={{
-          data: navData,
-          active: active,
-          onChange: (item) => {
-            setActive(item.key);
-            navigate(`type=${item.key}`);
-          },
-          onDropChange: (dropItem, parentItem) => {
-            setActive(parentItem.key);
-            setDropActive(dropItem.key);
-            navigate(`type=${parentItem.key}-${dropItem.key}`);
-          },
-          theme: {hoverBg: 'transparent',lineColor:'transparent'},
-          dropProps: {
-            direction: "column",
-            active: dropActive,
-            theme: { activeBg: "var(--color-bg-2)", lineColor: "transparent"}
-          },
-        }}
-        rightComponent={
-          <div className='flex items-center gap-12'>
-            {/*<LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}*/}
-            {/*            selected={language}/>*/}
-            {user ? <UserAvatar
-                isEnglish={language === 'en'}
-                avatar={user?.avatar_url}
-                username={user?.username}
-                email={user?.email}
-                coins={user?.coins}
-                onLogoutSuccess={() => setUser(undefined)}
-                onUpdateUserSuccess={() =>getUser()}
-            /> : <LoginButtons isEnglish={language === 'en'}/>}
-          </div>
-        }
-        mobileSize={1052}
-        align="center"
-        className="relative"
-        style={{backgroundColor: (active === 'course'||active === 'studio') ? '':'var(--color-bg-1)',whitespace:'no-wrap'}}
-        borderBottom={false}
-      />
-      <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
-        <Routes>
-          <Route path="/" element={<Community isEnglish={language === 'en'} user={user}/>} />
-          <Route path="/type=community" element={<Community isEnglish={language === 'en'} user={user}/>} />
+      <>
+        <LandHeader
+            fixed
+            logo={<img src={'./ckt_logo.png'} height={32} onClick={() => navigate('/')}/>}
+            menuProps={{
+              data: navData,
+              active: active,
+              onChange: (item) => {
+                setActive(item.key);
+                navigate(`type=${item.key}`);
+              },
+              onDropChange: (dropItem, parentItem) => {
+                setActive(parentItem.key);
+                setDropActive(dropItem.key);
+                navigate(`type=${parentItem.key}-${dropItem.key}`);
+              },
+              theme: {hoverBg: 'transparent',lineColor:'transparent'},
+              dropProps: {
+                direction: "column",
+                active: dropActive,
+                theme: { activeBg: "var(--color-bg-2)", lineColor: "transparent"}
+              },
+            }}
+            rightComponent={
+              <div className='flex items-center gap-12'>
+                {/*<LandSelect type={'transparent'} data={languageSelectData} onChange={item => setLanguage(item.value)}*/}
+                {/*            selected={language}/>*/}
+                {user ? <UserAvatar
+                    isEnglish={language === 'en'}
+                    avatar={user?.avatar_url}
+                    username={user?.username}
+                    email={user?.email}
+                    coins={user?.coins}
+                    onLogoutSuccess={() => setUser(undefined)}
+                    onUpdateUserSuccess={() =>getUser()}
+                /> : <LoginButtons isEnglish={language === 'en'}/>}
+              </div>
+            }
+            mobileSize={1052}
+            align="center"
+            className="relative"
+            style={{backgroundColor: (active === 'course'||active === 'studio') ? '':'var(--color-bg-1)',whitespace:'no-wrap'}}
+            borderBottom={false}
+        />
+        <div className={'height-100vh overflow-auto'} style={{ paddingTop: '64px' }}>
+          <Routes>
+            <Route path="/" element={<Community isEnglish={language === 'en'} user={user}/>} />
+            <Route path="/type=community" element={<Community isEnglish={language === 'en'} user={user}/>} />
 
-          {/*教程*/}
-          <Route path={'type=course'} element={<Course isEnglish={language ==='en'}/>}/>
-          <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
-          <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
-          <Route path="type=course-knit" element={<CardList data={knitCourseData} isEnglish={language === 'en'} />} />
+            {/*教程*/}
+            <Route path={'type=course'} element={<Course isEnglish={language ==='en'}/>}/>
+            <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
+            <Route path="type=course-crochet" element={<CourseList data={crochetCourseData} isEnglish={language === 'en'} />} />
+            <Route path="type=course-knit" element={<CardList data={knitCourseData} isEnglish={language === 'en'} />} />
 
-          <Route path='type=course-wire' element={<CourseWire isEnglish={language === 'en'} />} />
-          <Route path='type=course-tool' element={<CourseTool isEnglish={language === 'en'} />} />
-          <Route path='type=course-history' element={<CourseHistory isEnglish={language === 'en'} />} />
+            <Route path='type=course-wire' element={<CourseWire isEnglish={language === 'en'} />} />
+            <Route path='type=course-tool' element={<CourseTool isEnglish={language === 'en'} />} />
+            <Route path='type=course-history' element={<CourseHistory isEnglish={language === 'en'} />} />
 
-          {/*工作台*/}
-          <Route path='type=studio' element={<Studio isEnglish={language === 'en'} />} />
-          <Route path='type=studio/worktop' element={<WorktopPages isEnglish={language === 'en'} />} />
+            {/*工作台*/}
+            <Route path='type=studio' element={<Studio isEnglish={language === 'en'} />} />
+            <Route path='type=studio/worktop' element={<WorktopPages isEnglish={language === 'en'} />} />
 
-          {/*工具*/}
-          <Route path='type=tools' element={<Tools isEnglish={language === 'en'} />} />
-          <Route path='type=tools-colorPicker' element={<ImgColorPicker isEnglish={language === 'en'} />} />
-          <Route path='type=tools-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
-          <Route path='type=tools-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
-          <Route path='type=tools-imgToPixel' element={<ImgToPixel isEnglish={language === 'en'} />} />
-          <Route path='type=tools-text2img' element={<TextToImg isEnglish={language === 'en'} />} />
-          <Route path='type=tools-img2img' element={<ImgToImg isEnglish={language === 'en'} />} />
+            {/*工具*/}
+            <Route path='type=tools' element={<Tools isEnglish={language === 'en'} />} />
+            <Route path='type=tools-colorPicker' element={<ImgColorPicker isEnglish={language === 'en'} />} />
+            <Route path='type=tools-colorFill' element={<ColorFill pathData={ColorFill_Path_List_Data} isEnglish={language === 'en'} />} />
+            <Route path='type=tools-pixelDrawer' element={<PixelDrawer isEnglish={language === 'en'} />} />
+            <Route path='type=tools-imgToPixel' element={<ImgToPixel isEnglish={language === 'en'} />} />
+            <Route path='type=tools-text2img' element={<TextToImg isEnglish={language === 'en'} />} />
+            <Route path='type=tools-img2img' element={<ImgToImg isEnglish={language === 'en'} />} />
 
-          {/*资产*/}
-          <Route path={'type=repository'} element={<Assets isEnglish={language === 'en'} />}/>
+            {/*资产*/}
+            <Route path={'type=repository'} element={<Assets isEnglish={language === 'en'} />}/>
 
-          {/*注册&登录*/}
-          <Route path={'register'} element={<Register/>}/>
-          <Route path={'login'} element={<Login onLogined={user => setUser(user)} />}/>
-        </Routes>
-      </div>
-    </>
+            {/*注册&登录*/}
+            <Route path={'register'} element={<Register/>}/>
+            <Route path={'login'} element={<Login onLogined={user => setUser(user)} />}/>
+          </Routes>
+        </div>
+      </>
   );
 }
 

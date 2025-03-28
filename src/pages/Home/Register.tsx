@@ -90,6 +90,7 @@ const Register:React.FC<Props> = ({
     }, []);
     return (<LandDialog
         mask
+        size={'small'}
         show={true}
         onClose={() => navigate('/')}
         onCancel={() => navigate('/')}

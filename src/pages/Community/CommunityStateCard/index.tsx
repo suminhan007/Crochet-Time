@@ -203,7 +203,7 @@ const CommunityStateCard:React.FC<Props> = ({
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
-            </div> : (communityStateCardData && communityStateCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
+            </div> : (communityStateCardData && communityStateCardData?.length >0) ? <div className={'p-24 grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityStateCardData?.map(i =>  <StateCard
                     key={i.img_url}
                     isEnglish={isEnglish}

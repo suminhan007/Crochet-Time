@@ -9,8 +9,8 @@ type Props = {
 }
 
 const Login_bak:React.FC<Props> = ({
-                                   onLogined
-}) => {
+                                       onLogined
+                                   }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -35,6 +35,7 @@ const Login_bak:React.FC<Props> = ({
     };
     return (<LandDialog
         mask
+        size={'small'}
         show={true}
         onClose={() => navigate('/')}
         onCancel={() => navigate('/')}

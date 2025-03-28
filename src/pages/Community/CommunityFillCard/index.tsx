@@ -91,10 +91,10 @@ const CommunityColorCard:React.FC = () => {
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
-            </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
+            </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24 p-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <FillCard key={i.img_url} item={i} onDownload={() => handleDownloadColorCard?.(i.img_url)} onPreview={()=> setPreviewUrl(i.img_url)}/>
-                    )}
-                </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
+                )}
+            </div> : <div className={'width-100 height-100 flex-1 flex items-center justify-center'}>
                 <LandState type={'empty'} title={<>暂无公开配色卡, <LandLink
                     onClick={() => navigate('/type=tools-colorPicker')}>前往制作</LandLink>或<LandLink
                     onClick={() => navigate('/type=repository?assetsType=color-card')}>发布我的配色卡</LandLink></>}/>

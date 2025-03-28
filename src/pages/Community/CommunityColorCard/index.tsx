@@ -48,7 +48,7 @@ const CommunityColorCard:React.FC = () => {
                     .from('CroKnitTime')
                     .createSignedUrls(communityData?.map(i => `colorCards/${i.img_url}`), 60)
                 if(UrlError){}else{
-                   const { data: AvatarData, error:AvatarError } = await supabase.storage.from('CroKnitTime').createSignedUrls(communityData.map(i => `userAvatars/${i.users.avatar_url}`), 60)
+                    const { data: AvatarData, error:AvatarError } = await supabase.storage.from('CroKnitTime').createSignedUrls(communityData.map(i => `userAvatars/${i.users.avatar_url}`), 60)
                     if(AvatarError){}else{
                         const imgData = communityData?.map((i,idx) => Object.assign(i, {
                             img_url: UrlData[idx].signedUrl,
@@ -86,7 +86,7 @@ const CommunityColorCard:React.FC = () => {
         <>
             {loading ? <div className={'width-100 height-100 flex-1 flex both-center'}>
                 <LandLoading />
-            </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
+            </div> : (communityColorCardData && communityColorCardData?.length >0) ? <div className={'grid gap-24 p-24'} style={{gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))'}}>
                 {communityColorCardData?.map(i =>  <ColorCard
                     key={i.origin_img_url}
                     id={i.id}
